@@ -27,15 +27,10 @@ This is where Rent It shines! Rent It offers a space where both renters and rent
     - wants a low-risk/low-cost method of accessing an asset. 
 
 ### Features
-~~notdone~~
-#### As a NOT logged in user:
-- I want to be able to search for items to rent.
-- I view an item I am interested in. 
-- 
 
-#### As a logged in user:
-
-~~notdone~~
+- I want to be able to search ads with keywords.
+- I might want to message an AI assistance if I don't know what I am looking for. 
+- I want to have all the details for a rental offering presented in a clear an consist way. 
 
 ## Implementation
 
@@ -60,6 +55,7 @@ This is where Rent It shines! Rent It offers a space where both renters and rent
 
 - OpenAI API or similar LLM APIs. 
 - MediaDevice API
+- Strip API
 
 ### Sitemap
 
@@ -97,6 +93,45 @@ This is where Rent It shines! Rent It offers a space where both renters and rent
 
 #### Landing Page Signed in:
 ![](./landing-page-signed-in.png)
+
+#### Landing Page Expanded Menu:
+![](./expanded-hamburger-menu.png)
+
+#### Rent Management:
+![](./rent-mangement-page.png)
+
+#### Rent Management with History:
+![](./rent-management-with-history-page.png)
+
+#### Rented Management:
+![](./rented-management-page.png)
+
+#### Rented Management with History:
+![](./rented-management-with-history-page.png)
+
+#### Rental Ad Page 1, Photo and Media Upload:
+![](./upload-photos-media.png)
+
+#### Rental Ad Page 1, With Photo and Media Upload:
+![](./upload-photos-media-uploaded.png)
+
+#### Rental Ad Page 2, Ad Tags:
+![](./rental-ad-tags-page.png)
+
+#### Rental Ad Page 3, Contract Terms and Conditions Summary:
+![](./rental-ad-contract-terms-page.png)
+
+#### Rental Ad Page 4, Contract Upload:
+![](./contract-pdf-upload-page.png)
+
+#### Rental Ad Page 5, Camera Inspection:
+![](./camera-inspection.png)
+
+#### Rental Ad Page 6, Ad Review Page:
+![](./ad-review-page.png)
+
+#### Chat and Notifications:
+![](./chat-page.png)
 
 ### Data
 
