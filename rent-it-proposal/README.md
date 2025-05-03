@@ -4,72 +4,95 @@ Rent It
 
 ## Overview
 
-Rent It connects renters and rentees, offering a streamlined, automated workflow to empower users to transact with confidence.
+Rent It is a web platform that connects renters and rentees, offering a streamlined, automated workflow that empowers users to transact with confidence.
 
 ### Problem Space
 
-Rent It sets out to address two problems from two broad user categories.
+Rent It addresses two primary user needs:
 
-First, suppose you purchased an essential asset but don't get much use out of it, making it feel like an unwise purchasing decision. This could be a tuxedo, a snow machine, construction tools, etc. You might also have made such purchases because you're an entrepreneur looking for opportunities. Whatever the circumstances may be, you have an asset and hope to earn a financial return on it.
+Asset Owners (Renters)
+You’ve purchased valuable assets that are underutilized—formal wear, machinery, seasonal equipment, etc.—and you want to generate income from them.
 
-Second, suppose you need an asset for some period of time, or you are looking for a low-cost, low-risk way of accessing an asset. This could be seasonal decorations (e.g., Christmas decorations), a tuxedo, uncommon machinery, etc.
+Asset Seekers (Rentees)
+You need temporary access to assets without the burden of ownership. Whether it’s a snowblower for the winter, a tuxedo for an event, or specialized tools, you seek affordable, low-risk solutions.
 
-This is where Rent It shines! Rent It offers a space where both renters and rentees can transact in an efficient user friendly environment. This workflow include procedural wizards automating the process, such process may include advertising, questionnaires, messaging and texting, document sharing, contract establishment, cellphone based inspections, financial transaction brokering, and possibly more. 
+Rent It provides a trusted, user-friendly environment for these transactions, supported by an automated workflow that may include:
+
+- Asset advertising
+- Smart questionnaires
+- Messaging and texting
+- Document sharing
+- Contract creation and e-signing
+- Cellphone-based inspections
+- Financial transaction brokering
+
+...and potentially more as the platform evolves.
 
 ### User Profile
 
-- User profile 1 - renters:
-    - interested to earn a financial return on a purchased asset. 
-    - invested in offering an asset for earning an alternative income source.
-
-- User profile 2 - rentees:
-    - needs short term access to an asset.
-    - wants a low-risk/low-cost method of accessing an asset. 
+- Renters
+    - Aim to earn income from assets they own.
+    - Often entrepreneurs or individuals seeking passive income.
+- Rentees
+    - Need temporary access to assets.
+    - Prefer low-cost, low-commitment solutions.
 
 ### Features
 
-- I want to be able to search ads with keywords.
-- I might want to message an AI assistance if I don't know what I am looking for. 
-- I want to have all the details for a rental offering presented in a clear an consist way. 
+- Search rental ads using keywords.
+- Get AI assistance when unsure what to search for.
+- View rental listings with clear, consistent details.
+- Follow a standardized workflow to post rental assets.
+- Upload images and media when posting an asset.
+- Specify custom terms and conditions for each listing.
+- Access background checks, rental histories, and credit documents for prospective rentees.
+- Conduct pre- and post-rental camera inspections of assets.
+- Share, review, and sign contracts digitally.
+- Chat easily with renters and share documents.
+- Manage rental assets through a summary dashboard with status updates and detailed views.
+- Manage rented assets with similar ease and visibility
 
 ## Implementation
 
 ### Tech Stack
 
-- React
-- JavaScript
-- MySQL
-- Express
-- Client libraries: 
-    - react
-    - react-router
-    - axios
-    - uuid
-    - react-pdf or pdf.js
-- Server libraries:
-    - knex
-    - express
-    - bcrypt for password hashing
+- Frontend:
+    - React
+    - JavaScript
+    - Libraries:
+        - react
+        - react-router
+        - axios
+        - uuid
+        - sass
+        - react-pdf or pdf.js
+- Backend:
+    - Express
+    - MySQL
+    - Libraries:
+        - knex
+        - bcrypt (for password hashing)
 
 ### APIs
 
-- OpenAI API or similar LLM APIs. 
-- MediaDevice API
-- Strip API
+- OpenAI API or equivalent (for AI assistance).
+- MediaDevice API or equivalent (for inspections and media handling).
+- Stripe API or equivalent (optional, for payment processing).
+- ESIGN API or equivalent (optional, for digital signatures).
 
 ### Sitemap
 
-- Landing page
-- Asset details
-- Sign up
-- Log in
-- Manage rented assets
-- Manage assets for rent
-- **Post an asset**
-    - Upload images
-    - Add details (maybe multi step)
-    - Review document 
-    - Camera based inspection 
+- Landing Page
+- Asset Details Page
+- Sign Up
+- Log In
+- Manage Rented Assets
+- Manage Assets for Rent
+- Post an Asset (multi-step):
+    - Upload Images
+    - Add Details
+    - Review Documents
+    - Camera-Based Inspection
 
 ### Mockups
 
@@ -149,3 +172,16 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 ## Future Implementations
 Your project will be marked based on what you committed to in the above document. Here, you can list any additional features you may complete after the MVP of your application is built, or if you have extra time before the Capstone due date.
+
+
+Missing Legal/Compliance Considerations
+
+For a service handling payments, identity verification, contracts, and inspections, mention of GDPR/CCPA compliance and liability frameworks would strengthen the proposal.
+
+Optional but Beneficial
+
+Trust & Safety Features: Fraud detection, insurance integration.
+
+Mobile App Consideration: Given camera inspections and messaging, a mobile-first or mobile app approach should be noted.
+
+Admin Dashboard: For dispute management, moderation, and analytics.
