@@ -1,0 +1,26 @@
+// Media queries.
+
+@mixin mobile-and-tablet {
+    @media screen and (max-width: $tablet-max-width) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media screen and (min-width: $tablet-min-width) and
+        (max-width: $tablet-max-width) {
+        @content;
+    }
+}
+
+@mixin desktop-and-tablet {
+    @media screen and (min-width: $tablet-min-width) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media screen and (min-width: $desktop-min-width) {
+        @content;
+    }
+}
