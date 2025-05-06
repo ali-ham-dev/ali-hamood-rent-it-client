@@ -1,0 +1,52 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/variables' as *;
+
+.home-public {
+    &__heading-1 {
+        @include heading-1;
+    }
+
+    &__heading-2 {
+        @include heading-2;
+    }
+
+    &__heading-3 {
+        @include heading-3;
+    }
+
+    &__body-text {
+        @include body-text;
+    }
+
+    &__footnote {
+        @include footnote;
+    }
+
+    &__button-label {
+        @include button-label;
+    }
+
+    &__heading-1-mobile {
+        @include heading-1-mobile;
+    }
+
+    &__heading-2-mobile {
+        @include heading-2-mobile;
+    }
+
+    &__heading-3-mobile {
+        @include heading-3-mobile;
+    }
+
+    &__body-text-mobile {
+        @include body-text-mobile;
+    }
+
+    &__footnote-mobile {
+        @include footnote-mobile;
+    }
+
+    &__button-label-mobile {
+        @include button-label-mobile;
+    }
+}
