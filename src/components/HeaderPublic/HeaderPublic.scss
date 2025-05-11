@@ -1,0 +1,9 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.header-public {
+    @include no-margin;
+    @include no-padding;
+
+    background-color: $pistachio;
+}

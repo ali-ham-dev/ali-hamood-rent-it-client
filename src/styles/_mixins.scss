@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 // Media queries.
 
 @mixin mobile-and-tablet {
@@ -137,4 +139,19 @@
     letter-spacing: 0.01em;
     text-transform: uppercase;
     color: var(--text-primary);
+  }
+
+  // Style Mixins
+
+  @mixin no-underline {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @mixin no-margin {
+    margin: 0;
+  }
+
+  @mixin no-padding {
+    padding: 0;
   }

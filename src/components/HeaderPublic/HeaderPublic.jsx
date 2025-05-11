@@ -3,9 +3,8 @@ import Logo from '../Logo/Logo';
 
 const HeaderPublic = () => {
     return (
-        <header>
+        <header className='header-public'>
             <Logo />
-            <p>Rent it</p>
         </header>        
     )
 }
