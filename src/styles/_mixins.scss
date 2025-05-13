@@ -77,14 +77,13 @@
     letter-spacing: 0.01em;
     text-transform: uppercase;
 }
-  
-@mixin button-label-uppercase-uppercase {
+
+  @mixin button-label {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 1rem;
     line-height: 1.5;
     letter-spacing: 0.01em;
-    text-transform: uppercase;
   }
   
   // Mobile Font Mixins
@@ -129,13 +128,21 @@
     letter-spacing: 0;
   }
   
-  @mixin button-label-uppercase-uppercase-mobile {
+  @mixin button-label-uppercase-mobile {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 0.9375rem;
     line-height: 1.5;
     letter-spacing: 0.01em;
     text-transform: uppercase;
+  }
+
+  @mixin button-label-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
   }
 
   // Style Mixins
@@ -172,5 +179,29 @@
   @mixin input-box-no-focus {
     &:focus {
         outline: none;
+    }
+  }
+
+  @mixin no-border {
+    border: none;
+  }
+
+  @mixin button-1-style {
+    background-color: $black;
+    color: $white ;
+    border-radius: 1rem;
+    border: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+
+    @include button-1-style-hover; 
+  }
+
+  @mixin button-1-style-hover {
+    &:hover {
+        background-color: $forest-green;
+        color: $white;
     }
   }

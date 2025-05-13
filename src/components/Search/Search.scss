@@ -14,9 +14,16 @@
 
     &__input {
         @include input-box-no-focus;
+        @include button-label-mobile;
+        @include no-border;
+
+        @include desktop-and-tablet {
+            @include button-label;
+        }
     }
 
     &__button {
-
+        @include button-label;
+        @include button-1-style;
     }
 }
