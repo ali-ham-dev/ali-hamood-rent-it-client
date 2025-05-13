@@ -1,11 +1,17 @@
 import './Search.scss';
 
 const Search = () => {
-    return (
-        <div className='search'>
-            <input type='text' placeholder='Search' />
-        </div>
-    )
-}
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('submit');
+    };
 
-export default Search;
+    return (
+        <form className='search' onSubmit={handleSubmit}>
+            <input className='search__input' type='text' placeholder='Search' />
+            <button className='search__button' type="submit">Search</button>
+        </form>
+    )
+ }
+
+ export default Search;

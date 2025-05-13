@@ -9,7 +9,7 @@ const HeaderPublic = () => {
             <Search />
         </header>        
     )
-}
+ }
 
-export default HeaderPublic;
+ export default HeaderPublic;
 

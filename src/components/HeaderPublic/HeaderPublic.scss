@@ -2,12 +2,9 @@
 @use '../../styles/mixins' as *;
 
 .header-public {
+    background-color: $forest-green;
+
     @include flex-row;
     @include no-margin;
     @include no-padding;
-
-
-    background-color: $pistachio;
-
-
 }

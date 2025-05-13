@@ -2,6 +2,21 @@
 @use '../../styles/mixins' as *;
 
 .search {
+    background-color: $white;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
     @include no-margin;
-    @include no-padding;
+    @include flex-row;
+
+    &__input {
+        @include input-box-no-focus;
+    }
+
+    &__button {
+
+    }
 }

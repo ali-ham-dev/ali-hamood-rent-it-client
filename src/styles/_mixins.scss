@@ -35,53 +35,56 @@
     font-size: 2.5rem;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: var(--text-primary);
-  }
+}
   
-  @mixin heading-2 {
+@mixin heading-2 {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 2rem;
     line-height: 1.25;
     letter-spacing: -0.01em;
-    color: var(--text-primary);
-  }
+}
   
-  @mixin heading-3 {
+@mixin heading-3 {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.3;
     letter-spacing: -0.01em;
-    color: var(--text-primary);
-  }
+}
   
-  @mixin body-text {
+@mixin body-text {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.5;
     letter-spacing: 0;
-    color: var(--text-primary);
-  }
+}
   
-  @mixin footnote {
+@mixin footnote {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.4;
     letter-spacing: 0;
-    color: var(--text-secondary);
-  }
+}
   
-  @mixin button-label {
+@mixin button-label-uppercase {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 1rem;
     line-height: 1.5;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    color: var(--text-primary);
+}
+  
+@mixin button-label-uppercase-uppercase {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
   }
   
   // Mobile Font Mixins
@@ -92,7 +95,6 @@
     font-size: 2rem;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: var(--text-primary);
   }
   
   @mixin heading-2-mobile {
@@ -101,7 +103,6 @@
     font-size: 1.75rem;
     line-height: 1.25;
     letter-spacing: -0.01em;
-    color: var(--text-primary);
   }
   
   @mixin heading-3-mobile {
@@ -110,7 +111,6 @@
     font-size: 1.25rem;
     line-height: 1.3;
     letter-spacing: -0.01em;
-    color: var(--text-primary);
   }
   
   @mixin body-text-mobile {
@@ -119,7 +119,6 @@
     font-size: 0.9375rem;
     line-height: 1.5;
     letter-spacing: 0;
-    color: var(--text-primary);
   }
   
   @mixin footnote-mobile {
@@ -128,17 +127,15 @@
     font-size: 0.8125rem;
     line-height: 1.4;
     letter-spacing: 0;
-    color: var(--text-secondary);
   }
   
-  @mixin button-label-mobile {
+  @mixin button-label-uppercase-uppercase-mobile {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 0.9375rem;
     line-height: 1.5;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    color: var(--text-primary);
   }
 
   // Style Mixins
@@ -170,4 +167,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+  }
+
+  @mixin input-box-no-focus {
+    &:focus {
+        outline: none;
+    }
   }
