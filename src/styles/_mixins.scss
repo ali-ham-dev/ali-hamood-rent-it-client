@@ -188,13 +188,15 @@
 
   @mixin button-1-style {
     background-color: $black;
-    color: $white ;
+    color: $white;
     border-radius: 1rem;
     border: none;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
+    box-sizing: border-box;
+    border: 1px solid transparent;
 
     @include button-1-style-hover;
     @include button-label-mobile;
