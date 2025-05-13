@@ -8,10 +8,10 @@
     padding-right: 1rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    width: 30rem;
+    width: 100%;
 
     @include desktop-and-tablet {
-        width: 30rem;
+        width: 50rem;
     }
 
     @include no-margin;

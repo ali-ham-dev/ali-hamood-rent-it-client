@@ -1,5 +1,6 @@
 // Screen brake points. 
 
+$mobile-max-width: 767px;
 $tablet-min-width: 768px;
 $tablet-max-width: 1279px;
 $desktop-min-width: 1280px;
@@ -16,3 +17,8 @@ $error: #B10606;
 $primary-indigo: #2E66E5;
 $secondary-slate: #5C667E;
 $secondary-cloud: #BDC5D5;
+
+// Padding
+
+$left-right-padding-header: 10rem;
+$left-right-padding-header-mobile: 2rem;

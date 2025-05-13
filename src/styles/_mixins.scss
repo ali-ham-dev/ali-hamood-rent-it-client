@@ -2,6 +2,12 @@
 
 // Media queries.
 
+@mixin mobile {
+  @media screen and (max-width: $mobile-max-width) {
+      @content;
+  }
+}
+
 @mixin mobile-and-tablet {
     @media screen and (max-width: $tablet-max-width) {
         @content;

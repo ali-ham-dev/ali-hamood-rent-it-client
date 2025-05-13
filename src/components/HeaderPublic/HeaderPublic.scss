@@ -3,13 +3,45 @@
 
 .header-public {
     background-color: $forest-green;
+    padding-left: $left-right-padding-header-mobile;
+    padding-right: $left-right-padding-header-mobile;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    height: 9rem;
 
-    @include flex-row;
+    @include desktop-and-tablet {
+        padding-left: $left-right-padding-header;
+        padding-right: $left-right-padding-header;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        height: 100%;
+    }
+
+    @include flex-column;
     @include no-margin;
-    @include no-padding;
+    @include desktop-and-tablet {
+        @include flex-row;
+    }
 
     &__buttons {
+        width: 10.5rem;
+
+        @include desktop-and-tablet {
+            width: 11.5rem;
+        }
         @include flex-row;
+    }
+
+    &__buttons-mobile {
+        @include desktop-and-tablet {
+            display: none;
+        }
+    }
+
+    &__buttons-desktop {
+        @include mobile {
+            display: none;
+        }
     }
 
     &__button {
