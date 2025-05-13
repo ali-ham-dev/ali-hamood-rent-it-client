@@ -7,6 +7,10 @@ const HeaderPublic = () => {
         <header className='header-public'>
             <Logo />
             <Search />
+            <div className='header-public__buttons'>
+                <button className='header-public__button'>Login</button>
+                <button className='header-public__button'>Sign Up</button>
+            </div>
         </header>        
     )
  }

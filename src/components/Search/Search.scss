@@ -23,7 +23,6 @@
     }
 
     &__button {
-        @include button-label;
         @include button-1-style;
     }
 }

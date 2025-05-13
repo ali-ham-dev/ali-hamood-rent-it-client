@@ -7,4 +7,15 @@
     @include flex-row;
     @include no-margin;
     @include no-padding;
+
+    &__buttons {
+        @include flex-row;
+    }
+
+    &__button {
+        @include button-1-style;
+        @include desktop-and-tablet {
+            @include button-1-style-hover;
+        }
+    }
 }

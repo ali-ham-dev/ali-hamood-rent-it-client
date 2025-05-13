@@ -196,12 +196,17 @@
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 
-    @include button-1-style-hover; 
+    @include button-1-style-hover;
+    @include button-label-mobile;
+    @include desktop-and-tablet {
+        @include button-label;
+    }
   }
 
   @mixin button-1-style-hover {
     &:hover {
         background-color: $forest-green;
+        border: 1px solid $black;
         color: $white;
     }
   }
