@@ -193,18 +193,22 @@
   }
 
   @mixin button-1-style {
+    box-sizing: border-box;
     background-color: $black;
     color: $white;
     border-radius: 1rem;
-    border: none;
+    border: 1px solid transparent;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    box-sizing: border-box;
-    border: 1px solid transparent;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
 
     @include button-1-style-hover;
+    
     @include button-label-mobile;
     @include desktop-and-tablet {
         @include button-label;

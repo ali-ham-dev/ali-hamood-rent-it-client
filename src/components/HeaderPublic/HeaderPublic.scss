@@ -24,11 +24,6 @@
     }
 
     &__buttons {
-        width: 10.5rem;
-
-        @include desktop-and-tablet {
-            width: 11.5rem;
-        }
         @include flex-row;
     }
 
