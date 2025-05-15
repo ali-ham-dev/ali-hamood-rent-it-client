@@ -6,6 +6,7 @@
     
     &__title {
         color: $white;
+        white-space: nowrap;
         @include heading-1-mobile;
         @include no-margin;
         @include no-padding;
