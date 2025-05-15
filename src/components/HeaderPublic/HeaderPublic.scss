@@ -11,7 +11,15 @@
     @include flex-column;
     @include no-margin;
 
-    @include desktop-and-tablet {
+    @include tablet {
+        padding-left: $left-right-padding-header-tablet;
+        padding-right: $left-right-padding-header-tablet;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        height: 100%;
+    }
+
+    @include desktop {
         padding-left: $left-right-padding-header;
         padding-right: $left-right-padding-header;
         padding-top: 1rem;
