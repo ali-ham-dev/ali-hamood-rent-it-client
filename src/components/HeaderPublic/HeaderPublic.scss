@@ -8,6 +8,8 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     height: 9rem;
+    @include flex-column;
+    @include no-margin;
 
     @include desktop-and-tablet {
         padding-left: $left-right-padding-header;
@@ -17,8 +19,6 @@
         height: 100%;
     }
 
-    @include flex-column;
-    @include no-margin;
     @include desktop-and-tablet {
         @include flex-row;
     }
