@@ -1,0 +1,8 @@
+@use './styles/variables' as *;
+@use './styles/mixins' as *;
+
+body {
+    background-color: $pistachio;
+    @include no-margin;
+    @include no-padding;
+}

@@ -1,4 +1,12 @@
+@use 'variables' as *;
+
 // Media queries.
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-max-width) {
+      @content;
+  }
+}
 
 @mixin mobile-and-tablet {
     @media screen and (max-width: $tablet-max-width) {
@@ -24,3 +32,194 @@
         @content;
     }
 }
+
+// Font Mixins
+
+@mixin heading-1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+  
+@mixin heading-2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+  
+@mixin heading-3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+  
+@mixin body-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+}
+  
+@mixin footnote {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+  
+@mixin button-label-uppercase {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
+  @mixin button-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+  
+  // Mobile Font Mixins
+
+  @mixin heading-1-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  @mixin heading-2-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  
+  @mixin heading-3-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  
+  @mixin body-text-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+  
+  @mixin footnote-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+  
+  @mixin button-label-uppercase-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  @mixin button-label-mobile {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  // Style Mixins
+
+  @mixin no-underline {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @mixin no-margin {
+    margin: 0;
+  }
+
+  @mixin no-padding {
+    padding: 0;
+  }
+
+  // Flexbox Mixins
+
+  @mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @mixin flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @mixin input-box-no-focus {
+    &:focus {
+        outline: none;
+    }
+  }
+
+  @mixin no-border {
+    border: none;
+  }
+
+  @mixin button-1-style {
+    box-sizing: border-box;
+    background-color: $black;
+    color: $white;
+    border-radius: 1rem;
+    border: 1px solid transparent;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+
+    @include button-1-style-hover;
+    
+    @include button-label-mobile;
+    @include desktop-and-tablet {
+        @include button-label;
+    }
+  }
+
+  @mixin button-1-style-hover {
+    &:hover {
+        background-color: $forest-green;
+        border: 1px solid $black;
+        color: $white;
+    }
+  }

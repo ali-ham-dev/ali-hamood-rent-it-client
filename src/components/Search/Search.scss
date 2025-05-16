@@ -1,0 +1,30 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.search {
+    background-color: $white;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    width: 100%;
+
+    @include flex-row;
+
+    &__input {
+        @include input-box-no-focus;
+        @include button-label-mobile;
+        @include no-border;
+
+        @include desktop-and-tablet {
+            @include button-label;
+        }
+    }
+
+    &__button {
+        @include button-1-style;
+    }
+}

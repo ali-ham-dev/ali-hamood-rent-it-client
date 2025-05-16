@@ -1,0 +1,18 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.logo {
+    @include no-underline;
+    
+    &__title {
+        color: $white;
+        white-space: nowrap;
+        @include heading-1-mobile;
+        @include no-margin;
+        @include no-padding;
+
+        @include desktop-and-tablet {
+            @include heading-1;
+        }
+    }
+}
