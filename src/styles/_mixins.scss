@@ -192,11 +192,17 @@
     border: none;
   }
 
-  @mixin button-1-style {
+  @mixin button-1-style(
+      $backgroudColor: $black, 
+      $textColor: $white,
+      $hoverBackgroundColor: $forest-green,
+      $hoverTextColor: $black,
+      $hoverBorderColor: $black) {
+
     box-sizing: border-box;
-    background-color: $black;
-    color: $white;
-    border-radius: 1rem;
+    background-color: $backgroudColor;
+    color: $textColor;
+    border-radius: 0.15rem;
     border: 1px solid transparent;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -208,7 +214,7 @@
     margin-bottom: 0.25rem;
     white-space: nowrap;
 
-    @include button-1-style-hover;
+    @include button-1-style-hover($hoverBackgroundColor, $hoverTextColor, $hoverBorderColor);
     
     @include button-label-mobile;
     @include desktop-and-tablet {
@@ -216,10 +222,13 @@
     }
   }
 
-  @mixin button-1-style-hover {
+  @mixin button-1-style-hover(
+    $hoverBackgroundColor: $forest-green,
+    $hoverTextColor: $black,
+    $hoverBorderColor: $black) {
     &:hover {
-        background-color: $forest-green;
-        border: 1px solid $black;
-        color: $white;
+        background-color: $hoverBackgroundColor;
+        border: 1px solid $hoverBorderColor;
+        color: $hoverTextColor;
     }
   }

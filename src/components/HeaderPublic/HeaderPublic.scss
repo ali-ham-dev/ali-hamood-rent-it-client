@@ -48,9 +48,6 @@
     }
 
     &__button {
-        @include button-1-style;
-        @include desktop-and-tablet {
-            @include button-1-style-hover;
-        }
+        @include button-1-style($black, $white, $forest-green, $white, $black);
     }
 }

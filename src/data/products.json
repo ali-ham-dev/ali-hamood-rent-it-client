@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "images": [
+            "../../assets/images/products/product-1/uav-1.png",
+            "../../assets/images/products/product-1/uav-2.png",
+            "../../assets/images/products/product-1/uav-3.png",
+            "../../assets/images/products/product-1/uav-4.png",
+            "../../assets/images/products/product-1/uav-5.png",
+            "../../assets/images/products/product-1/uav-6.png",
+            "../../assets/images/products/product-1/uav-7.png"
+            
+        ],
+        "title": "NAFYRE N11 PRO GPS Drone with Camera for Adults 4K UHD, 90 Min Long Flight Time, Long Control Range, Auto Return, Follow Me, Brushless Motor, 5G FPV RC Quadcopter for Beginners",
+        "cost": 100,
+        "charge-frequency": "monthly"
+    }
+]
