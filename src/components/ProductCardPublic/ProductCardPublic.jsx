@@ -1,21 +1,48 @@
 import './ProductCardPublic.scss';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const ProductCardPublic = ({}) => {
 
-    // Load product images.
+    // Load product media.
+    // Product title 
+    // Product tags
     // Product description 
     // Product details 
-    // Product features 
-    // Product reviews 
-    // Product rating 
-    // Contract tearms 
-    // Product payment schedule 
+    // Product specifications 
+    // Contract const 
+    // Product charge period
+    // is active
 
-    // Get image
-    // Get Tags
-    // Get payment schedule
-    
+    const productId = 1;
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(()=>{
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`${apiUrl}/products/${productId}`);
+                setProduct(response.data);
+                setLoading(false);
+                console.log(response.data);
+                console.log(`${apiUrl}/products/${productId}`);
+
+            } catch (error) {
+                console.error(`Error fetching product with id: ${productId}`, error);
+            }
+        }
+        fetchProduct();
+    }, [])
+
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        );
+    }
+
     return (
         <div className='product-card-public'>
             <picture className='product-card-public__picture'>
@@ -27,7 +54,7 @@ const ProductCardPublic = ({}) => {
                 <p className="product-card-public__price">Product Price</p>
             </section>
         </div>
-    )
+    );
 }
 
 export default ProductCardPublic;
