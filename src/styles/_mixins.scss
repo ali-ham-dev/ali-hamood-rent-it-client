@@ -151,6 +151,55 @@
     letter-spacing: 0.01em;
   }
 
+  @mixin heading-1-all {
+    @include heading-1-mobile;
+    @include desktop-and-tablet {
+        @include heading-1;
+    }
+}
+  
+@mixin heading-2-all {
+    @include heading-2-mobile;
+    @include desktop-and-tablet {
+        @include heading-2;
+    }
+}
+  
+@mixin heading-3-all {
+    @include heading-3-mobile;
+    @include desktop-and-tablet {
+        @include heading-3;
+    }
+}
+  
+@mixin body-text-all {
+    @include body-text-mobile;
+    @include desktop-and-tablet {
+        @include body-text;
+    }
+}
+  
+@mixin footnote-all {
+    @include footnote-mobile;
+    @include desktop-and-tablet {
+        @include footnote;
+    }
+}
+  
+@mixin button-label-uppercase-all {
+    @include button-label-uppercase-mobile;
+    @include desktop-and-tablet {
+        @include button-label-uppercase;
+    }
+}
+
+  @mixin button-label-all {
+    @include button-label-mobile;
+    @include desktop-and-tablet {
+        @include button-label;
+    }
+  }
+
   // Style Mixins
 
   @mixin no-underline {
@@ -215,11 +264,7 @@
     white-space: nowrap;
 
     @include button-1-style-hover($hoverBackgroundColor, $hoverTextColor, $hoverBorderColor);
-    
-    @include button-label-mobile;
-    @include desktop-and-tablet {
-        @include button-label;
-    }
+    @include button-label-all;
   }
 
   @mixin button-1-style-hover(
@@ -230,5 +275,16 @@
         background-color: $hoverBackgroundColor;
         border: 1px solid $hoverBorderColor;
         color: $hoverTextColor;
+    }
+  }
+
+  @mixin floating {
+    background-color: $white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1.5px 4px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0,0,0,0.12);
+      transform: translateY(-4px) scale(1.02);
     }
   }

@@ -2,23 +2,56 @@
 @use '../../styles/mixins' as *;
 
 .product-card-public {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: red;
     width: 20rem;
     height: 20rem;
+    overflow: hidden;
+    @include flex-column;
+    @include floating;
+    &__gallary {
+        width: 100%;
+        height: 12rem;
+    }
 
-    &__picture {
+    &__button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    &__image {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
     
     &__summary {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        width: 100%;
+        height: auto;
+    }
+
+    &__title {
+        @include heading-3;
+        @include no-margin;
+        @include no-padding;
+    }
+
+    &__description {
+        @include body-text-all;
+        @include no-margin;
+        @include no-padding;
+    }
+    
+    &__price {
+        @include body-text-all;
+        @include no-margin;
+        @include no-padding;
     }
 }
+
 

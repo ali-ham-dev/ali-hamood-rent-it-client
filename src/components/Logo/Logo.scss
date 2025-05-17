@@ -7,12 +7,8 @@
     &__title {
         color: $white;
         white-space: nowrap;
-        @include heading-1-mobile;
         @include no-margin;
         @include no-padding;
-
-        @include desktop-and-tablet {
-            @include heading-1;
-        }
+        @include heading-1-all;
     }
 }
