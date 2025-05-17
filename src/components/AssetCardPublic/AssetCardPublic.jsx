@@ -1,22 +1,22 @@
-import './ProductCardPublic.scss';
+import './AssetCardPublic.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 const apiUrl = import.meta.env.VITE_API_URL;
 import { Link } from 'react-router-dom';
 
-const ProductCardPublic = ({productId}) => {
+const AssetCardPublic = ({assetId}) => {
 
-    // Load product media.
-    // Product title 
-    // Product tags
-    // Product description 
-    // Product details 
-    // Product specifications 
+    // Load asset media.
+    // Asset title 
+    // Asset tags
+    // Asset description 
+    // Asset details 
+    // Asset specifications 
     // Contract const 
-    // Product charge period
+    // Asset charge period
     // is active
 
-    // TODO: get product id from url.
+    // TODO: get asset id from url.
 
     const getMediaType = (url) => {
         if (!url) 
@@ -63,26 +63,26 @@ const ProductCardPublic = ({productId}) => {
         />;
     }
 
-    const [product, setProduct] = useState(null);
+    const [asset, setAsset] = useState(null);
     const [loading, setLoading] = useState(true);
     const [media, setMedia] = useState(null);
     const [mediaIndex, setMediaIndex] = useState(0);
 
     useEffect(()=>{
-        const fetchProduct = async () => {
+        const fetchAsset = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/products/${productId}`);
+                const response = await axios.get(`${apiUrl}/products/${assetId}`);
                 setTimeout(() => {
-                    setProduct(response.data);
+                    setAsset(response.data);
                     setMedia(JSON.parse(response.data.media));
                     setLoading(false);
                     console.log(response.data);
                 }, 2000);
             } catch (error) {
-                console.error(`Error fetching product with id: ${productId}`, error);
+                console.error(`Error fetching asset with id: ${assetId}`, error);
             }
         }
-        fetchProduct();
+        fetchAsset();
     }, []);
 
     const handleLeftButtonClick = () => {
@@ -108,47 +108,47 @@ const ProductCardPublic = ({productId}) => {
     // TODO: 1. buttons and image changines, 2. image sizing, 3. summary contetnt. 4. code clean up.
 
     return (
-        <div className='product-card-public'>
-            <section className="product-card-public__gallary">
+        <div className='asset-card-public'>
+            <section className="asset-card-public__gallary">
                 <button 
-                    className="product-card-public__button product-card-public__button-left" 
+                    className="asset-card-public__button asset-card-public__button-left" 
                     onClick={handleLeftButtonClick}>
                         <img 
                             src={'/media/svg/arrow_left.svg'} 
                             alt="arrow left" 
-                            className="product-card-public__button-icon"/>
+                            className="asset-card-public__button-icon"/>
                 </button>
                 {loading ? (
                     <img
                         src={'/media/images/place_holder.png'}
                         alt="placeholder image"
-                        className="product-card-public__image"
+                        className="asset-card-public__image"
                     />
                 ) : (
-                    renderMedia(media[mediaIndex], 'product-card-public__image')
+                    renderMedia(media[mediaIndex], 'asset-card-public__image')
                 )}
                 <button 
-                    className="product-card-public__button product-card-public__button-right"
+                    className="asset-card-public__button asset-card-public__button-right"
                     onClick={handleRightButtonClick}>
                         <img 
                             src={'/media/svg/arrow_right.svg'} 
                             alt="arrow right" 
-                            className="product-card-public__button-icon"/>
+                            className="asset-card-public__button-icon"/>
                 </button>
             </section>
-            <section className="product-card-public__summary">
-                <h3 className="product-card-public__title">
-                    {loading ? 'loading...' : product.title}
+            <section className="asset-card-public__summary">
+                <h3 className="asset-card-public__title">
+                    {loading ? 'loading...' : asset.title}
                 </h3>
-                <p className="product-card-public__description">
-                    {loading ? 'loading...' : product.description}
+                <p className="asset-card-public__description">
+                    {loading ? 'loading...' : asset.description}
                 </p>
-                <p className="product-card-public__price">
-                    {loading ? 'loading...' : `$${product.cost} per ${product.charge_frequency}`}
+                <p className="asset-card-public__price">
+                    {loading ? 'loading...' : `$${asset.cost} per ${asset.charge_frequency}`}
                 </p>
             </section>
         </div>
     );
 }
 
-export default ProductCardPublic;
+export default AssetCardPublic;

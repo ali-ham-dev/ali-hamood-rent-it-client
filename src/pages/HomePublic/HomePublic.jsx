@@ -1,12 +1,12 @@
 import './HomePublic.scss';
-import ProductCardPublic from '../../components/ProductCardPublic/ProductCardPublic';
+import AssetCardPublic from '../../components/AssetCardPublic/AssetCardPublic';
 import { Link } from 'react-router-dom';
 
 const HomePublic = () => {
     return (
         <main>
             <div className='home-public'>
-                <ProductCardPublic productId={1} />
+                <AssetCardPublic assetId={1} />
             </div>
         </main>
     )
