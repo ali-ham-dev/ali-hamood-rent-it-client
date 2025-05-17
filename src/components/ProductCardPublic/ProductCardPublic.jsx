@@ -83,14 +83,41 @@ const ProductCardPublic = ({}) => {
             }
         }
         fetchProduct();
-    }, [])
+    }, []);
+
+    const handleLeftButtonClick = () => {
+        const nextMediaIndex = mediaIndex - 1;
+        
+        if (nextMediaIndex < 0) {
+            setMediaIndex(media.length - 1);
+        } else {
+            setMediaIndex(nextMediaIndex);
+        }
+    }
+
+    const handleRightButtonClick = () => {
+        const nextMediaIndex = mediaIndex + 1;
+        
+        if (nextMediaIndex >= media.length) {
+            setMediaIndex(0);
+        } else {
+            setMediaIndex(nextMediaIndex);
+        }
+    }
 
     // TODO: 1. buttons and image changines, 2. image sizing, 3. summary contetnt. 4. code clean up.
 
     return (
         <div className='product-card-public'>
             <section className="product-card-public__gallary">
-                <button className="product-card-public__button"></button>
+                <button 
+                    className="product-card-public__button product-card-public__button-left" 
+                    onClick={handleLeftButtonClick}>
+                        <img 
+                            src={'/media/svg/arrow_left.svg'} 
+                            alt="arrow left" 
+                            className="product-card-public__button-icon"/>
+                </button>
                 {loading ? (
                     <img
                         src={'/media/images/place_holder.png'}
@@ -100,7 +127,14 @@ const ProductCardPublic = ({}) => {
                 ) : (
                     renderMedia(media[mediaIndex], 'product-card-public__image')
                 )}
-                <button className="product-card-public__button"></button>
+                <button 
+                    className="product-card-public__button product-card-public__button-right"
+                    onClick={handleRightButtonClick}>
+                        <img 
+                            src={'/media/svg/arrow_right.svg'} 
+                            alt="arrow right" 
+                            className="product-card-public__button-icon"/>
+                </button>
             </section>
             <section className="product-card-public__summary">
                 <h3 className="product-card-public__title">Product Name</h3>
