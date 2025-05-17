@@ -6,7 +6,7 @@ const HomePublic = () => {
     return (
         <main>
             <div className='home-public'>
-                <ProductCardPublic />
+                <ProductCardPublic productId={1} />
             </div>
         </main>
     )

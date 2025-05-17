@@ -294,3 +294,9 @@
       transform: translateY(-4px) scale(1.02);
     }
   }
+
+  @mixin no-text-overflow {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

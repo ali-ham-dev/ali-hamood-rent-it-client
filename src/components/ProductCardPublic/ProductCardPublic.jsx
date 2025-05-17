@@ -1,9 +1,10 @@
 import './ProductCardPublic.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL;
 import { Link } from 'react-router-dom';
 
-const ProductCardPublic = ({}) => {
+const ProductCardPublic = ({productId}) => {
 
     // Load product media.
     // Product title 
@@ -16,8 +17,6 @@ const ProductCardPublic = ({}) => {
     // is active
 
     // TODO: get product id from url.
-    const productId = 1;
-    const apiUrl = import.meta.env.VITE_API_URL;
 
     const getMediaType = (url) => {
         if (!url) 
@@ -77,6 +76,7 @@ const ProductCardPublic = ({}) => {
                     setProduct(response.data);
                     setMedia(JSON.parse(response.data.media));
                     setLoading(false);
+                    console.log(response.data);
                 }, 2000);
             } catch (error) {
                 console.error(`Error fetching product with id: ${productId}`, error);
@@ -137,9 +137,15 @@ const ProductCardPublic = ({}) => {
                 </button>
             </section>
             <section className="product-card-public__summary">
-                <h3 className="product-card-public__title">Product Name</h3>
-                <p className="product-card-public__description">Product Description</p>
-                <p className="product-card-public__price">Product Price</p>
+                <h3 className="product-card-public__title">
+                    {loading ? 'loading...' : product.title}
+                </h3>
+                <p className="product-card-public__description">
+                    {loading ? 'loading...' : product.description}
+                </p>
+                <p className="product-card-public__price">
+                    {loading ? 'loading...' : `$${product.cost} per ${product.charge_frequency}`}
+                </p>
             </section>
         </div>
     );

@@ -62,18 +62,21 @@
         @include heading-3;
         @include no-margin;
         @include no-padding;
+        @include no-text-overflow;
     }
 
     &__description {
         @include body-text-all;
         @include no-margin;
         @include no-padding;
+        @include no-text-overflow;
     }
     
     &__price {
         @include body-text-all;
         @include no-margin;
         @include no-padding;
+        @include no-text-overflow;
     }
 }
 
