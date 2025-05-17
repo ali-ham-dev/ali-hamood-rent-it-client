@@ -85,10 +85,12 @@ const ProductCardPublic = ({}) => {
         fetchProduct();
     }, [])
 
+    // TODO: 1. buttons and image changines, 2. image sizing, 3. summary contetnt. 4. code clean up.
+
     return (
         <div className='product-card-public'>
             <section className="product-card-public__gallary">
-                {/* <button className="product-card-public__button"></button> */}
+                <button className="product-card-public__button"></button>
                 {loading ? (
                     <img
                         src={'/media/images/place_holder.png'}
@@ -98,7 +100,7 @@ const ProductCardPublic = ({}) => {
                 ) : (
                     renderMedia(media[mediaIndex], 'product-card-public__image')
                 )}
-                {/* <button className="product-card-public__button"></button> */}
+                <button className="product-card-public__button"></button>
             </section>
             <section className="product-card-public__summary">
                 <h3 className="product-card-public__title">Product Name</h3>
