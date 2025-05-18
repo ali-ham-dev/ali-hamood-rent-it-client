@@ -105,7 +105,7 @@ const AssetCardPublic = ({assetId}) => {
         }
     }
 
-    // TODO: 1. buttons and image changines, 2. image sizing, 3. summary contetnt. 4. code clean up.
+    // TODO:  3. summary contetnt. 4. code clean up.
 
     return (
         <div className='asset-card-public'>
@@ -137,9 +137,11 @@ const AssetCardPublic = ({assetId}) => {
                 </button>
             </section>
             <section className="asset-card-public__summary">
-                <h3 className="asset-card-public__title">
-                    {loading ? 'loading...' : asset.title}
-                </h3>
+                <Link to={`/products/${assetId}`} className="asset-card-public__title-link">
+                    <h3 className="asset-card-public__title">
+                        {loading ? 'loading...' : asset.title}
+                    </h3>
+                </Link>
                 <p className="asset-card-public__description">
                     {loading ? 'loading...' : asset.description}
                 </p>

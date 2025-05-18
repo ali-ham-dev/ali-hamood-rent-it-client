@@ -58,6 +58,14 @@
     line-height: 1.3;
     letter-spacing: -0.01em;
 }
+
+@mixin heading-4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
   
 @mixin body-text {
     font-family: 'Inter', sans-serif;
@@ -84,78 +92,86 @@
     text-transform: uppercase;
 }
 
-  @mixin button-label {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.5;
-    letter-spacing: 0.01em;
-  }
-  
-  // Mobile Font Mixins
+@mixin button-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
 
-  @mixin heading-1-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 2rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
-  
-  @mixin heading-2-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 1.75rem;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-  }
-  
-  @mixin heading-3-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-  }
-  
-  @mixin body-text-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    letter-spacing: 0;
-  }
-  
-  @mixin footnote-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 0.8125rem;
-    line-height: 1.4;
-    letter-spacing: 0;
-  }
-  
-  @mixin button-label-uppercase-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-  }
+// Mobile Font Mixins
 
-  @mixin button-label-mobile {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    letter-spacing: 0.01em;
-  }
+@mixin heading-1-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
 
-  @mixin heading-1-all {
-    @include heading-1-mobile;
-    @include desktop-and-tablet {
-        @include heading-1;
-    }
+@mixin heading-2-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+@mixin heading-3-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+@mixin heading-4-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+@mixin body-text-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+@mixin footnote-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+@mixin button-label-uppercase-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+@mixin button-label-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+@mixin heading-1-all {
+  @include heading-1-mobile;
+  @include desktop-and-tablet {
+      @include heading-1;
+  }
 }
   
 @mixin heading-2-all {
@@ -170,6 +186,13 @@
     @include desktop-and-tablet {
         @include heading-3;
     }
+}
+
+@mixin heading-4-all {
+  @include heading-4-mobile;
+  @include desktop-and-tablet {
+      @include heading-4;
+  }
 }
   
 @mixin body-text-all {
@@ -193,110 +216,113 @@
     }
 }
 
-  @mixin button-label-all {
-    @include button-label-mobile;
-    @include desktop-and-tablet {
-        @include button-label;
-    }
+@mixin button-label-all {
+  @include button-label-mobile;
+  @include desktop-and-tablet {
+      @include button-label;
   }
+}
 
-  // Style Mixins
+// Style Mixins
 
-  @mixin no-underline {
-    text-decoration: none;
-    color: inherit;
+@mixin no-underline {
+  text-decoration: none;
+  color: inherit;
+}
+
+@mixin no-margin {
+  margin: 0;
+}
+
+@mixin no-padding {
+  padding: 0;
+}
+
+@mixin input-box-no-focus {
+  &:focus {
+      outline: none;
   }
+}
 
-  @mixin no-margin {
-    margin: 0;
-  }
+@mixin no-border {
+  border: none;
+}
 
-  @mixin no-padding {
-    padding: 0;
-  }
-
-  // Flexbox Mixins
-
-  @mixin flex-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  @mixin flex-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  @mixin flex-row-center {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @mixin input-box-no-focus {
-    &:focus {
-        outline: none;
-    }
-  }
-
-  @mixin no-border {
-    border: none;
-  }
-
-  @mixin button-1-style(
-      $backgroudColor: $black, 
-      $textColor: $white,
-      $hoverBackgroundColor: $forest-green,
-      $hoverTextColor: $black,
-      $hoverBorderColor: $black) {
-
-    box-sizing: border-box;
-    background-color: $backgroudColor;
-    color: $textColor;
-    border-radius: 0.15rem;
-    border: 1px solid transparent;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    white-space: nowrap;
-
-    @include button-1-style-hover($hoverBackgroundColor, $hoverTextColor, $hoverBorderColor);
-    @include button-label-all;
-  }
-
-  @mixin button-1-style-hover(
+@mixin button-1-style(
+    $backgroudColor: $black, 
+    $textColor: $white,
     $hoverBackgroundColor: $forest-green,
     $hoverTextColor: $black,
     $hoverBorderColor: $black) {
-    &:hover {
-        background-color: $hoverBackgroundColor;
-        border: 1px solid $hoverBorderColor;
-        color: $hoverTextColor;
-    }
-  }
 
-  @mixin floating {
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0,0,0,0.08);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-sizing: border-box;
+  background-color: $backgroudColor;
+  color: $textColor;
+  border-radius: 0.15rem;
+  border: 1px solid transparent;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
 
-    &:hover {
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0,0,0,0.12);
-      transform: translateY(-4px) scale(1.02);
-    }
-  }
+  @include button-1-style-hover($hoverBackgroundColor, $hoverTextColor, $hoverBorderColor);
+  @include button-label-all;
+}
 
-  @mixin no-text-overflow {
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
+@mixin button-1-style-hover(
+  $hoverBackgroundColor: $forest-green,
+  $hoverTextColor: $black,
+  $hoverBorderColor: $black) {
+  &:hover {
+      background-color: $hoverBackgroundColor;
+      border: 1px solid $hoverBorderColor;
+      color: $hoverTextColor;
   }
+}
+
+@mixin floating {
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0,0,0,0.12);
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+@mixin no-text-overflow {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Flexbox Mixins
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+
+

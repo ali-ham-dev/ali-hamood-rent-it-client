@@ -58,8 +58,12 @@
         padding: 0.25rem;
     }
 
+    &__title-link {
+        text-decoration: none;
+    }
+
     &__title {
-        @include heading-3;
+        @include heading-4-all;
         @include no-margin;
         @include no-padding;
         @include no-text-overflow;
