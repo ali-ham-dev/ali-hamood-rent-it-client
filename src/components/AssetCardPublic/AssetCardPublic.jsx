@@ -6,29 +6,22 @@ import { Link } from 'react-router-dom';
 
 const AssetCardPublic = ({assetId}) => {
 
-    // Load asset media.
-    // Asset title 
-    // Asset tags
-    // Asset description 
-    // Asset details 
-    // Asset specifications 
-    // Contract const 
-    // Asset charge period
-    // is active
+    const [asset, setAsset] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [media, setMedia] = useState(null);
+    const [mediaIndex, setMediaIndex] = useState(0);
+    const [imageExtensions, setImageExtensions] = useState(null);
+    const [videoExtensions, setVideoExtensions] = useState(null);
 
     const getMediaType = (url) => {
         if (!url) 
             return null;
 
-        // TODO: backend should return the media type.
-        const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
-        const videoTypes = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'];
-
         const fileExtension = url.split('.').pop().toLowerCase();
 
-        if (imageTypes.includes(fileExtension)) 
+        if (imageExtensions.includes(fileExtension)) 
             return 'image';
-        if (videoTypes.includes(fileExtension)) 
+        if (videoExtensions.includes(fileExtension)) 
             return 'video';
 
         return null;
@@ -60,20 +53,39 @@ const AssetCardPublic = ({assetId}) => {
         />;
     }
 
+    const fetchAssetDetails = async () => {
+        const response = await axios.get(`${apiUrl}/assets/${assetId}`);
+
+        if (response.status === 200) {
+            setAsset(response.data);
+            setMedia(JSON.parse(response.data.media));
+            setLoading(false);
+        }
+    }
+
+    const fetchFileExtensions = async () => {
+        const imageResponse = await axios.get(`${apiUrl}/file-extensions/image-file-extensions`);
+
+        if (imageResponse.status === 200) {
+            const ext = imageResponse.data.map(item => item.extension);
+            setImageExtensions(ext);
+        }
+
+        const videoResponse = await axios.get(`${apiUrl}/file-extensions/video-file-extensions`);
+
+        if (videoResponse.status === 200) {
+            const ext = videoResponse.data.map(item => item.extension);     
+            setVideoExtensions(ext);
+        }
+    }
 
 
-    const [asset, setAsset] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [media, setMedia] = useState(null);
-    const [mediaIndex, setMediaIndex] = useState(0);
 
     useEffect(()=>{
         const fetchAsset = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/assets/${assetId}`);
-                setAsset(response.data);
-                setMedia(JSON.parse(response.data.media));
-                setLoading(false);
+                await fetchFileExtensions();
+                await fetchAssetDetails();
             } catch (error) {
                 console.error(`Error fetching asset with id: ${assetId}`, error);
             }
@@ -100,12 +112,6 @@ const AssetCardPublic = ({assetId}) => {
             setMediaIndex(nextMediaIndex);
         }
     }
-
-    // TODO:  3. summary contetnt. 4. code clean up.
-
-    // TODO: update file extensions
-    // TODO: add product summar look at others.
-    // TODO: AWS images and other assets. 
 
     return (
         <div className='asset-card-public'>
