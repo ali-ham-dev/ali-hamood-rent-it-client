@@ -6,18 +6,18 @@ import { Link } from 'react-router-dom';
 
 const AssetCardPublic = ({assetId}) => {
 
-    const [asset, setAsset] = useState(null);
+    const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
-    const [media, setMedia] = useState(null);
+    const [media, setMedia] = useState({});
     const [mediaIndex, setMediaIndex] = useState(0);
-    const [imageExtensions, setImageExtensions] = useState(null);
-    const [videoExtensions, setVideoExtensions] = useState(null);
+    const [imageExtensions, setImageExtensions] = useState([]);
+    const [videoExtensions, setVideoExtensions] = useState([]);
 
     // Helper functions
 
     const getMediaType = (url) => {
         if (!url) 
-            return null;
+            return '';
 
         const fileExtension = url.split('.').pop().toLowerCase();
 
@@ -26,7 +26,7 @@ const AssetCardPublic = ({assetId}) => {
         if (videoExtensions.includes(fileExtension)) 
             return 'video';
 
-        return null;
+        return '';
     }
 
     const noImageFound = (className = '') => {
@@ -40,7 +40,7 @@ const AssetCardPublic = ({assetId}) => {
     const renderMedia = (url, className = '') => {
         const mediaType = getMediaType(url);
 
-        if (loading || mediaType === null)
+        if (loading || mediaType === '')
             return noImageFound(className);
 
         if (mediaType === 'image') {
@@ -69,7 +69,6 @@ const AssetCardPublic = ({assetId}) => {
 
         if (response.status === 200) {
             setAsset(response.data);
-            console.log(response.data);
             setMedia([
                 ...(response.data.media.images || []), 
                 ...(response.data.media.videos || [])
@@ -140,7 +139,7 @@ const AssetCardPublic = ({assetId}) => {
                             alt="arrow left" 
                             className="asset-card-public__button-icon"/>
                 </button>
-                {renderMedia(media[mediaIndex], 'asset-card-public__image')}
+                {renderMedia(loading ? '' : media[mediaIndex], 'asset-card-public__image')}
                 <button 
                     className="asset-card-public__button asset-card-public__button-right"
                     onClick={handleRightButtonClick}>
