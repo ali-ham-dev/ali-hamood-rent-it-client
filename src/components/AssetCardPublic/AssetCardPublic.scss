@@ -63,24 +63,24 @@
     }
 
     &__title {
-        @include heading-4-all;
         @include no-margin;
         @include no-padding;
         @include no-text-overflow;
+        @include heading-4-all;
     }
 
     &__description {
-        @include body-text-all;
         @include no-margin;
         @include no-padding;
         @include no-text-overflow;
+        @include body-text-all;
     }
     
     &__price {
-        @include body-text-all;
         @include no-margin;
         @include no-padding;
         @include no-text-overflow;
+        @include body-text-all;
     }
 }
 

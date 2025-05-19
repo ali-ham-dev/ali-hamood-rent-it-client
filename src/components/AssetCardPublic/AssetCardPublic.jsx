@@ -16,8 +16,6 @@ const AssetCardPublic = ({assetId}) => {
     // Asset charge period
     // is active
 
-    // TODO: get asset id from url.
-
     const getMediaType = (url) => {
         if (!url) 
             return null;
@@ -36,7 +34,6 @@ const AssetCardPublic = ({assetId}) => {
         return null;
     }
 
-    // 
     const renderMedia = (url, className = '') => {
         const mediaType = getMediaType(url);
 
@@ -63,6 +60,8 @@ const AssetCardPublic = ({assetId}) => {
         />;
     }
 
+
+
     const [asset, setAsset] = useState(null);
     const [loading, setLoading] = useState(true);
     const [media, setMedia] = useState(null);
@@ -71,13 +70,10 @@ const AssetCardPublic = ({assetId}) => {
     useEffect(()=>{
         const fetchAsset = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/products/${assetId}`);
-                setTimeout(() => {
-                    setAsset(response.data);
-                    setMedia(JSON.parse(response.data.media));
-                    setLoading(false);
-                    console.log(response.data);
-                }, 2000);
+                const response = await axios.get(`${apiUrl}/assets/${assetId}`);
+                setAsset(response.data);
+                setMedia(JSON.parse(response.data.media));
+                setLoading(false);
             } catch (error) {
                 console.error(`Error fetching asset with id: ${assetId}`, error);
             }
@@ -106,6 +102,10 @@ const AssetCardPublic = ({assetId}) => {
     }
 
     // TODO:  3. summary contetnt. 4. code clean up.
+
+    // TODO: update file extensions
+    // TODO: add product summar look at others.
+    // TODO: AWS images and other assets. 
 
     return (
         <div className='asset-card-public'>
