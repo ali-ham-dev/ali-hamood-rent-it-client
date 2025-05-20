@@ -301,6 +301,21 @@
   text-overflow: ellipsis;
 }
 
+@mixin left-right-page-padding {
+  padding-left: $left-right-padding-header-mobile;
+  padding-right: $left-right-padding-header-mobile;
+
+  @include tablet {
+    padding-left: $left-right-padding-header-tablet;
+    padding-right: $left-right-padding-header-tablet;
+  }
+
+  @include desktop {
+    padding-left: $left-right-padding-header;
+    padding-right: $left-right-padding-header;
+  }
+}
+
 // Flexbox Mixins
 
 @mixin flex-row {

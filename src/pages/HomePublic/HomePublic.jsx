@@ -7,6 +7,11 @@ import { Link } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+// Future features:
+// - Add categories to the home page.
+// - Add pagination to the home page.
+// - Add dynamic filters.
+
 const HomePublic = () => {
 
     const [assetIds, setAssetIds] = useState([]);
@@ -61,6 +66,8 @@ const HomePublic = () => {
 
         setAssetIds(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
     }
+
+    // loading, or error? 
 
     useEffect(()=>{
         const fetchAsset = async () => {
