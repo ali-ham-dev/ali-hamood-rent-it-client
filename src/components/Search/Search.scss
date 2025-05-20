@@ -3,7 +3,7 @@
 
 .search {
     background-color: $white;
-    border-radius: 1rem;
+    border-radius: 0.25rem;
     padding-left: 1rem;
     padding-right: 1rem;
     margin-left: 2rem;
@@ -16,15 +16,11 @@
 
     &__input {
         @include input-box-no-focus;
-        @include button-label-mobile;
         @include no-border;
-
-        @include desktop-and-tablet {
-            @include button-label;
-        }
+        @include button-label-all;
     }
 
     &__button {
-        @include button-1-style;
+        @include button-1-style($black, $white, $white, $black, $black);
     }
 }

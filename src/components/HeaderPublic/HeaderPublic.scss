@@ -3,25 +3,20 @@
 
 .header-public {
     background-color: $forest-green;
-    padding-left: $left-right-padding-header-mobile;
-    padding-right: $left-right-padding-header-mobile;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     height: 9rem;
     @include flex-column;
     @include no-margin;
+    @include left-right-page-padding;
 
     @include tablet {
-        padding-left: $left-right-padding-header-tablet;
-        padding-right: $left-right-padding-header-tablet;
         padding-top: 1rem;
         padding-bottom: 1rem;
         height: 100%;
     }
 
     @include desktop {
-        padding-left: $left-right-padding-header;
-        padding-right: $left-right-padding-header;
         padding-top: 1rem;
         padding-bottom: 1rem;
         height: 100%;
@@ -48,9 +43,6 @@
     }
 
     &__button {
-        @include button-1-style;
-        @include desktop-and-tablet {
-            @include button-1-style-hover;
-        }
+        @include button-1-style($black, $white, $forest-green, $white, $black);
     }
 }
