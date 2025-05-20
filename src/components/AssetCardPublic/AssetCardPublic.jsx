@@ -66,11 +66,10 @@ const AssetCardPublic = ({ assetId }) => {
     // Loading data
 
     const fetchAssetDetails = async () => {
-        if (!assetId ||
-            Number.isInteger(assetId) ||
-            Number(assetId) < 0) {
-                throw new Error('Invalid asset id');
-            }
+
+        if (!assetId) {
+            throw new Error('Invalid asset id');
+        }
 
         const response = await axios.get(`${apiUrl}/assets/${assetId}`);
         if (response.status === 200) {
