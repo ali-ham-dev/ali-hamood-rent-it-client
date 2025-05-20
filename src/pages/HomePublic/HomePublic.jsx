@@ -9,7 +9,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const HomePublic = () => {
 
-    const [assetIds, setAssetIds] = useState(['1']);
+    const [assetIds, setAssetIds] = useState(['']);
     const [loading, setLoading] = useState(true);
 
     // Rendering functions.
