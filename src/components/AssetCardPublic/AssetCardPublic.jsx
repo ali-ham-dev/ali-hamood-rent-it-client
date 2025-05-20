@@ -1,10 +1,11 @@
 import './AssetCardPublic.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-const apiUrl = import.meta.env.VITE_API_URL;
 import { Link } from 'react-router-dom';
 
-const AssetCardPublic = ({assetId}) => {
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const AssetCardPublic = ({ assetId }) => {
 
     const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const AssetCardPublic = ({assetId}) => {
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
 
-    // Helper functions
+    // Render functions
 
     const getMediaType = (url) => {
         if (!url) 
@@ -62,11 +63,13 @@ const AssetCardPublic = ({assetId}) => {
         return noImageFound(className);
     }
 
-    // Loading component data.
+    // Loading data
 
     const fetchAssetDetails = async () => {
-        const response = await axios.get(`${apiUrl}/assets/${assetId}`);
+        if (!assetId || typeof assetId !== 'string')
+            return;
 
+        const response = await axios.get(`${apiUrl}/assets/${assetId}`);
         if (response.status === 200) {
             setAsset(response.data);
             setMedia([
