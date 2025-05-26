@@ -3,7 +3,6 @@
 
 .home-public {
     padding: 2rem 0;
-    @include flex-column;
     @include left-right-page-padding;
     
     display: grid;
