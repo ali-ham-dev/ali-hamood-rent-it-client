@@ -155,7 +155,7 @@ const AssetCardPublic = ({ assetId }) => {
                 </button>
             </section>
             <section className="asset-card-public__summary">
-                <Link to={`/products/${assetId}`} className="asset-card-public__title-link">
+                <Link to={`/asset/${assetId}`} className="asset-card-public__title-link">
                     <h3 className="asset-card-public__title">
                         {loading ? 'loading...' : asset.asset.title}
                     </h3>
