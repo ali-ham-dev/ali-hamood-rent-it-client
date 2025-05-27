@@ -2,6 +2,8 @@ import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HeaderPublic from './components/HeaderPublic/HeaderPublic';
 import HomePublic from './pages/HomePublic/HomePublic';
+import AssetPagePublic from './pages/AssetPagePublic/AssetPagePublic';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
@@ -10,7 +12,9 @@ function App() {
       <HeaderPublic /> 
       <Routes>
         <Route path='/' element={<HomePublic />} />
+        <Route path='/asset/:assetId' element={<AssetPagePublic />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
