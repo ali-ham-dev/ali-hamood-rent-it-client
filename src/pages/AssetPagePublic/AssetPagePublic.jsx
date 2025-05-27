@@ -45,23 +45,23 @@ const AssetPagePublic = () => {
 
         if (mediaType === 'image') {
             return (
-                <div className="asset-page-public__image-container">
-                    <img 
-                        src={url} 
-                        alt={asset.asset?.title || ''} 
-                        className={className}
-                        onClick={() => setIsZoomed(true)}
-                    />
-                </div>
+                <img 
+                    src={url} 
+                    alt={asset.asset?.title || ''} 
+                    className={className}
+                    onClick={() => setIsZoomed(true)}
+                />
             );
         }
 
         if (mediaType === 'video') {
-            return <video 
-                src={url} 
-                controls
-                className={className}
-            />;
+            return ( 
+                <video 
+                    src={url} 
+                    controls
+                    className={className}
+                />
+            );
         }
 
         return noImageFound(className);
@@ -135,48 +135,27 @@ const AssetPagePublic = () => {
 
     return (
         <main className='asset-page-public'>
-            <section className='asset-page-public__gallery'>
-                <button 
-                    className="asset-page-public__button asset-page-public__button-left" 
-                    onClick={handleLeftButtonClick}>
-                        <img 
-                            src={'/media/svg/arrow_left.svg'} 
-                            alt="arrow left" 
-                            className="asset-page-public__button-icon"/>
-                </button>
-                {renderMedia(loading ? '' : media[mediaIndex], 'asset-page-public__image')}
-                <button 
-                    className="asset-page-public__button asset-page-public__button-right"
-                    onClick={handleRightButtonClick}>
-                        <img 
-                            src={'/media/svg/arrow_right.svg'} 
-                            alt="arrow right" 
-                            className="asset-page-public__button-icon"/>
-                </button>
-            </section>
-
-            {/* Zoom Modal */}
-            {isZoomed && (
-                <div 
-                    className="asset-page-public__zoom-modal"
-                    onClick={() => setIsZoomed(false)}
-                >
-                    <div className="asset-page-public__zoom-content">
-                        <button 
-                            className="asset-page-public__zoom-close"
-                            onClick={() => setIsZoomed(false)}
-                        >
-                            ×
-                        </button>
-                        <img 
-                            src={media[mediaIndex]} 
-                            alt={asset.asset?.title || ''} 
-                            className="asset-page-public__zoomed-image"
-                        />
-                    </div>
+            <section className='asset-page-public__gallery-container'>
+                <div className='asset-page-public__gallery'>
+                    <button 
+                        className="asset-page-public__button asset-page-public__button-left" 
+                        onClick={handleLeftButtonClick}>
+                            <img 
+                                src={'/media/svg/arrow_left.svg'} 
+                                alt="arrow left" 
+                                className="asset-page-public__button-icon"/>
+                    </button>
+                    {renderMedia(loading ? '' : media[mediaIndex], 'asset-page-public__image')}
+                    <button 
+                        className="asset-page-public__button asset-page-public__button-right"
+                        onClick={handleRightButtonClick}>
+                            <img 
+                                src={'/media/svg/arrow_right.svg'} 
+                                alt="arrow right" 
+                                className="asset-page-public__button-icon"/>
+                    </button>
                 </div>
-            )}
-            
+            </section>
             <p className='asset-page-public__text'>Asset Page</p>
         </main>
     )
