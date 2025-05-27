@@ -11,6 +11,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 // - Add categories to the home page.
 // - Add pagination to the home page.
 // - Add dynamic filters.
+// - AI and search. 
 
 const HomePublic = () => {
 

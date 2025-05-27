@@ -2,6 +2,7 @@ import './AssetPagePublic.scss';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Gallery from '../../components/Gallery/Gallery';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -10,62 +11,6 @@ const AssetPagePublic = () => {
     const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
     const [media, setMedia] = useState({});
-    const [mediaIndex, setMediaIndex] = useState(0);
-    const [imageExtensions, setImageExtensions] = useState([]);
-    const [videoExtensions, setVideoExtensions] = useState([]);
-    const [isZoomed, setIsZoomed] = useState(false);
-
-    const getMediaType = (url) => {
-        if (!url) 
-            return '';
-
-        const fileExtension = url.split('.').pop().toLowerCase();
-
-        if (imageExtensions.includes(fileExtension)) 
-            return 'image';
-        if (videoExtensions.includes(fileExtension)) 
-            return 'video';
-
-        return '';
-    }
-
-    const noImageFound = (className = '') => {
-        return <img 
-            src={'/media/images/place_holder.png'} 
-            alt={'placeholder image'} 
-            className={className}
-        />;
-    }
-
-    const renderMedia = (url, className = '') => {
-        const mediaType = getMediaType(url);
-
-        if (loading || mediaType === '')
-            return noImageFound(className);
-
-        if (mediaType === 'image') {
-            return (
-                <img 
-                    src={url} 
-                    alt={asset.asset?.title || ''} 
-                    className={className}
-                    onClick={() => setIsZoomed(true)}
-                />
-            );
-        }
-
-        if (mediaType === 'video') {
-            return ( 
-                <video 
-                    src={url} 
-                    controls
-                    className={className}
-                />
-            );
-        }
-
-        return noImageFound(className);
-    }
 
     const fetchAssetDetails = async () => {
 
@@ -83,27 +28,10 @@ const AssetPagePublic = () => {
         }
     }
 
-    const fetchFileExtensions = async () => {
-        const imageResponse = await axios.get(`${apiUrl}/file-extensions/image-file-extensions`);
-
-        if (imageResponse.status === 200) {
-            const ext = imageResponse.data.map(item => item.extension);
-            setImageExtensions(ext);
-        }
-
-        const videoResponse = await axios.get(`${apiUrl}/file-extensions/video-file-extensions`);
-
-        if (videoResponse.status === 200) {
-            const ext = videoResponse.data.map(item => item.extension);     
-            setVideoExtensions(ext);
-        }
-    }
-
     useEffect( () => {
         const fetchAsset = async () => {
             try {
                 await fetchAssetDetails();
-                await fetchFileExtensions();
                 setLoading(false);
             } catch (error) {
                 console.error(`Error fetching asset with id: ${assetId}`, error);
@@ -113,49 +41,9 @@ const AssetPagePublic = () => {
         fetchAsset();
     }, [])
 
-    const handleLeftButtonClick = () => {
-        const nextMediaIndex = mediaIndex - 1;
-        
-        if (nextMediaIndex < 0) {
-            setMediaIndex(media.length - 1);
-        } else {
-            setMediaIndex(nextMediaIndex);
-        }
-    }
-
-    const handleRightButtonClick = () => {
-        const nextMediaIndex = mediaIndex + 1;
-        
-        if (nextMediaIndex >= media.length) {
-            setMediaIndex(0);
-        } else {
-            setMediaIndex(nextMediaIndex);
-        }
-    }
-
     return (
         <main className='asset-page-public'>
-            <section className='asset-page-public__gallery-container'>
-                <div className='asset-page-public__gallery'>
-                    <button 
-                        className="asset-page-public__button asset-page-public__button-left" 
-                        onClick={handleLeftButtonClick}>
-                            <img 
-                                src={'/media/svg/arrow_left.svg'} 
-                                alt="arrow left" 
-                                className="asset-page-public__button-icon"/>
-                    </button>
-                    {renderMedia(loading ? '' : media[mediaIndex], 'asset-page-public__image')}
-                    <button 
-                        className="asset-page-public__button asset-page-public__button-right"
-                        onClick={handleRightButtonClick}>
-                            <img 
-                                src={'/media/svg/arrow_right.svg'} 
-                                alt="arrow right" 
-                                className="asset-page-public__button-icon"/>
-                    </button>
-                </div>
-            </section>
+            <Gallery media={media} />
             <p className='asset-page-public__text'>Asset Page</p>
         </main>
     )
