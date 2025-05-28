@@ -112,25 +112,25 @@ const Gallery = ({ media }) => {
 
     return (
         <section className='gallery__gallery-container'>
+            <button 
+                className="gallery__button gallery__button-left" 
+                onClick={handleLeftButtonClick}>
+                    <img 
+                        src={'/media/svg/arrow_left.svg'} 
+                        alt="arrow left" 
+                        className="gallery__button-icon"/>
+            </button>
             <div className='gallery__gallery'>
-                <button 
-                    className="gallery__button gallery__button-left" 
-                    onClick={handleLeftButtonClick}>
-                        <img 
-                            src={'/media/svg/arrow_left.svg'} 
-                            alt="arrow left" 
-                            className="gallery__button-icon"/>
-                </button>
                 {renderMedia(media[mediaIndex], 'gallery__image')}
-                <button 
-                    className="gallery__button gallery__button-right"
-                    onClick={handleRightButtonClick}>
-                        <img 
-                            src={'/media/svg/arrow_right.svg'} 
-                            alt="arrow right" 
-                            className="gallery__button-icon"/>
-                </button>
             </div>
+            <button 
+                className="gallery__button gallery__button-right"
+                onClick={handleRightButtonClick}>
+                    <img 
+                        src={'/media/svg/arrow_right.svg'} 
+                        alt="arrow right" 
+                        className="gallery__button-icon"/>
+            </button>
         </section>
     )
 }
