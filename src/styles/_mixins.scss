@@ -320,6 +320,10 @@
   border: 1px solid $secondary-dark;
 }
 
+@mixin corner-radius-1 {
+  border-radius: 0.25rem;
+}
+
 // Flexbox Mixins
 
 @mixin flex-row {

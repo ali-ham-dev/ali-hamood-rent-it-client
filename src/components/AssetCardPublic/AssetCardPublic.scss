@@ -6,7 +6,7 @@
     height: 20rem;
     overflow: hidden;
     background-color: $white;
-    border-radius: 0.25rem;
+    @include corner-radius-1;
     @include flex-column;
     @include floating;
 
