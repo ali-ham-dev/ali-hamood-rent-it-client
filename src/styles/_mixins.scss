@@ -286,13 +286,21 @@
 }
 
 @mixin floating {
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0,0,0,0.08);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
+  @include shadow-1;
 
   &:hover {
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0,0,0,0.12);
     transform: translateY(-4px) scale(1.02);
+    @include shadow-2;
   }
+}
+
+@mixin shadow-1 {
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0,0,0,0.08);
+}
+
+@mixin shadow-2 {
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0,0,0,0.12);
 }
 
 @mixin no-text-overflow {
@@ -318,6 +326,10 @@
 
 @mixin border-1 {
   border: 1px solid $secondary-dark;
+}
+
+@mixin border-bottom-1 {
+  border-bottom: 1px solid $secondary-dark;
 }
 
 @mixin corner-radius-1 {
