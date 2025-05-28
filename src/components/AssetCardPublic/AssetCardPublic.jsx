@@ -135,7 +135,7 @@ const AssetCardPublic = ({ assetId }) => {
 
     return (
         <div className='asset-card-public'>
-            <section className="asset-card-public__gallary">
+            <section className="asset-card-public__gallery">
                 <button 
                     className="asset-card-public__button asset-card-public__button-left" 
                     onClick={handleLeftButtonClick}>
