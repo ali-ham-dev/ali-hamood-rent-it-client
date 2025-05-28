@@ -111,7 +111,7 @@ const Gallery = ({ media }) => {
     }
 
     return (
-        <section className='gallery__gallery-container'>
+        <section className='gallery'>
             <button 
                 className="gallery__button gallery__button-left" 
                 onClick={handleLeftButtonClick}>
@@ -120,7 +120,7 @@ const Gallery = ({ media }) => {
                         alt="arrow left" 
                         className="gallery__button-icon"/>
             </button>
-            <div className='gallery__gallery'>
+            <div className='gallery__container'>
                 {renderMedia(media[mediaIndex], 'gallery__image')}
             </div>
             <button 

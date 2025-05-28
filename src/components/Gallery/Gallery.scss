@@ -2,17 +2,15 @@
 @use '../../styles/mixins' as *;
 
 .gallery {
-    &__gallery-container {
-        position: relative;
-        background-color: $primary-light;
-        width: 100%;
-        height: 70vh;
-        padding: 0.25rem;
-        box-sizing: border-box;
-        @include flex-row-center;
-    }
+    position: relative;
+    background-color: $primary-light;
+    width: 100%;
+    height: 70vh;
+    padding: 0.25rem;
+    box-sizing: border-box;
+    @include flex-row-center;
 
-    &__gallery {
+    &__container {
         height: 100%;
         width: auto;
         overflow: hidden;
