@@ -16,6 +16,7 @@
     @include flex-row;
 
     &__input {
+        width: 100%;
         @include input-box-no-focus;
         @include no-border;
         @include button-label-all;
