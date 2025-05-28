@@ -2,7 +2,7 @@
 @use './styles/mixins' as *;
 
 body {
-    background-color: $pistachio;
+    background-color: $primary-light;
     @include no-margin;
     @include no-padding;
 }

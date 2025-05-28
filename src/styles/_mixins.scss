@@ -316,6 +316,10 @@
   }
 }
 
+@mixin border-1 {
+  border: 1px solid $secondary-dark;
+}
+
 // Flexbox Mixins
 
 @mixin flex-row {
