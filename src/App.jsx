@@ -1,4 +1,5 @@
 import './App.scss';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HeaderPublic from './components/HeaderPublic/HeaderPublic';
 import HomePublic from './pages/HomePublic/HomePublic';

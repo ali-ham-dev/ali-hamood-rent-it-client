@@ -295,6 +295,10 @@
   }
 }
 
+@mixin footer-animation {
+  transition: height 0.5s ease;
+}
+
 @mixin shadow-1 {
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0,0,0,0.08);
 }
