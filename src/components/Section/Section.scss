@@ -7,7 +7,7 @@
     background-color: $white;
     padding: 0.25rem;
     margin: 1rem 0;
-    @include shadow-1;
+    // @include shadow-1;
     @include corner-radius-1;
 
     &__title {

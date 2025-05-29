@@ -45,9 +45,11 @@ const AssetPage = () => {
         <main className='asset-page'>
             <Gallery media={media} />
             <div className='asset-page__container'>
-                <Section title={asset.title} headingLevel='h2' content={asset.description} />
-                {/* todo: wrap description in p tag. */}
-                <Section title='Asset Details' headingLevel='h3' content={
+                <Section title={asset.title} headingLevel='h2' content={''} />
+                <Section title='Asset Description' headingLevel='h3' content={asset.description} />
+                {/* TODO: wrap description in p tag. */}
+                {/* TODO: user defined markdown? User defined forms?  */}
+                <Section title='Asset Specifications' headingLevel='h3' content={
                     <table className='asset-page__table'> 
                         <thead className='asset-page__table-header'>
                             <tr className='asset-page__table-row'>
