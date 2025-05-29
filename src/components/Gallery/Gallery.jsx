@@ -121,7 +121,12 @@ const Gallery = ({ media }) => {
                         className="gallery__button-icon"/>
             </button>
             <div className='gallery__container'>
-                {renderMedia(media[mediaIndex], 'gallery__image')}
+                <div className='gallery__image-container'> 
+                    {renderMedia(media[mediaIndex], 'gallery__image')}
+                </div>
+                <div className='gallery__carousel'>
+                    
+                </div>
             </div>
             <button 
                 className="gallery__button gallery__button-right"
