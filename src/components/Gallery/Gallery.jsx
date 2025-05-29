@@ -1,6 +1,8 @@
 import './Gallery.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import Circle from '../Circle/Circle';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -9,6 +11,7 @@ const Gallery = ({ media }) => {
     const [mediaIndex, setMediaIndex] = useState(0);
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
+    const circles = [];
 
     const getMediaType = (url) => {
         if (!url) 
@@ -53,13 +56,31 @@ const Gallery = ({ media }) => {
             return ( 
                 <video 
                     src={url} 
-                    controls
                     className={className}
+                    controls
+                    muted
+                    playsInline
+                    autoPlay
                 />
             );
         }
 
         return noImageFound(className);
+    }
+
+    const renderCircles = () => {
+
+        if (!media || media.length === 0)
+            return null;
+
+        const circles = [];
+        const circleCount = media.length;
+
+        for (let i = 0; i < circleCount; i++) {
+            circles.push(<Circle selected={i === mediaIndex} key={uuidv4()}/>);
+        }
+
+        return circles;
     }
 
     const fetchFileExtensions = async () => {
@@ -125,7 +146,7 @@ const Gallery = ({ media }) => {
                     {renderMedia(media[mediaIndex], 'gallery__image')}
                 </div>
                 <div className='gallery__carousel'>
-                    
+                    {renderCircles()}
                 </div>
             </div>
             <button 

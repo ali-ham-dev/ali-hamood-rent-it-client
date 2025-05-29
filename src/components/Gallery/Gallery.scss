@@ -16,6 +16,7 @@
         overflow: hidden;
         @include corner-radius-1;
         @include shadow-1;
+        @include flex-column-center;
     }
 
     &__button {
@@ -48,7 +49,7 @@
     }
 
     &__image-container {
-        height: 100%;
+        height: calc(100% - $circle-size-1); // TODO: remove
         width: 100%;
         object-fit: contain;
     }
@@ -62,5 +63,7 @@
     &__carousel {
         height: fit-content;
         width: fit-content;
+
+        @include flex-row-center;
     }
 }

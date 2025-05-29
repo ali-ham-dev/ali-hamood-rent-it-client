@@ -1,0 +1,12 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.circle {
+    width: $circle-size-1;
+    height: $circle-size-1;
+    border-radius: 50%;
+    margin: 0.25rem;
+
+
+    border: 1px solid;
+}
