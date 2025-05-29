@@ -1,7 +1,7 @@
 import './Circle.scss';
 import { useState, useEffect } from 'react';
 
-const Circle = ({ selected = false, backgroundColor = 'black', selectedColor = 'white'}) => {
+const Circle = ({ selected = false, defaultClass = '', selectedClass = ''}) => {
 
     const [isSelected, setIsSelected] = useState(selected);
 
@@ -10,11 +10,7 @@ const Circle = ({ selected = false, backgroundColor = 'black', selectedColor = '
     }, [selected]);
 
     return (
-        <div 
-            className='circle' 
-            style={{ 
-                backgroundColor: isSelected ? backgroundColor : selectedColor, 
-                borderColor: isSelected ? selectedColor : backgroundColor }}>
+        <div className={`circle ${defaultClass} ${isSelected ? selectedClass : ''}`} >
         </div>
     );
 }

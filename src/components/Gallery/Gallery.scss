@@ -12,7 +12,7 @@
 
     &__container {
         height: 100%;
-        width: auto;
+        width: 100%;
         overflow: hidden;
         @include corner-radius-1;
         @include shadow-1;
@@ -23,7 +23,8 @@
         position: absolute;
         top: 0;
         width: 15%;
-        height: calc(100% - 0.5rem); // do to 0.25rem to and bottom margin.
+        height: 50%;
+        height: calc(100% - 0.5rem); // do to 0.25rem top and bottom margin.
         margin: 0.25rem;
         padding: 0rem;
         background: rgba(0, 0, 0, 0.35);;
@@ -49,8 +50,8 @@
     }
 
     &__image-container {
-        height: calc(100% - $circle-size-1); // TODO: remove
-        width: 100%;
+        height: calc(100% - ($circle-radius-1 + 0.5rem)); // do to 0.25rem top and bottom margin.
+        width: auto;
         object-fit: contain;
     }
 
@@ -63,7 +64,18 @@
     &__carousel {
         height: fit-content;
         width: fit-content;
-
+        overflow: hidden;
         @include flex-row-center;
+    }
+
+    &__circle {
+        margin: 0.25rem;
+        background-color: $black;
+        border-color: $primary-light;
+    }
+
+    &__circle-selected {
+        background-color: $primary-light;
+        border-color: $black;
     }
 }

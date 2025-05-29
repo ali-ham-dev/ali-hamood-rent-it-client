@@ -76,8 +76,18 @@ const Gallery = ({ media }) => {
         const circles = [];
         const circleCount = media.length;
 
+        if (circleCount > 20) {
+            circleCount = 20;
+        }
+
         for (let i = 0; i < circleCount; i++) {
-            circles.push(<Circle selected={i === mediaIndex} key={uuidv4()}/>);
+            circles.push(
+                <Circle 
+                    selected={i === mediaIndex} 
+                    defaultClass='gallery__circle'
+                    selectedClass='gallery__circle-selected'
+                    key={uuidv4()} />
+            );
         }
 
         return circles;
