@@ -13,7 +13,7 @@ const AssetPage = () => {
     const [media, setMedia] = useState({});
 
     const renderAssetTitleBoxContent= () => {
-        console.log(asset);
+
     }
 
     const renderAssetDescription = () => {
