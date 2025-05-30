@@ -19,5 +19,26 @@
             outline: none;
             border-color: $black;
         }
+
+        &--error {
+            border-color: $error;
+        }
+    }
+
+    &__error-container {
+        gap: 0.5rem;
+        align-items: center;
+        @include flex-row-2;
+    }
+
+    &__error-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    &__error {
+        margin: 0;
+        color: $error;
+        @include body-text-all;
     }
 }

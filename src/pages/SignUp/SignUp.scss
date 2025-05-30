@@ -10,7 +10,7 @@
     &__container {
         padding: 2rem;
         width: 100%;
-        background-color: white;
+        background-color: $white;
 
         @include corner-radius-1;
         @include tablet {
@@ -30,32 +30,26 @@
         @include flex-column-2;
     }
 
-    &__form-group {
-        gap: 0.5rem;
-        @include flex-column-2;
-
-        label {
-            @include button-label-all;
-        }
-
-        input {
-            padding: 0.75rem;
-            @include corner-radius-1;
-            @include body-text-all;
-            @include border-1;
-
-            &:focus {
-                outline: none;
-                border-color: $black;
-            }
-        }
-    }
-
     &__submit {
+
+        
         @include button-1-style;
         &{
             margin: 0rem;
             padding: 0.75rem;
+        }
+
+        &--disabled {
+            background-color: $primary-dark;
+            color: $primary-light;
+            cursor: not-allowed;
+
+            &:hover {
+                background-color: $primary-dark;
+                border-color: $primary-dark;
+                color: $primary-light;
+                cursor: not-allowed;
+            }
         }
     }
 } 

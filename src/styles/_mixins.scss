@@ -342,11 +342,16 @@
 
 // Flexbox Mixins
 
-@mixin flex-row {
+@mixin flex-row-1 {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin flex-row-2 {
+  display: flex;
+  flex-direction: row;
 }
 
 @mixin flex-column-1 {

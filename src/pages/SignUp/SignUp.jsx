@@ -6,6 +6,7 @@ import InputBox from '../../components/InputBox/InputBox';
 const SignUp = () => {
 
 
+    const [enableSubmit, setEnableSubmit] = useState(false);
     const [formData, setFormData] = useState([
        {
             htmlFor: 'firstName',
@@ -14,6 +15,7 @@ const SignUp = () => {
             name: 'firstName',
             value: '',
             error: false,
+            errorMessage: 'First name is required',
             isRequired: true
         },
         {
@@ -23,6 +25,7 @@ const SignUp = () => {
             name: 'lastName',
             value: '',
             error: false,
+            errorMessage: 'Last name is required',
             isRequired: true
         },
         {
@@ -31,7 +34,8 @@ const SignUp = () => {
             type: 'email',
             name: 'email',
             value: '',
-            error: false,
+            error: true,
+            errorMessage: 'Email is required',
             isRequired: true
         },
         {
@@ -41,6 +45,7 @@ const SignUp = () => {
             name: 'phone',
             value: '',
             error: false,
+            errorMessage: 'Phone is required',
             isRequired: true
         },
         {
@@ -50,6 +55,7 @@ const SignUp = () => {
             name: 'password',
             value: '',
             error: false,
+            errorMessage: 'Password is required',
             isRequired: true,
             autoComplete: 'new-password'
         },
@@ -60,10 +66,18 @@ const SignUp = () => {
             name: 'confirmPassword',
             value: '',
             error: false,
+            errorMessage: 'Confirm password is required',
             isRequired: true,
             autoComplete: 'new-password'
         },
     ]);
+
+    const checkFirstName = () => {
+        const firstName = formData.find(item => item.name === 'firstName');
+        if (firstName.value.length === 0) {
+            firstName.error = true;
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -88,7 +102,12 @@ const SignUp = () => {
                     {formData.map((item, index) => (
                         <InputBox inputBoxData={item} key={index} onChange={handleChange}/>
                     ))}
-                    <button type="submit" className="signup__submit">Sign Up</button>
+                    <button 
+                        type="submit" 
+                        className={`signup__submit ${enableSubmit ? '' : 'signup__submit--disabled'}`}
+                        disabled={!enableSubmit}>
+                            Sign Up
+                    </button>
                 </form>
             </div>
         </main>

@@ -24,11 +24,11 @@
     }
 
     @include desktop-and-tablet {
-        @include flex-row;
+        @include flex-row-1;
     }
 
     &__buttons {
-        @include flex-row;
+        @include flex-row-1;
     }
 
     &__button {

@@ -1,9 +1,20 @@
 import './InputBox.scss';
+import errorIcon from '/media/svg/error-24px.svg';
 
 const InputBox = ({inputBoxData, onChange = () => {}}) => {
 
     if (!inputBoxData)
-        return
+        return;
+
+    const renderError = () => {
+        if (inputBoxData.error)
+            return (
+                <div className='input-box__error-container'>
+                    <img src={errorIcon} alt='error' className='input-box__error-icon'/>
+                    <p className='input-box__error'>{inputBoxData.errorMessage}</p>
+                </div>
+            );
+    }
     
     return (
         <div className='input-box'>
@@ -11,7 +22,7 @@ const InputBox = ({inputBoxData, onChange = () => {}}) => {
                     {inputBoxData.labelText}
             </label>
             <input
-                className='input-box__input'
+                className={`input-box__input ${inputBoxData.error ? 'input-box__input--error' : ''}`}
                 type={inputBoxData.type}
                 id={inputBoxData.id}
                 name={inputBoxData.name}
@@ -19,7 +30,7 @@ const InputBox = ({inputBoxData, onChange = () => {}}) => {
                 onChange={onChange}
                 autoComplete={inputBoxData.autoComplete ? inputBoxData.autoComplete : 'off'}
             />
-            <p className='input-box__error'>"fkusdhkljfhdsljkh</p>
+            {renderError()}
         </div>
     )
 }
