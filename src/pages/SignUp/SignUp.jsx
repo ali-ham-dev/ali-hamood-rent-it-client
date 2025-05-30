@@ -34,14 +34,14 @@ const SignUp = () => {
             type: 'email',
             name: 'email',
             value: '',
-            error: true,
+            error: false,
             errorMessage: 'Email is required',
             isRequired: true
         },
         {
             htmlFor: 'phone',
             labelText: 'Phone',
-            type: 'text',
+            type: 'tel',
             name: 'phone',
             value: '',
             error: false,
@@ -72,55 +72,126 @@ const SignUp = () => {
         },
     ]);
 
-    const validateNameOnBlur = (name) => {
-        const value = name.value;
+    const checkEmptyFieldOnBlur = (inputFeild) => {
+        const value = inputFeild.value;
 
         if (value.length === 0) {
-            name.error = true;
-            name.errorMessage = 'First name is required';
+            inputFeild.error = true;
+            inputFeild.errorMessage = 'This field is required';
             return;
         }
+    }
+
+    const validateNameOnBlur = (inputFeild) => {
+        const value = inputFeild.value;
 
         if (value.length < 2) {
-            name.error = true;
-            name.errorMessage = 'First name must be at least 2 characters';
+            inputFeild.error = true;
+            inputFeild.errorMessage = 'Name must be at least 2 characters';
             return;
         }
     }
 
-    const validateName = (name) => {
-        const value = name.value;
+    const validateName = (inputFeild) => {
+        const value = inputFeild.value;
 
-        name.error = false;
+        inputFeild.error = false;
 
         if (value.length > 50) {
-            name.error = true;
-            name.errorMessage = 'First name must be less than 50 characters';
+            inputFeild.error = true;
+            inputFeild.errorMessage = 'Name must be less than 50 characters';
             return;
         }
 
-        if (!/^[A-Za-z\s-]+$/.test(value)) {
-            name.error = true;
-            name.errorMessage = 'First name can only contain letters, spaces, and hyphens';
+        const charOnlyRegex = /^[A-Za-z\s-]+$/;
+        if (!charOnlyRegex.test(value)) {
+            inputFeild.error = true;
+            inputFeild.errorMessage = 'Name can only contain letters, spaces, and hyphens';
             return;
         }
 
-        if (/\s{2,}/.test(value)) {
-            name.error = true;
-            name.errorMessage = 'First name cannot contain multiple consecutive spaces';
+        const consecutiveSpacesRegex = /\s{2,}/;
+        if (consecutiveSpacesRegex.test(value)) {
+            inputFeild.error = true;
+            inputFeild.errorMessage = 'Name cannot contain multiple consecutive spaces';
             return;
         }
     }
+
+    const validateEmail = (inputField) => {
+        const value = inputField.value;
+        inputField.error = false;
+
+        if (value.length > 254) {
+            inputField.error = true;
+            inputField.errorMessage = 'Email must be less than 254 characters';
+            return;
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(value)) {
+            inputField.error = true;
+            inputField.errorMessage = 'Please enter a valid email address';
+            return;
+        }
+    };
+
+    const validatePhoneOnBlur = (inputField) => {
+        const numericValue = inputField.value.replace(/\D/g, '');
+
+        if (numericValue.length < 10 || numericValue.length > 15) {
+            inputField.error = true;
+            inputField.errorMessage = 'Please enter a valid phone number';
+            return;
+        }
+
+        if (numericValue.length <= 3) {
+            const formattedNumber = numericValue.replace(/(\d{0,3})/, '($1)');
+            inputField.value = formattedNumber;
+        }
+
+        if (numericValue.length > 3 && numericValue.length <= 6) {
+            const formattedNumber = numericValue.replace(/(\d{3})(\d{0,3})/, '($1) $2');
+            inputField.value = formattedNumber;
+        }
+
+        if (numericValue.length > 6) {
+            const formattedNumber = numericValue.replace(/(\d{3})(\d{3})(\d{0,4})/, '($1) $2-$3');
+            inputField.value = formattedNumber;
+        }
+    }
+
+    const validatePhone = (inputField) => {
+        const value = inputField.value;
+        inputField.error = false;
+
+        if (!/^[0-9]+$/.test(value)) {
+            inputField.error = true;
+            inputField.errorMessage = 'Phone number can only contain numbers';
+            inputField.value = value.replace(/\D/g, '');
+            return;
+        }
+    };
 
     const handleBlur = (e) => {
         const { name } = e.target;
         const index = formData.findIndex(item => item.name === name);
+        const newFormData = [...formData];
 
         if (name === 'firstName' || name === 'lastName') {
-            const newFormData = [...formData];
             validateNameOnBlur(newFormData[index]);
-            setFormData(newFormData);
         }
+
+        if (name === 'email') {
+            validateEmail(newFormData[index]);
+        }
+
+        if (name === 'phone') {
+            validatePhoneOnBlur(newFormData[index]);
+        }
+
+        checkEmptyFieldOnBlur(newFormData[index]);
+        setFormData(newFormData);
     };
 
     const handleChange = (e) => {
@@ -132,6 +203,10 @@ const SignUp = () => {
         
         if (name === 'firstName' || name === 'lastName') {
             validateName(newFormData[index]);
+        }
+
+        if (name === 'phone') {
+            validatePhone(newFormData[index]);
         }
         
         setFormData(newFormData);
