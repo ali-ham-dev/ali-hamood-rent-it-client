@@ -31,42 +31,31 @@
     }
 
     &__form-group {
-        display: flex;
-        flex-direction: column;
         gap: 0.5rem;
+        @include flex-column-2;
 
         label {
-            font-weight: 500;
-            color: $primary-dark;
+            @include button-label-all;
         }
 
         input {
             padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
+            @include corner-radius-1;
+            @include body-text-all;
+            @include border-1;
 
             &:focus {
                 outline: none;
-                border-color: $primary-light;
-                box-shadow: 0 0 0 2px rgba($primary-light, 0.1);
+                border-color: $black;
             }
         }
     }
 
     &__submit {
-        margin-top: 1rem;
-        padding: 0.75rem;
-        background-color: $primary-light;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.2s;
-
-        &:hover {
-            background-color: darken($primary-light, 10%);
+        @include button-1-style;
+        &{
+            margin: 0rem;
+            padding: 0.75rem;
         }
     }
 } 

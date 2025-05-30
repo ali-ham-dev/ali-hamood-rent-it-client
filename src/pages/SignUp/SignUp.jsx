@@ -4,6 +4,19 @@ import './SignUp.scss';
 const SignUp = () => {
 
 
+    //     nameOnCard: '',
+    //     cardNumber: '',
+    //     expirationDate: '',
+    //     cvv: '',
+    //     cardType: '',
+    //     billingCountry: '',
+    //     billingCity: '',
+    //     billingState: '',
+    //     billingAddress: '',
+    //     billingUnit: '',
+    //     billingPostalCode: '',
+
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -11,24 +24,31 @@ const SignUp = () => {
         phone: '',
         password: '',
         confirmPassword: '',
-        country: '',
-        city: '',
-        state: '',
-        address: '',
-        unit: '',
-        postalCode: '',
-        nameOnCard: '',
-        cardNumber: '',
-        expirationDate: '',
-        cvv: '',
-        cardType: '',
-        billingCountry: '',
-        billingCity: '',
-        billingState: '',
-        billingAddress: '',
-        billingUnit: '',
-        billingPostalCode: '',
     });
+
+    const renderInputFeilds = (
+        htmlFor = '', 
+        labelText = '', 
+        type = 'text', 
+        id = '', 
+        name = '', 
+        value = '', 
+        onChange  = () => {return }, 
+        required = false) => {
+        return (
+            <div className="signup__form-group">
+                <label htmlFor={htmlFor}>{labelText}</label>
+                <input
+                    type={type}
+                    id={id}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    required={required}
+                />
+            </div>
+        )
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,61 +69,66 @@ const SignUp = () => {
             <div className="signup__container">
                 <h1 className="signup__title">Create an Account</h1>
                 <form className="signup__form" onSubmit={handleSubmit}>
-                    <div className="signup__form-group">
-                        <label htmlFor="firstName">First Name</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="signup__form-group">
-                        <label htmlFor="lastName">Last Name</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="signup__form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="signup__form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="signup__form-group">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    {renderInputFeilds(
+                        'firstName',
+                        'First Name',
+                        'text',
+                        'firstName',
+                        'firstName',
+                        formData.firstName,
+                        handleChange,
+                        true
+                    )}
+                    {renderInputFeilds(
+                        'lastName',
+                        'Last Name',
+                        'text',
+                        'lastName',
+                        'lastName',
+                        formData.lastName,
+                        handleChange,
+                        true
+                    )}
+                    {renderInputFeilds(
+                        'email',
+                        'Email',
+                        'email',
+                        'email',
+                        'email',
+                        formData.email,
+                        handleChange,
+                        true
+                    )}
+                    {renderInputFeilds(
+                        'phone',
+                        'Phone',
+                        'phone',
+                        'phone',
+                        'phone',
+                        formData.phone,
+                        handleChange,
+                        true
+                    )}
+                    {renderInputFeilds(
+                        'password',
+                        'Password',
+                        'password',
+                        'password',
+                        'password',
+                        formData.password,
+                        handleChange,
+                        true
+                    )}
+                    {renderInputFeilds(
+                        'confirmPassword',
+                        'Confirm Password',
+                        'password',
+                        'confirmPassword',
+                        'confirmPassword',
+                        formData.confirmPassword,
+                        handleChange,
+                        true
+                    )}
                     <button type="submit" className="signup__submit">Sign Up</button>
                 </form>
             </div>
