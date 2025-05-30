@@ -53,6 +53,8 @@
         height: calc(100% - ($circle-radius-1 + 0.5rem)); // do to 0.25rem top and bottom margin.
         width: auto;
         object-fit: contain;
+        overflow: hidden;
+        @include corner-radius-1;
     }
 
     &__image {

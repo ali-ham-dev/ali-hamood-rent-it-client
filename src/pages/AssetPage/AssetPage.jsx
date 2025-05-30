@@ -10,8 +10,17 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const AssetPage = () => {
     const { assetId } = useParams();
     const [asset, setAsset] = useState({});
-    const [loading, setLoading] = useState(true);
     const [media, setMedia] = useState({});
+
+    const renderAssetTitleBoxContent= () => {
+        console.log(asset);
+    }
+
+    const renderAssetDescription = () => {
+        return (
+            <p className='asset-page__description'>{asset.description}</p>
+        )
+    }
 
     const fetchAssetDetails = async () => {
         if (!assetId) {
@@ -32,10 +41,8 @@ const AssetPage = () => {
         const fetchAsset = async () => {
             try {
                 await fetchAssetDetails();
-                setLoading(false);
             } catch (error) {
                 console.error(`Error fetching asset with id: ${assetId}`, error);
-                setLoading(true);
             }
         }
         fetchAsset();
@@ -44,10 +51,10 @@ const AssetPage = () => {
     return (
         <main className='asset-page'>
             <Gallery media={media} />
-            <div className='asset-page__container'>
-                <Section title={asset.title} headingLevel='h2' content={''} />
-                <Section title='Asset Description' headingLevel='h3' content={asset.description} />
-                {/* TODO: wrap description in p tag. */}
+            <div className='asset-page__wrapper'>
+                <Section title={asset.title} headingLevel='h2' content={renderAssetTitleBoxContent()} />
+                <Section title='Asset Description' headingLevel='h3' content={renderAssetDescription()} />
+
                 {/* TODO: user defined markdown? User defined forms?  */}
                 <Section title='Asset Specifications' headingLevel='h3' content={
                     <table className='asset-page__table'> 
@@ -67,9 +74,34 @@ const AssetPage = () => {
                         </tbody>
                     </table>
                 } />
+                <Section title='Location' headingLevel='h3' content={''} />
             </div>
         </main>
     )
 }
+// Gallery, title, description, price, location, specifications {key value pairs}, embeded custom content. , rent process. -> questions and forms
 
 export default AssetPage;
+
+
+
+
+// const renderAssetDescription = () => (
+//     <div>
+//       {/* Your asset description here */}
+//       <p>This is a great product located in San Francisco!</p>
+//       <div style={{ width: '100%', height: '300px', marginTop: '1rem' }}>
+//         <iframe
+//           width="100%"
+//           height="100%"
+//           frameBorder="0"
+//           style={{ border: 0 }}
+//           src={`https://www.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`}
+//           allowFullScreen
+//           aria-hidden="false"
+//           tabIndex="0"
+//           title="Product Location"
+//         />
+//       </div>
+//     </div>
+//   );
