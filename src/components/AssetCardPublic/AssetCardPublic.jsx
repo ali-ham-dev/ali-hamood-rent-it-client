@@ -47,16 +47,20 @@ const AssetCardPublic = ({ assetId }) => {
         if (mediaType === 'image') {
             return <img 
                 src={url} 
-                alt={''} 
                 className={className}
+                alt={''}
             />;
         }
 
         if (mediaType === 'video') {
             return <video 
                 src={url} 
-                controls
                 className={className}
+                controls
+                autoPlay
+                muted
+                loop
+                playsInline
             />;
         }
 
