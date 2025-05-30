@@ -79,8 +79,8 @@ const AssetPage = () => {
         </main>
     )
 }
-// Gallery, title, description, price, location, specifications {key value pairs}, embeded custom content. , rent process. -> questions and forms
-
+// TODO: Gallery, title, description, price, location, specifications {key value pairs}, embeded custom content. , rent process. -> questions and forms
+// TODO: Active inactive?
 export default AssetPage;
 
 
