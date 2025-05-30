@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './SignUp.scss';
 import InputBox from '../../components/InputBox/InputBox';
+import axios from 'axios';
+import { SHA256 } from 'crypto-js';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const signUpEp = import.meta.env.VITE_SIGN_UP_EP;
 
 const SignUp = () => {
     const [formData, setFormData] = useState([
@@ -70,6 +73,9 @@ const SignUp = () => {
             autoComplete: 'new-password'
         },
     ]);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
 
     const checkEmptyFieldOnBlur = (inputFeild) => {
         const value = inputFeild.value;
@@ -275,44 +281,73 @@ const SignUp = () => {
 
     const apiPayload = () => {
         const payload = {};
+        const password = formData.find(item => item.name === 'password').value;
 
         formData.forEach(item => {
-            payload[item.name] = item.value;
+            if (item.name === 'password') {
+                payload[item.name] = password;
+            } else if (item.name !== 'confirmPassword') {
+                payload[item.name] = item.value;
+            }
         });
 
         return payload;
     }
 
-    const handleSubmit = (e) => {
+    const postSignUp = async (payload) => {
+        try {
+            const payload = apiPayload();
+
+            const response = await axios.post(`${apiUrl}${signUpEp}`, payload, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 201) {
+                // TODO: Redirect to login or show success message page. 
+                console.log('Sign up successful');
+            }
+        } catch (error) {
+            console.error('Sign up failed', error);
+            setSubmitError(true);
+        }
+    }
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setSubmitError(false);
 
         formData.forEach(item => {
             handleChange({target: item});
             handleBlur({target: item});
         });
-
+        
         const isFormValid = formData.every(item => !item.error);
-
         if (!isFormValid) {
+            setIsLoading(false);
             return;
         }
 
-        const payload = apiPayload();
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        await delay(1000);
 
-        try {
-            const payload = apiPayload();
-
-        } catch (error) {
-
-        } finally {
-
-        }
+        await postSignUp();
+        setIsLoading(false);
     };
 
     return (
         <main className="signup">
             <div className="signup__container">
                 <h1 className="signup__title">Create an Account</h1>
+                {submitError && (
+                    <div className="signup__error">
+                        <p className="signup__error-message">
+                            There was an error signing up. Please try again or contact support.
+                        </p>
+                    </div>
+                )}
                 <form className="signup__form" onSubmit={handleSubmit}>
                     {formData.map((item, index) => (
                         <InputBox 
@@ -321,8 +356,11 @@ const SignUp = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}/>
                     ))}
-                    <button type="submit" className='signup__submit'>
-                            Sign Up
+                    <button 
+                        type="submit" 
+                        className={`signup__submit ${isLoading ? 'signup__submit--loading' : ''}`}
+                        disabled={isLoading}>
+                            {isLoading ? 'Signing Up...' : 'Sign Up'}
                     </button>
                 </form>
             </div>
