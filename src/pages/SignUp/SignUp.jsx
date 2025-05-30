@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import './SignUp.scss';
 import InputBox from '../../components/InputBox/InputBox';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const SignUp = () => {
     const [formData, setFormData] = useState([
        {
@@ -296,9 +298,15 @@ const SignUp = () => {
         }
 
         const payload = apiPayload();
-        console.log(payload);
 
-        // TODO: Add form validation and API call
+        try {
+            const payload = apiPayload();
+
+        } catch (error) {
+
+        } finally {
+
+        }
     };
 
     return (
