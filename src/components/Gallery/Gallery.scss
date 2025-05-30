@@ -1,0 +1,83 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.gallery {
+    position: relative;
+    background-color: $primary-light;
+    width: 100%;
+    height: 70vh;
+    padding: 0.25rem;
+    box-sizing: border-box;
+    @include flex-row-center;
+
+    &__container {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        @include corner-radius-1;
+        @include shadow-1;
+        @include flex-column-center;
+    }
+
+    &__button {
+        position: absolute;
+        top: 0;
+        width: 15%;
+        height: 50%;
+        height: calc(100% - 0.5rem); // do to 0.25rem top and bottom margin.
+        margin: 0.25rem;
+        padding: 0rem;
+        background: rgba(0, 0, 0, 0.35);;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+        transition: background 0.2s;
+        opacity: 0.25;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 1;
+        }
+    }
+
+    &__button-left {
+        left: 0rem;
+    }
+
+    &__button-right {
+        right: 0rem;
+    }
+
+    &__image-container {
+        height: calc(100% - ($circle-radius-1 + 0.5rem)); // do to 0.25rem top and bottom margin.
+        width: auto;
+        object-fit: contain;
+        overflow: hidden;
+        @include corner-radius-1;
+    }
+
+    &__image {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    &__carousel {
+        height: fit-content;
+        width: fit-content;
+        overflow: hidden;
+        @include flex-row-center;
+    }
+
+    &__circle {
+        margin: 0.25rem;
+        background-color: $black;
+        border-color: $primary-light;
+    }
+
+    &__circle-selected {
+        background-color: $primary-light;
+        border-color: $black;
+    }
+}

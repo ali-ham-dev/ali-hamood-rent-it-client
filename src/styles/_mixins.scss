@@ -1,4 +1,12 @@
+@use 'variables' as *;
+
 // Media queries.
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-max-width) {
+      @content;
+  }
+}
 
 @mixin mobile-and-tablet {
     @media screen and (max-width: $tablet-max-width) {
@@ -24,3 +32,341 @@
         @content;
     }
 }
+
+// Font Mixins
+
+@mixin heading-1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+  
+@mixin heading-2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+  
+@mixin heading-3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+@mixin heading-4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+  
+@mixin body-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+}
+  
+@mixin footnote {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+  
+@mixin button-label-uppercase {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
+@mixin button-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+// Mobile Font Mixins
+
+@mixin heading-1-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@mixin heading-2-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+@mixin heading-3-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+@mixin heading-4-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+@mixin body-text-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+@mixin footnote-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+@mixin button-label-uppercase-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+@mixin button-label-mobile {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+@mixin heading-1-all {
+  @include heading-1-mobile;
+  @include desktop-and-tablet {
+      @include heading-1;
+  }
+}
+  
+@mixin heading-2-all {
+    @include heading-2-mobile;
+    @include desktop-and-tablet {
+        @include heading-2;
+    }
+}
+  
+@mixin heading-3-all {
+    @include heading-3-mobile;
+    @include desktop-and-tablet {
+        @include heading-3;
+    }
+}
+
+@mixin heading-4-all {
+  @include heading-4-mobile;
+  @include desktop-and-tablet {
+      @include heading-4;
+  }
+}
+  
+@mixin body-text-all {
+    @include body-text-mobile;
+    @include desktop-and-tablet {
+        @include body-text;
+    }
+}
+  
+@mixin footnote-all {
+    @include footnote-mobile;
+    @include desktop-and-tablet {
+        @include footnote;
+    }
+}
+  
+@mixin button-label-uppercase-all {
+    @include button-label-uppercase-mobile;
+    @include desktop-and-tablet {
+        @include button-label-uppercase;
+    }
+}
+
+@mixin button-label-all {
+  @include button-label-mobile;
+  @include desktop-and-tablet {
+      @include button-label;
+  }
+}
+
+// Style Mixins
+
+@mixin no-underline {
+  text-decoration: none;
+  color: inherit;
+}
+
+@mixin no-margin {
+  margin: 0;
+}
+
+@mixin no-padding {
+  padding: 0;
+}
+
+@mixin input-box-no-focus {
+  &:focus {
+      outline: none;
+  }
+}
+
+@mixin no-border {
+  border: none;
+}
+
+@mixin button-1-style(
+    $backgroudColor: $black, 
+    $textColor: $white,
+    $hoverBackgroundColor: $forest-green,
+    $hoverTextColor: $black,
+    $hoverBorderColor: $black) {
+
+  box-sizing: border-box;
+  background-color: $backgroudColor;
+  color: $textColor;
+  border-radius: 0.15rem;
+  border: 1px solid transparent;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+
+  @include button-1-style-hover($hoverBackgroundColor, $hoverTextColor, $hoverBorderColor);
+  @include button-label-all;
+}
+
+@mixin button-1-style-hover(
+  $hoverBackgroundColor: $forest-green,
+  $hoverTextColor: $black,
+  $hoverBorderColor: $black) {
+  &:hover {
+      background-color: $hoverBackgroundColor;
+      border: 1px solid $hoverBorderColor;
+      color: $hoverTextColor;
+  }
+}
+
+@mixin floating {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  @include shadow-1;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    @include shadow-2;
+  }
+}
+
+@mixin footer-animation {
+  transition: height 0.5s ease;
+}
+
+@mixin shadow-1 {
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0,0,0,0.08);
+}
+
+@mixin shadow-2 {
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0,0,0,0.12);
+}
+
+@mixin no-text-overflow {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin left-right-page-padding {
+  padding-left: $left-right-padding-header-mobile;
+  padding-right: $left-right-padding-header-mobile;
+
+  @include tablet {
+    padding-left: $left-right-padding-header-tablet;
+    padding-right: $left-right-padding-header-tablet;
+  }
+
+  @include desktop {
+    padding-left: $left-right-padding-header;
+    padding-right: $left-right-padding-header;
+  }
+}
+
+@mixin border-1 {
+  border: 1px solid $secondary-dark;
+}
+
+@mixin border-bottom-1 {
+  border-bottom: 1px solid $secondary-dark;
+}
+
+@mixin corner-radius-1 {
+  border-radius: 0.25rem;
+}
+
+// Flexbox Mixins
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+

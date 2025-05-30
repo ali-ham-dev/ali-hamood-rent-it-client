@@ -1,5 +1,38 @@
 // Screen brake points. 
 
+$mobile-max-width: 767px;
 $tablet-min-width: 768px;
 $tablet-max-width: 1279px;
 $desktop-min-width: 1280px;
+
+// Colors
+
+// $dark: #0C1E1A;
+// $dark-blue: #151B22;
+// $darker-blue: #2E2E2E;
+// $forest-green: #1E6655;
+// $pistachio: #EFFAF7;
+// $sea-green: #B7CEC9;
+// $sage: #E4EFEC;
+// $error: #B10606;
+// $primary-indigo: #2E66E5;
+// $secondary-slate: #5C667E;
+// $secondary-cloud: #BDC5D5;
+
+$primary-light: #F5F5F5;
+$primary-dark: #DEDEDE;
+$secondary-dark: #D4DCE3;
+$white: #FFFFFF;
+$black: #000000;
+
+// Padding
+
+$left-right-padding-header: 10rem;
+$left-right-padding-header-mobile: 2rem;
+$left-right-padding-header-tablet: 4rem;
+
+// Miscellaneous
+
+$circle-radius-1: 1rem;
+$circle-radius-1-tablet: 0.75rem;
+$circle-radius-1-mobile: 0.5rem;

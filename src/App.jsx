@@ -1,12 +1,23 @@
-import './App.scss'
+import './App.scss';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HeaderPublic from './components/HeaderPublic/HeaderPublic';
+import HomePublic from './pages/HomePublic/HomePublic';
+import AssetPage from './pages/AssetPage/AssetPage';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
   return (
-    <>
-      <p>Rent it</p>
-    </>
+    <BrowserRouter>
+      <HeaderPublic /> 
+      <Routes>
+        <Route path='/' element={<HomePublic />} />
+        <Route path='/asset/:assetId' element={<AssetPage />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   )
 }
 
-export default App
+export default App;

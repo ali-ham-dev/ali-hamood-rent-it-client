@@ -1,0 +1,25 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.circle {
+    min-width: $circle-radius-1-mobile;
+    max-width: $circle-radius-1-mobile;
+    min-height: $circle-radius-1-mobile;
+    max-height: $circle-radius-1-mobile;
+    border-radius: 50%;
+    border: 1px solid;
+
+    @include tablet {
+        min-width: $circle-radius-1-tablet;
+        max-width: $circle-radius-1-tablet;
+        min-height: $circle-radius-1-tablet;
+        max-height: $circle-radius-1-tablet;
+    }
+
+    @include desktop {
+        min-width: $circle-radius-1;
+        max-width: $circle-radius-1;
+        min-height: $circle-radius-1;
+        max-height: $circle-radius-1;
+    }
+}
