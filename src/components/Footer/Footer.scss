@@ -2,6 +2,7 @@
 @use '../../styles/mixins' as *;
 
 .footer {
+    overflow: hidden;
     
     &__chat-box {
         width: 100%;
