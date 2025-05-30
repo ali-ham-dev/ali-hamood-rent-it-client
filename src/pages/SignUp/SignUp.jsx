@@ -4,9 +4,6 @@ import './SignUp.scss';
 import InputBox from '../../components/InputBox/InputBox';
 
 const SignUp = () => {
-
-
-    const [enableSubmit, setEnableSubmit] = useState(false);
     const [formData, setFormData] = useState([
        {
             htmlFor: 'firstName',
@@ -139,12 +136,6 @@ const SignUp = () => {
     const validatePhoneOnBlur = (inputField) => {
         const numericValue = inputField.value.replace(/\D/g, '');
 
-        if (numericValue.length < 10 || numericValue.length > 15) {
-            inputField.error = true;
-            inputField.errorMessage = 'Please enter a valid phone number';
-            return;
-        }
-
         if (numericValue.length <= 3) {
             const formattedNumber = numericValue.replace(/(\d{0,3})/, '($1)');
             inputField.value = formattedNumber;
@@ -159,6 +150,14 @@ const SignUp = () => {
             const formattedNumber = numericValue.replace(/(\d{3})(\d{3})(\d{0,4})/, '($1) $2-$3');
             inputField.value = formattedNumber;
         }
+
+        if (numericValue.length < 10 || numericValue.length > 15) {
+            inputField.error = true;
+            inputField.errorMessage = 'Please enter a valid phone number';
+            return;
+        }
+
+        inputField.error = false;
     }
 
     const validatePhone = (inputField) => {
@@ -169,6 +168,58 @@ const SignUp = () => {
             inputField.error = true;
             inputField.errorMessage = 'Phone number can only contain numbers';
             inputField.value = value.replace(/\D/g, '');
+        }
+    };
+
+    const validatePassword = (inputField) => {
+        const value = inputField.value;
+        inputField.error = false;
+
+        if (value.length < 8) {
+            inputField.error = true;
+            inputField.errorMessage = 'Password must be at least 8 characters';
+            return;
+        }
+
+        if (!/[A-Z]/.test(value)) {
+            inputField.error = true;
+            inputField.errorMessage = 'Password must contain at least one uppercase letter';
+            return;
+        }
+
+        if (!/[a-z]/.test(value)) {
+            inputField.error = true;
+            inputField.errorMessage = 'Password must contain at least one lowercase letter';
+            return;
+        }
+
+        if (!/[0-9]/.test(value)) {
+            inputField.error = true;
+            inputField.errorMessage = 'Password must contain at least one number';
+            return;
+        }
+
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+            inputField.error = true;
+            inputField.errorMessage = 'Password must contain at least one special character: ! @ # $ % ^ & * ( ) , . ? : { } | < >';
+            return;
+        }
+
+        if (value.length > 50) {
+            inputField.error = true;
+            inputField.errorMessage = 'Password must be less than 50 characters';
+            return;
+        }
+    };
+
+    const validateConfirmPassword = (inputField) => {
+        const password = formData.find(item => item.name === 'password').value;
+        const confirmPassword = inputField.value;
+        inputField.error = false;
+
+        if (confirmPassword !== password) {
+            inputField.error = true;
+            inputField.errorMessage = 'Passwords do not match';
             return;
         }
     };
@@ -188,6 +239,14 @@ const SignUp = () => {
 
         if (name === 'phone') {
             validatePhoneOnBlur(newFormData[index]);
+        }
+
+        if (name === 'password') {
+            validatePassword(newFormData[index]);
+        }
+
+        if (name === 'confirmPassword') {
+            validateConfirmPassword(newFormData[index]);
         }
 
         checkEmptyFieldOnBlur(newFormData[index]);
@@ -212,10 +271,34 @@ const SignUp = () => {
         setFormData(newFormData);
     };
 
+    const apiPayload = () => {
+        const payload = {};
+
+        formData.forEach(item => {
+            payload[item.name] = item.value;
+        });
+
+        return payload;
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        formData.forEach(item => {
+            handleChange({target: item});
+            handleBlur({target: item});
+        });
+
+        const isFormValid = formData.every(item => !item.error);
+
+        if (!isFormValid) {
+            return;
+        }
+
+        const payload = apiPayload();
+        console.log(payload);
+
         // TODO: Add form validation and API call
-        console.log('Form submitted:', formData);
     };
 
     return (
@@ -230,10 +313,7 @@ const SignUp = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}/>
                     ))}
-                    <button 
-                        type="submit" 
-                        className={`signup__submit ${enableSubmit ? '' : 'signup__submit--disabled'}`}
-                        disabled={!enableSubmit}>
+                    <button type="submit" className='signup__submit'>
                             Sign Up
                     </button>
                 </form>
