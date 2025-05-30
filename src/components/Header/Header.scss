@@ -7,7 +7,7 @@
     padding-bottom: 0.5rem;
     height: 9rem;
     @include border-1;
-    @include flex-column;
+    @include flex-column-1;
     @include no-margin;
     @include left-right-page-padding;
 

@@ -5,11 +5,29 @@ const SignUp = () => {
 
 
     const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
+        phone: '',
         password: '',
         confirmPassword: '',
-        firstName: '',
-        lastName: ''
+        country: '',
+        city: '',
+        state: '',
+        address: '',
+        unit: '',
+        postalCode: '',
+        nameOnCard: '',
+        cardNumber: '',
+        expirationDate: '',
+        cvv: '',
+        cardType: '',
+        billingCountry: '',
+        billingCity: '',
+        billingState: '',
+        billingAddress: '',
+        billingUnit: '',
+        billingPostalCode: '',
     });
 
     const handleChange = (e) => {
@@ -27,7 +45,7 @@ const SignUp = () => {
     };
 
     return (
-        <section className="signup">
+        <main className="signup">
             <div className="signup__container">
                 <h1 className="signup__title">Create an Account</h1>
                 <form className="signup__form" onSubmit={handleSubmit}>
@@ -89,7 +107,7 @@ const SignUp = () => {
                     <button type="submit" className="signup__submit">Sign Up</button>
                 </form>
             </div>
-        </section>
+        </main>
     );
 };
 
