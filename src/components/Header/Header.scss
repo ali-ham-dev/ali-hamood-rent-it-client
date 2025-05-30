@@ -31,18 +31,6 @@
         @include flex-row;
     }
 
-    &__buttons-mobile {
-        @include desktop-and-tablet {
-            display: none;
-        }
-    }
-
-    &__buttons-desktop {
-        @include mobile {
-            display: none;
-        }
-    }
-
     &__button {
         @include button-1-style($black, $white, $white, $black, $black);
     }
