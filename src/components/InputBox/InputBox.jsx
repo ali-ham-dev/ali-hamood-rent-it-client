@@ -1,7 +1,10 @@
 import './InputBox.scss';
 import errorIcon from '/media/svg/error-24px.svg';
 
-const InputBox = ({inputBoxData, onChange = () => {}}) => {
+const InputBox = ({
+        inputBoxData, 
+        onChange = () => {}, 
+        onBlur = () => {}}) => {
 
     if (!inputBoxData)
         return;
@@ -28,6 +31,7 @@ const InputBox = ({inputBoxData, onChange = () => {}}) => {
                 name={inputBoxData.name}
                 value={inputBoxData.value}
                 onChange={onChange}
+                onBlur={onBlur}   
                 autoComplete={inputBoxData.autoComplete ? inputBoxData.autoComplete : 'off'}
             />
             {renderError()}

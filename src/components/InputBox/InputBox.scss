@@ -22,6 +22,11 @@
 
         &--error {
             border-color: $error;
+
+            &:focus {
+                outline: none;
+                border-color: $error;
+            }
         }
     }
 

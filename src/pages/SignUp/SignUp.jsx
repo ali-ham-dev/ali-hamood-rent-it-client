@@ -72,19 +72,68 @@ const SignUp = () => {
         },
     ]);
 
-    const checkFirstName = () => {
-        const firstName = formData.find(item => item.name === 'firstName');
-        if (firstName.value.length === 0) {
-            firstName.error = true;
+    const validateNameOnBlur = (name) => {
+        const value = name.value;
+
+        if (value.length === 0) {
+            name.error = true;
+            name.errorMessage = 'First name is required';
+            return;
+        }
+
+        if (value.length < 2) {
+            name.error = true;
+            name.errorMessage = 'First name must be at least 2 characters';
+            return;
         }
     }
+
+    const validateName = (name) => {
+        const value = name.value;
+
+        name.error = false;
+
+        if (value.length > 50) {
+            name.error = true;
+            name.errorMessage = 'First name must be less than 50 characters';
+            return;
+        }
+
+        if (!/^[A-Za-z\s-]+$/.test(value)) {
+            name.error = true;
+            name.errorMessage = 'First name can only contain letters, spaces, and hyphens';
+            return;
+        }
+
+        if (/\s{2,}/.test(value)) {
+            name.error = true;
+            name.errorMessage = 'First name cannot contain multiple consecutive spaces';
+            return;
+        }
+    }
+
+    const handleBlur = (e) => {
+        const { name } = e.target;
+        const index = formData.findIndex(item => item.name === name);
+
+        if (name === 'firstName' || name === 'lastName') {
+            const newFormData = [...formData];
+            validateNameOnBlur(newFormData[index]);
+            setFormData(newFormData);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         const index = formData.findIndex(item => item.name === name);
         const newFormData = [...formData];
 
-        newFormData[index].value = value;
+        newFormData[index].value = value.trim();
+        
+        if (name === 'firstName' || name === 'lastName') {
+            validateName(newFormData[index]);
+        }
+        
         setFormData(newFormData);
     };
 
@@ -100,7 +149,11 @@ const SignUp = () => {
                 <h1 className="signup__title">Create an Account</h1>
                 <form className="signup__form" onSubmit={handleSubmit}>
                     {formData.map((item, index) => (
-                        <InputBox inputBoxData={item} key={index} onChange={handleChange}/>
+                        <InputBox 
+                            inputBoxData={item} 
+                            key={index} 
+                            onChange={handleChange}
+                            onBlur={handleBlur}/>
                     ))}
                     <button 
                         type="submit" 
