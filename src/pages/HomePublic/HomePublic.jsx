@@ -11,6 +11,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 // - Add categories to the home page.
 // - Add pagination to the home page.
 // - Add dynamic filters.
+// - AI and search. 
 
 const HomePublic = () => {
 
@@ -64,7 +65,7 @@ const HomePublic = () => {
             setAssetIds(response.data.map(asset => asset.id));
         }
 
-        setAssetIds(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
+        setAssetIds(['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']);
     }
 
     // loading, or error? 

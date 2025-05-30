@@ -1,0 +1,25 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.asset-page {
+    width: 100%;
+    height: 100%;
+    background-color: $primary-light;
+    box-sizing: border-box;
+
+    &__wrapper {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        @include left-right-page-padding;
+    }
+
+    &__title {
+        @include heading-2-all;
+    }
+
+    &__description {
+        @include body-text-all;
+    }
+
+}

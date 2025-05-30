@@ -2,10 +2,11 @@
 @use '../../styles/mixins' as *;
 
 .header-public {
-    background-color: $forest-green;
+    background-color: $white;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     height: 9rem;
+    @include border-1;
     @include flex-column;
     @include no-margin;
     @include left-right-page-padding;
@@ -43,6 +44,6 @@
     }
 
     &__button {
-        @include button-1-style($black, $white, $forest-green, $white, $black);
+        @include button-1-style($black, $white, $white, $black, $black);
     }
 }

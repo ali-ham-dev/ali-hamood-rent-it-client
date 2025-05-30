@@ -3,7 +3,6 @@
 
 .search {
     background-color: $white;
-    border-radius: 0.25rem;
     padding-left: 1rem;
     padding-right: 1rem;
     margin-left: 2rem;
@@ -11,10 +10,12 @@
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
     width: 100%;
-
+    @include corner-radius-1;
+    @include border-1;
     @include flex-row;
 
     &__input {
+        width: 100%;
         @include input-box-no-focus;
         @include no-border;
         @include button-label-all;

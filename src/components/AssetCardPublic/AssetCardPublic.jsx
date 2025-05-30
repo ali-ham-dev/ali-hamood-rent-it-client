@@ -135,7 +135,7 @@ const AssetCardPublic = ({ assetId }) => {
 
     return (
         <div className='asset-card-public'>
-            <section className="asset-card-public__gallary">
+            <section className="asset-card-public__gallery">
                 <button 
                     className="asset-card-public__button asset-card-public__button-left" 
                     onClick={handleLeftButtonClick}>
@@ -155,7 +155,7 @@ const AssetCardPublic = ({ assetId }) => {
                 </button>
             </section>
             <section className="asset-card-public__summary">
-                <Link to={`/products/${assetId}`} className="asset-card-public__title-link">
+                <Link to={`/asset/${assetId}`} className="asset-card-public__title-link">
                     <h3 className="asset-card-public__title">
                         {loading ? 'loading...' : asset.asset.title}
                     </h3>
