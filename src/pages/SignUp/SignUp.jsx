@@ -306,6 +306,8 @@ const SignUp = () => {
 
             if (response.status === 201) {
                 // TODO: Redirect to login or show success message page. 
+                // TODO: Fix hash issue
+                // TODO: Try to improve number input formatting
                 console.log('Sign up successful');
             }
         } catch (error) {
