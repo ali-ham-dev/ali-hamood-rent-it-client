@@ -57,7 +57,7 @@
         background-color: $white;
         color: $error;
         padding: 1rem;
-        margin: 1rem;
+        margin: 1rem 0;
         @include corner-radius-1;
         @include border-1;
         @include body-text-all;

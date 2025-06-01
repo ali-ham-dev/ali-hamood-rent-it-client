@@ -8,6 +8,7 @@ import { SHA256 } from 'crypto-js';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const signUpEp = import.meta.env.VITE_SIGN_UP_EP;
+const checkEmailEp = import.meta.env.VITE_CHECK_EMAIL_EP;
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -78,6 +79,7 @@ const SignUp = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [submitError, setSubmitError] = useState(false);
+    const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
     const checkEmptyFieldOnBlur = (inputFeild) => {
         const value = inputFeild.value;
@@ -125,7 +127,7 @@ const SignUp = () => {
         }
     }
 
-    const validateEmail = (inputField) => {
+    const validateEmailOnBlur = async (inputField) => {
         const value = inputField.value;
         inputField.error = false;
 
@@ -140,6 +142,25 @@ const SignUp = () => {
             inputField.error = true;
             inputField.errorMessage = 'Please enter a valid email address';
             return;
+        }
+
+        try {
+            setIsLoading(true);
+            const response = await axios.post(`${apiUrl}${checkEmailEp}`, {
+                email: value
+            });
+            if (response &&
+                response.status === 200 &&
+                response.data.emailIsAvailable === false
+            ) {
+                    inputField.error = true;
+                    inputField.errorMessage = 'Email already exists';
+                    return;
+            }
+        } catch (error) {
+            console.error('Error checking email', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -234,7 +255,7 @@ const SignUp = () => {
         }
     };
 
-    const handleBlur = (e) => {
+    const handleBlur = async (e) => {
         const { name } = e.target;
         const index = formData.findIndex(item => item.name === name);
         const newFormData = [...formData];
@@ -244,7 +265,7 @@ const SignUp = () => {
         }
 
         if (name === 'email') {
-            validateEmail(newFormData[index]);
+            await validateEmailOnBlur(newFormData[index]);
         }
 
         if (name === 'phone') {
@@ -333,15 +354,49 @@ const SignUp = () => {
         e.preventDefault();
         setIsLoading(true);
         setSubmitError(false);
+        setSubmitErrorMessage('');
 
-        formData.forEach(item => {
-            handleChange({target: item});
-            handleBlur({target: item});
-        });
-        
-        const isFormValid = formData.every(item => !item.error);
+        const newFormData = [...formData];
+        let isFormValid = true;
+        let errorMessage = '';
+
+        for (const [index, item] of newFormData.entries()) {
+            if (item.name === 'firstName' || item.name === 'lastName') {
+                validateName(item);
+                validateNameOnBlur(item);
+            }
+
+            if (item.name === 'email') {
+                await validateEmailOnBlur(item);
+            }
+
+            if (item.name === 'phone') {
+                validatePhone(item);
+                validatePhoneOnBlur(item);
+            }
+
+            if (item.name === 'password') {
+                validatePassword(item);
+            }
+
+            if (item.name === 'confirmPassword') {
+                validateConfirmPassword(item);
+            }
+
+            if (item.error === true) {
+                isFormValid = false;
+                errorMessage = `There is an issue with the ${item.labelText} field.`;
+                break;
+            }
+
+            newFormData[index] = item;
+        }
+
         if (!isFormValid) {
             setIsLoading(false);
+            setFormData(newFormData);
+            setSubmitError(true);
+            setSubmitErrorMessage(errorMessage);
             return;
         }
 
@@ -356,7 +411,9 @@ const SignUp = () => {
                 {submitError && (
                     <div className="signup__error">
                         <p className="signup__error-message">
-                            There was an error signing up. Please try again or contact support.
+                            {submitErrorMessage ? 
+                                submitErrorMessage : 
+                                'There was an error signing up. Please try again or contact support.'}
                         </p>
                     </div>
                 )}
