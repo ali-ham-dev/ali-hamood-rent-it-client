@@ -5,9 +5,12 @@ import './UserAuth.scss';
 import InputBox from '../../components/InputBox/InputBox';
 
 const apiUrl = import.meta.env.VITE_API_URL;
-
+const resendVerificationTokenEp = import.meta.env.VITE_RESEND_TOK_EP;
+const verifyEmailTokenEp = import.meta.env.VITE_VERIFY_EMAIL_TOKEN_EP;
 const UserAuth = () => {
-    const { userId, email, expires } = useParams();
+
+    const { userId, email } = useParams();
+    const [expires, setExpires] = useState(useParams().expires);
     const navigate = useNavigate();
     const [timeLeft, setTimeLeft] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -19,15 +22,20 @@ const UserAuth = () => {
         name: 'verificationCode',
         value: '',
         error: false,
-        errorMessage: 'Please enter a valid 6-digit code',
+        errorMessage: '',
         isRequired: true,
         maxLength: 6
     });
 
-    // Validate URL parameters
+    const calcTimeLeft = (expires) => {
+        const expirationTime = new Date(expires).getTime();
+        const now = new Date().getTime();
+        return Math.max(0, Math.floor((expirationTime - now) / 1000));
+    }
+
     useEffect(() => {
         if (!userId || !email || !expires) {
-            navigate('/signup');
+            setError('Invalid credentials, please try again.');
             return;
         }
 
@@ -35,28 +43,25 @@ const UserAuth = () => {
         const now = new Date().getTime();
         
         if (now >= expirationTime) {
-            navigate('/signup');
+            setError('Invalid credentials, please try again.');
             return;
         }
 
-        // Start countdown
         const timer = setInterval(() => {
-            const currentTime = new Date().getTime();
-            const remainingTime = Math.max(0, Math.floor((expirationTime - currentTime) / 1000));
+            const remainingTime = calcTimeLeft(expires);
             setTimeLeft(remainingTime);
 
-            if (remainingTime === 0) {
-                clearInterval(timer);
-                navigate('/signup');
+            if (remainingTime <= 0) {
+                setError('Code expired, please request a new code.');
             }
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [userId, email, expires, navigate]);
+    }, [expires]);
 
     const handleCodeChange = (e) => {
         const value = e.target.value.replace(/\D/g, '').slice(0, 6);
-        setVerificationCode(prev => ({
+        setVerificationCode((prev) => ({
             ...prev,
             value,
             error: false
@@ -67,15 +72,35 @@ const UserAuth = () => {
         try {
             setIsLoading(true);
             setError('');
-            const response = await axios.post(`${apiUrl}/auth/resend-verification-token/${userId}`);
-            if (response.status === 200) {
-                // Update expiration time from response
-                const newExpires = response.data.verificationTokenExpires;
-                navigate(`/user-auth/${userId}/${email}/${newExpires}`);
+            const response = await axios.post(`${apiUrl}${resendVerificationTokenEp}/${userId}`);
+            if (response.status === 200 && 
+                response.data && 
+                response.data.token && 
+                response.data.token.expires) {
+
+                setExpires(response.data.token.expires);
+                setTimeLeft(calcTimeLeft(expires));
             }
         } catch (error) {
-            setError('Failed to resend verification code. Please try again.');
-        } finally {
+            console.log(`Failed to resend verification code: ${error}`);
+            const generalErrorMessage = 'Failed to resend verification code. Please try again.';
+            if (error.response && 
+                error.response.status === 400 && 
+                error.response.data?.error) {
+
+                const backendErrorMessage = error.response.data?.error;
+                const errorMessage = backendErrorMessage ?? generalErrorMessage;
+                setError(errorMessage);
+
+                if (error.response.data?.token &&
+                    error.response.data.token?.expires) {
+                    setExpires(error.response.data.token.expires);
+                    setTimeLeft(calcTimeLeft(expires));
+                }
+            } else {
+                setError(generalErrorMessage);
+            }
+        } finally { 
             setIsLoading(false);
         }
     };
@@ -86,7 +111,8 @@ const UserAuth = () => {
         if (verificationCode.value.length !== 6) {
             setVerificationCode(prev => ({
                 ...prev,
-                error: true
+                error: true,
+                errorMessage: 'Please enter a valid 6-digit code'
             }));
             return;
         }
@@ -95,21 +121,24 @@ const UserAuth = () => {
             setIsLoading(true);
             setError('');
             const response = await axios.post(
-                `${apiUrl}/auth/verify-email-token/${userId}/${verificationCode.value}`
+                `${apiUrl}${verifyEmailTokenEp}/${userId}/${verificationCode.value}`
             );
 
             if (response.status === 200) {
                 const { token, user } = response.data;
-                
-                // Store JWT token and user data in cookies
                 document.cookie = `jwt=${token}; path=/`;
                 document.cookie = `user=${JSON.stringify(user)}; path=/`;
-                
-                // Navigate to home page or dashboard
                 navigate('/');
             }
         } catch (error) {
-            setError('Verification code not valid, please try again, or request a new code.');
+            console.log(`Failed to verify email token: ${error}`);
+            const generalErrorMessage = 'Verification code not valid, please try again, or request a new code.';
+            if (error.response && error.response.status === 400 && error.response.data?.error) {
+                const errorMessage = error.response.data?.error ?? generalErrorMessage;
+                setError(errorMessage);
+            } else {
+                setError(generalErrorMessage);
+            }
         } finally {
             setIsLoading(false);
         }
@@ -136,10 +165,7 @@ const UserAuth = () => {
                 )}
 
                 <form className="code-confirmation__form" onSubmit={handleSubmit}>
-                    <InputBox
-                        inputBoxData={verificationCode}
-                        onChange={handleCodeChange}
-                    />
+                    <InputBox inputBoxData={verificationCode} onChange={handleCodeChange} />
                     <div className="code-confirmation__buttons">
                         <button
                             type="button"
