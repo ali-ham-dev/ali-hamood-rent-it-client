@@ -17,7 +17,7 @@ const SignUp = () => {
             labelText: 'First Name',
             type: 'text',
             name: 'firstName',
-            value: '',
+            value: 'Ali',
             error: false,
             errorMessage: 'First name is required',
             isRequired: true
@@ -27,7 +27,7 @@ const SignUp = () => {
             labelText: 'Last Name',
             type: 'text',
             name: 'lastName',
-            value: '',
+            value: 'ali',
             error: false,
             errorMessage: 'Last name is required',
             isRequired: true
@@ -37,7 +37,7 @@ const SignUp = () => {
             labelText: 'Email',
             type: 'email',
             name: 'email',
-            value: '',
+            value: 'ali@gmail.com',
             error: false,
             errorMessage: 'Email is required',
             isRequired: true
@@ -47,7 +47,7 @@ const SignUp = () => {
             labelText: 'Phone',
             type: 'tel',
             name: 'phone',
-            value: '',
+            value: '1234567890',
             error: false,
             errorMessage: 'Phone is required',
             isRequired: true
@@ -57,7 +57,7 @@ const SignUp = () => {
             labelText: 'Password',
             type: 'password',
             name: 'password',
-            value: '',
+            value: 'Qq!12345',
             error: false,
             errorMessage: 'Password is required',
             isRequired: true,
@@ -68,7 +68,7 @@ const SignUp = () => {
             labelText: 'Confirm Password',
             type: 'password',
             name: 'confirmPassword',
-            value: '',
+            value: 'Qq!12345',
             error: false,
             errorMessage: 'Confirm password is required',
             isRequired: true,
@@ -319,7 +319,7 @@ const SignUp = () => {
                 }
             });
 
-            if (response.status === 201) {
+            if (response.status === 200) {
                 console.log('Sign up successful');
                 navigate(`/user-auth/${response.data.userId}/${encodeURIComponent(payload.email)}/${encodeURIComponent(response.data.verificationTokenExpires)}`);
             }
