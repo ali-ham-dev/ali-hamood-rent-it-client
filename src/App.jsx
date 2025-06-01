@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import HomePublic from './pages/HomePublic/HomePublic';
 import AssetPage from './pages/AssetPage/AssetPage';
 import SignUp from './pages/SignUp/SignUp';
+import UserAuth from './pages/UserAuth/UserAuth';
 import Footer from './components/Footer/Footer';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<HomePublic />} />
         <Route path='/asset/:assetId' element={<AssetPage />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/user-auth' element={<UserAuth />} />
       </Routes>
       <Footer />
     </BrowserRouter>

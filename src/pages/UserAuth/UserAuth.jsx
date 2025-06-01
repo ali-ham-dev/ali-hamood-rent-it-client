@@ -1,6 +1,6 @@
-import './CodeConfirmation.scss';
+import './UserAuth.scss';
 
-const CodeConfirmation = () => {
+const UserAuth = () => {
     return (
         <main className="code-confirmation">
             <div className="code-confirmation__container">
@@ -10,4 +10,4 @@ const CodeConfirmation = () => {
     );
 }
 
-export default CodeConfirmation;
+export default UserAuth;

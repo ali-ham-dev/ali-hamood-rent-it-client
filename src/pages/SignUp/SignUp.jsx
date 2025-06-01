@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 import './SignUp.scss';
 import InputBox from '../../components/InputBox/InputBox';
 import axios from 'axios';
@@ -9,6 +10,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const signUpEp = import.meta.env.VITE_SIGN_UP_EP;
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState([
        {
             htmlFor: 'firstName',
@@ -283,9 +285,22 @@ const SignUp = () => {
         const payload = {};
         const password = formData.find(item => item.name === 'password').value;
 
+        // TODO: Learn about how this works.
+        // Generate a random salt
+        // const salt = window.crypto.getRandomValues(new Uint8Array(16));
+        // const passwordBytes = new TextEncoder().encode(password);
+        // const saltedPassword = new Uint8Array([...salt, ...passwordBytes]);
+        // const hashedPassword = SHA256(saltedPassword).toString();
+        
+        // Send both the hash and salt to the backend
+        // payload[item.name] = {
+        //     hash: hashedPassword,
+        //     salt: Array.from(salt).map(b => b.toString(16).padStart(2, '0')).join('')
+        // };
+
         formData.forEach(item => {
             if (item.name === 'password') {
-                payload[item.name] = password;
+                payload[item.name] = SHA256(password).toString();
             } else if (item.name !== 'confirmPassword') {
                 payload[item.name] = item.value;
             }
@@ -305,11 +320,8 @@ const SignUp = () => {
             });
 
             if (response.status === 201) {
-                // TODO: Redirect to login or show success message page. 
-                // TODO: Fix hash issue
-                // TODO: Try to improve number input formatting
-                // TODO: used email error message
                 console.log('Sign up successful');
+                navigate('/user-auth');
             }
         } catch (error) {
             console.error('Sign up failed', error);
