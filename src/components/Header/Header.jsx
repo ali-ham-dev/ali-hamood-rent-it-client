@@ -9,12 +9,12 @@ const Header = ({ isLoggedIn }) => {
             <Logo />
             <Search />
             <div className='header__buttons'>
-                <button className='header__button'>Login</button>
-                {!isLoggedIn.current && (
-                    <Link to='/signup'>
-                        <button className='header__button'>Sign Up</button>
-                    </Link>
-                )}
+                <Link to='/login'>
+                    <button className='header__button'>Login</button>
+                </Link>
+                <Link to='/signup'>
+                    <button className='header__button'>Sign Up</button>
+                </Link>
             </div>
         </header>        
     )
