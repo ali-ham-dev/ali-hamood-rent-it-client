@@ -19,7 +19,7 @@ function App() {
         <Route path='/' element={<HomePublic />} />
         <Route path='/asset/:assetId' element={<AssetPage />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/user-auth' element={<UserAuth />} />
+        <Route path='/user-auth/:id/:expires' element={<UserAuth />} />
       </Routes>
       <Footer />
     </BrowserRouter>
