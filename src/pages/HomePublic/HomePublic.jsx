@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const assetsEp = import.meta.env.VITE_ASSETS_EP;
 
 // Future features:
 // - Add categories to the home page.

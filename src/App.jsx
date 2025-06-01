@@ -1,19 +1,25 @@
 import './App.scss';
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HeaderPublic from './components/HeaderPublic/HeaderPublic';
+import Header from './components/Header/Header';
 import HomePublic from './pages/HomePublic/HomePublic';
 import AssetPage from './pages/AssetPage/AssetPage';
+import SignUp from './pages/SignUp/SignUp';
+import UserAuth from './pages/UserAuth/UserAuth';
 import Footer from './components/Footer/Footer';
 
 function App() {
 
+  const isLoggedIn = useRef(false);
+
   return (
     <BrowserRouter>
-      <HeaderPublic /> 
+      <Header isLoggedIn={isLoggedIn} /> 
       <Routes>
         <Route path='/' element={<HomePublic />} />
         <Route path='/asset/:assetId' element={<AssetPage />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/user-auth' element={<UserAuth />} />
       </Routes>
       <Footer />
     </BrowserRouter>

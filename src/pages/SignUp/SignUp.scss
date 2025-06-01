@@ -1,0 +1,74 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.signup {
+    padding: 2rem;
+    background-color: $primary-light;
+    @include flex-column-1;
+    @include left-right-page-padding;
+
+    &__container {
+        padding: 2rem;
+        width: 100%;
+        background-color: $white;
+
+        @include corner-radius-1;
+        @include tablet {
+            width: 50%;
+        }
+        @include desktop {
+            width: 35%;
+        }
+    }
+
+    &__title {
+        @include heading-2;
+    }
+
+    &__form {
+        gap: 1rem;
+        @include flex-column-2;
+    }
+
+    &__submit {
+
+        
+        @include button-1-style;
+        & {
+            margin: 0rem;
+            padding: 0.75rem;
+        }
+
+        &--loading {
+            background-color: $primary-dark;
+            color: $primary-light;
+            cursor: not-allowed;
+
+            &:hover {
+                background-color: $primary-dark;
+                border-color: $primary-dark;
+                color: $primary-light;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    &__error {
+        background-color: $white;
+        color: $error;
+        padding: 1rem;
+        margin: 1rem;
+        @include corner-radius-1;
+        @include border-1;
+        @include body-text-all;
+        & { 
+            border-color: $error;
+        }
+    }
+
+    &__error-message {
+        @include no-padding;
+        @include no-margin;
+    }
+    
+} 

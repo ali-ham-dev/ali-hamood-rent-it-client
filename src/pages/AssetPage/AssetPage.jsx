@@ -6,6 +6,7 @@ import Gallery from '../../components/Gallery/Gallery';
 import Section from '../../components/Section/Section';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const assetsEp = import.meta.env.VITE_ASSETS_EP;
 
 const AssetPage = () => {
     const { assetId } = useParams();
@@ -13,7 +14,7 @@ const AssetPage = () => {
     const [media, setMedia] = useState({});
 
     const renderAssetTitleBoxContent= () => {
-        console.log(asset);
+
     }
 
     const renderAssetDescription = () => {
@@ -27,7 +28,7 @@ const AssetPage = () => {
             throw new Error('Invalid asset id');
         }
 
-        const response = await axios.get(`${apiUrl}/assets/${assetId}`);
+        const response = await axios.get(`${apiUrl}${assetsEp}/${assetId}`);
         if (response.status === 200) {
             setAsset(response.data.asset);
             setMedia([
@@ -79,8 +80,8 @@ const AssetPage = () => {
         </main>
     )
 }
-// Gallery, title, description, price, location, specifications {key value pairs}, embeded custom content. , rent process. -> questions and forms
-
+// TODO: Gallery, title, description, price, location, specifications {key value pairs}, embeded custom content. , rent process. -> questions and forms
+// TODO: Active inactive?
 export default AssetPage;
 
 

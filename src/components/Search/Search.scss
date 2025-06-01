@@ -12,7 +12,7 @@
     width: 100%;
     @include corner-radius-1;
     @include border-1;
-    @include flex-row;
+    @include flex-row-1;
 
     &__input {
         width: 100%;

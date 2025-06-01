@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import Circle from '../Circle/Circle';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const imgFileExtEp = import.meta.env.VITE_IMG_FILE_EX_EP;
+const videoFileExtEp = import.meta.env.VITE_VID_FILE_EX_EP;
+
 
 const Gallery = ({ media }) => {
 
@@ -74,11 +77,7 @@ const Gallery = ({ media }) => {
             return null;
 
         const circles = [];
-        const circleCount = media.length;
-
-        if (circleCount > 20) {
-            circleCount = 20;
-        }
+        const circleCount = media.length < 20 ? media.length : 20;
 
         for (let i = 0; i < circleCount; i++) {
             circles.push(
@@ -94,14 +93,14 @@ const Gallery = ({ media }) => {
     }
 
     const fetchFileExtensions = async () => {
-        const imageResponse = await axios.get(`${apiUrl}/file-extensions/image-file-extensions`);
+        const imageResponse = await axios.get(`${apiUrl}${imgFileExtEp}`);
 
         if (imageResponse.status === 200) {
             const ext = imageResponse.data.map(item => item.extension);
             setImageExtensions(ext);
         }
 
-        const videoResponse = await axios.get(`${apiUrl}/file-extensions/video-file-extensions`);
+        const videoResponse = await axios.get(`${apiUrl}${videoFileExtEp}`);
 
         if (videoResponse.status === 200) {
             const ext = videoResponse.data.map(item => item.extension);     

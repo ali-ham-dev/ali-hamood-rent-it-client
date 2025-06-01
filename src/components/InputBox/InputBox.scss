@@ -1,0 +1,49 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.input-box {
+    gap: 0.5rem;
+    @include flex-column-2;
+
+    &__label {
+        @include button-label-all;
+    }
+
+    &__input {
+        padding: 0.75rem;
+        @include corner-radius-1;
+        @include border-1;
+        @include body-text-all;
+
+        &:focus {
+            outline: none;
+            border-color: $black;
+        }
+
+        &--error {
+            border-color: $error;
+
+            &:focus {
+                outline: none;
+                border-color: $error;
+            }
+        }
+    }
+
+    &__error-container {
+        gap: 0.5rem;
+        align-items: center;
+        @include flex-row-2;
+    }
+
+    &__error-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    &__error {
+        margin: 0;
+        color: $error;
+        @include body-text-all;
+    }
+}

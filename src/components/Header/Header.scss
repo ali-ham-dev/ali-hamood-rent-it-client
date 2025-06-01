@@ -1,13 +1,13 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
-.header-public {
+.header {
     background-color: $white;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     height: 9rem;
     @include border-1;
-    @include flex-column;
+    @include flex-column-1;
     @include no-margin;
     @include left-right-page-padding;
 
@@ -24,23 +24,11 @@
     }
 
     @include desktop-and-tablet {
-        @include flex-row;
+        @include flex-row-1;
     }
 
     &__buttons {
-        @include flex-row;
-    }
-
-    &__buttons-mobile {
-        @include desktop-and-tablet {
-            display: none;
-        }
-    }
-
-    &__buttons-desktop {
-        @include mobile {
-            display: none;
-        }
+        @include flex-row-1;
     }
 
     &__button {
