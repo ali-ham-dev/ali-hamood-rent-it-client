@@ -77,11 +77,7 @@ const Gallery = ({ media }) => {
             return null;
 
         const circles = [];
-        const circleCount = media.length;
-
-        if (circleCount > 20) {
-            circleCount = 20;
-        }
+        const circleCount = media.length < 20 ? media.length : 20;
 
         for (let i = 0; i < circleCount; i++) {
             circles.push(

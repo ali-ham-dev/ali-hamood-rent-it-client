@@ -34,7 +34,7 @@
 
         
         @include button-1-style;
-        &{
+        & {
             margin: 0rem;
             padding: 0.75rem;
         }
@@ -59,9 +59,9 @@
         padding: 1rem;
         margin: 1rem;
         @include corner-radius-1;
-        @include body-text-all;
         @include border-1;
-        &{ 
+        @include body-text-all;
+        & { 
             border-color: $error;
         }
     }

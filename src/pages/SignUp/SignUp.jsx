@@ -308,6 +308,7 @@ const SignUp = () => {
                 // TODO: Redirect to login or show success message page. 
                 // TODO: Fix hash issue
                 // TODO: Try to improve number input formatting
+                // TODO: used email error message
                 console.log('Sign up successful');
             }
         } catch (error) {
@@ -331,9 +332,9 @@ const SignUp = () => {
             setIsLoading(false);
             return;
         }
-        
-        await postSignUp();
+
         setIsLoading(false);
+        await postSignUp();
     };
 
     return (
