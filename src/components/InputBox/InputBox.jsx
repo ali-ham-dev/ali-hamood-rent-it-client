@@ -30,9 +30,11 @@ const InputBox = ({
                 id={inputBoxData.id}
                 name={inputBoxData.name}
                 value={inputBoxData.value}
+                placeholder={inputBoxData.placeholder}
                 onChange={onChange}
                 onBlur={onBlur}   
                 autoComplete={inputBoxData.autoComplete ? inputBoxData.autoComplete : 'off'}
+                maxLength={inputBoxData.maxLength}
             />
             {renderError()}
         </div>
