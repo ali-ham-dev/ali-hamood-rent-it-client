@@ -321,7 +321,7 @@ const SignUp = () => {
 
             if (response.status === 201) {
                 console.log('Sign up successful');
-                navigate(`/user-auth/${response.data.id}/${payload.email}/${response.data.verificationTokenExpires}`);
+                navigate(`/user-auth/${response.data.userId}/${encodeURIComponent(payload.email)}/${encodeURIComponent(response.data.verificationTokenExpires)}`);
             }
         } catch (error) {
             console.error('Sign up failed', error);
