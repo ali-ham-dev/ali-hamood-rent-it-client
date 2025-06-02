@@ -98,9 +98,7 @@ const Login = () => {
             const response = await axios.post(`${apiUrl}${loginWithEmailEp}`, {
                 email: email.value
             });
-            console.log(response);
             if (response.status === 200) {
-                console.log('response.data');
                 navigate('/user-auth' +
                     '/' +
                     encodeURIComponent(response.data.user.id).toString() +
