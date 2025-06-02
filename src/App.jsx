@@ -15,8 +15,8 @@ const checkJwtEp = import.meta.env.VITE_CHECK_JWT_EP;
 
 function App() {
 
-  const isLoggedIn = useRef(false);
-  const userData = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -29,15 +29,14 @@ function App() {
         .find(row => row.startsWith('user='));
 
       if (!jwtCookie || !userCookie) {
-        isLoggedIn.current = false;
-        console.log('Security cookie missing');
+        isLoggedIn && setIsLoggedIn(false);
         return;
       }
 
       try {
         const userData = JSON.parse(userCookie.split('=')[1]);
         if (!userData) { 
-          isLoggedIn.current = false;
+          isLoggedIn && setIsLoggedIn(false);
           console.log('userData is false');
           return;
         }
@@ -48,14 +47,14 @@ function App() {
             return value !== undefined && value !== null && value !== '';
         });
         if (!hasAllFields) {
-            isLoggedIn.current = false;
+            isLoggedIn && setIsLoggedIn(false);
             console.log('userData is missing or corrupted');
             return;
         }
 
         const jwt = jwtCookie.split('=')[1];
         if (!jwt) {
-          isLoggedIn.current = false;
+          isLoggedIn && setIsLoggedIn(false);
           console.log('jwt is false');
           return;
         }
@@ -74,16 +73,20 @@ function App() {
             response.data.user.email &&
             response.data.user.id === userData.id &&
             response.data.user.email === userData.email) {
-          isLoggedIn.current = true;
-          userData.current = userData;
+          isLoggedIn && setIsLoggedIn(true);
+          setUserData(userData);
+          console.log('Login successful.');
+          return;
         }
+        isLoggedIn && setIsLoggedIn(false);
+        console.log('Login failed.');
       } catch (error) {
         console.error('Error checking auth status:', error);
-        isLoggedIn.current = false;
+        isLoggedIn && setIsLoggedIn(false);
       }
     };
     checkAuthStatus();
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <BrowserRouter>
@@ -93,7 +96,7 @@ function App() {
         <Route path='/asset/:assetId' element={<AssetPage />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/user-auth/:userId/:email/:expires' element={<UserAuth isLoggedIn={isLoggedIn} />} />
+        <Route path='/user-auth/:userId/:email/:expires' element={<UserAuth setIsLoggedIn={setIsLoggedIn} />} />
       </Routes>
       <Footer />
     </BrowserRouter>

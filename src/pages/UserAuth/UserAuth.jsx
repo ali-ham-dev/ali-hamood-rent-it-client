@@ -7,7 +7,7 @@ import InputBox from '../../components/InputBox/InputBox';
 const apiUrl = import.meta.env.VITE_API_URL;
 const resendVerificationTokenEp = import.meta.env.VITE_RESEND_TOK_EP;
 const verifyEmailTokenEp = import.meta.env.VITE_VERIFY_EMAIL_TOKEN_EP;
-const UserAuth = () => {
+const UserAuth = ({ setIsLoggedIn }) => {
 
     const { userId, email } = useParams();
     const [expires, setExpires] = useState(useParams().expires);
@@ -128,6 +128,7 @@ const UserAuth = () => {
                 const { token, user } = response.data;
                 document.cookie = `jwt=${token}; path=/`;
                 document.cookie = `user=${JSON.stringify(user)}; path=/`;
+                setIsLoggedIn(true);
                 navigate('/');
             }
         } catch (error) {
