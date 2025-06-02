@@ -19,6 +19,12 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [jwt, setJwt] = useState(null);
 
+  const clearUserData = () => {
+    isLoggedIn && setIsLoggedIn(false);
+    userData && setUserData(null);
+    jwt && setJwt(null);
+  }
+
   useEffect(() => {
     const checkAuthStatus = async () => {
       const jwtCookie = document.cookie
@@ -30,14 +36,14 @@ function App() {
         .find(row => row.startsWith('user='));
 
       if (!jwtCookie || !userCookie) {
-        isLoggedIn && setIsLoggedIn(false);
+        clearUserData();
         return;
       }
 
       try {
         const userData = JSON.parse(userCookie.split('=')[1]);
         if (!userData) { 
-          isLoggedIn && setIsLoggedIn(false);
+          clearUserData();
           console.log('userData is false');
           return;
         }
@@ -48,14 +54,14 @@ function App() {
             return value !== undefined && value !== null && value !== '';
         });
         if (!hasAllFields) {
-            isLoggedIn && setIsLoggedIn(false);
+            clearUserData();
             console.log('userData is missing or corrupted');
             return;
         }
 
         const jwt = jwtCookie.split('=')[1];
         if (!jwt) {
-          isLoggedIn && setIsLoggedIn(false);
+          clearUserData();
           console.log('jwt is false');
           return;
         }
@@ -64,7 +70,7 @@ function App() {
           headers: {
             'Authorization': `Bearer ${jwt}`
           }
-        }, [isLoggedIn]);
+        });
 
         if (response && 
             response.data && 
@@ -74,17 +80,17 @@ function App() {
             response.data.user.email &&
             response.data.user.id === userData.id &&
             response.data.user.email === userData.email) {
-          isLoggedIn && setIsLoggedIn(true);
+          !(isLoggedIn) && setIsLoggedIn(true);
           setUserData(userData);
           setJwt(jwt);
           console.log('Login successful.');
           return;
         }
-        isLoggedIn && setIsLoggedIn(false);
+        clearUserData();
         console.log('Login failed.');
       } catch (error) {
         console.error('Error checking auth status:', error);
-        isLoggedIn && setIsLoggedIn(false);
+        clearUserData();
       }
     };
     checkAuthStatus();
@@ -92,7 +98,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header isLoggedIn={isLoggedIn} /> 
+      <Header isLoggedIn={isLoggedIn} userData={userData} /> 
       <Routes>
         <Route path='/' element={<HomePublic />} />
         <Route path='/asset/:assetId' element={<AssetPage />} />
