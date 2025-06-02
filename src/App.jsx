@@ -1,6 +1,7 @@
 import './App.scss';
 import { useRef, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 import Header from './components/Header/Header';
 import HomePublic from './pages/HomePublic/HomePublic';
 import AssetPage from './pages/AssetPage/AssetPage';
@@ -9,59 +10,78 @@ import UserAuth from './pages/UserAuth/UserAuth';
 import Login from './pages/Login/Login';
 import Footer from './components/Footer/Footer';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+const checkJwtEp = import.meta.env.VITE_CHECK_JWT_EP;
+
 function App() {
 
   const isLoggedIn = useRef(false);
 
   useEffect(() => {
-    const checkAuthStatus = () => {
-      console.log('Checking auth status');
+    const checkAuthStatus = async () => {
       const jwtCookie = document.cookie
         .split('; ')
         .find(row => row.startsWith('jwt='));
 
-      console.log(jwtCookie);
-      
-      // Get user data from cookie
       const userCookie = document.cookie
         .split('; ')
         .find(row => row.startsWith('user='));
 
       if (!jwtCookie || !userCookie) {
         isLoggedIn.current = false;
+        console.log('Security cookie missing');
         return;
       }
 
       try {
-        // Extract token and user data
-        const token = jwtCookie.split('=')[1];
-        const userData = JSON.parse(decodeURIComponent(userCookie.split('=')[1]));
-
-        // Basic validation of user data
-        if (!userData || !userData.id || !userData.email) {
+        const userData = JSON.parse(userCookie.split('=')[1]);
+        if (!userData) { 
           isLoggedIn.current = false;
+          console.log('userData is false');
           return;
         }
 
-        // TODO: Add JWT validation here
-        // This would require:
-        // 1. Decoding the JWT
-        // 2. Checking expiration
-        // 3. Verifying signature with public key
-        // For now, we'll just check if token exists
-        if (token) {
-          isLoggedIn.current = true;
-        } else {
+        const requiredFields = ['id', 'email', 'firstName', 'lastName', 'phone'];
+        const hasAllFields = requiredFields.every(field => {
+            const value = userData[field];
+            return value !== undefined && value !== null && value !== '';
+        });
+        if (!hasAllFields) {
+            isLoggedIn.current = false;
+            console.log('userData is missing or corrupted');
+            return;
+        }
+
+        const jwt = jwtCookie.split('=')[1];
+        if (!jwt) {
           isLoggedIn.current = false;
+          console.log('jwt is false');
+          return;
+        }
+
+        const response = await axios.post(`${apiUrl}${checkJwtEp}`, {}, {
+          headers: {
+            'Authorization': `Bearer ${jwt}`
+          }
+        }, [isLoggedIn]);
+
+        if (response && 
+          response.data && 
+          response.data.valid && 
+          response.data.user && 
+          response.data.user.id && 
+          response.data.user.email &&
+          response.data.user.id === userData.id &&
+          response.data.user.email === userData.email) {
+
+          isLoggedIn.current = true;
         }
       } catch (error) {
         console.error('Error checking auth status:', error);
         isLoggedIn.current = false;
       }
     };
-
     checkAuthStatus();
-    console.log(isLoggedIn.current);
   }, []);
 
   return (
