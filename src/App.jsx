@@ -17,6 +17,7 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [jwt, setJwt] = useState(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -75,6 +76,7 @@ function App() {
             response.data.user.email === userData.email) {
           isLoggedIn && setIsLoggedIn(true);
           setUserData(userData);
+          setJwt(jwt);
           console.log('Login successful.');
           return;
         }
