@@ -1,10 +1,10 @@
 import './Logo.scss';
 import { Link } from 'react-router-dom';
 
-const Logo = () => {
+const Logo = ({ userName }) => {
     return (
         <Link to='/' className='logo'>
-            <h1 className='logo__title'>Rent it</h1>
+            <h1 className='logo__title'>{userName ? `${userName}'s ` : ''}Rent it</h1>
         </Link>
     )
 }

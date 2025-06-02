@@ -25,6 +25,14 @@ function App() {
     jwt && setJwt(null);
   }
 
+  const clearAllUserData = () => {
+    clearUserData();
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+
   useEffect(() => {
     const checkAuthStatus = async () => {
       const jwtCookie = document.cookie
@@ -98,7 +106,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header isLoggedIn={isLoggedIn} userData={userData} /> 
+      <Header isLoggedIn={isLoggedIn} userData={userData} clearAllUserData={clearAllUserData} /> 
       <Routes>
         <Route path='/' element={<HomePublic />} />
         <Route path='/asset/:assetId' element={<AssetPage />} />
