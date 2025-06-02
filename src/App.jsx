@@ -16,6 +16,7 @@ const checkJwtEp = import.meta.env.VITE_CHECK_JWT_EP;
 function App() {
 
   const isLoggedIn = useRef(false);
+  const userData = useRef(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -66,15 +67,15 @@ function App() {
         }, [isLoggedIn]);
 
         if (response && 
-          response.data && 
-          response.data.valid && 
-          response.data.user && 
-          response.data.user.id && 
-          response.data.user.email &&
-          response.data.user.id === userData.id &&
-          response.data.user.email === userData.email) {
-
+            response.data && 
+            response.data.valid && 
+            response.data.user && 
+            response.data.user.id && 
+            response.data.user.email &&
+            response.data.user.id === userData.id &&
+            response.data.user.email === userData.email) {
           isLoggedIn.current = true;
+          userData.current = userData;
         }
       } catch (error) {
         console.error('Error checking auth status:', error);
