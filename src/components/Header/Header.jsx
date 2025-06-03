@@ -61,15 +61,16 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
                         )
                     }
                     {
-                        (!isLoggedIn) && (
+                        isLoggedIn ? (
+                            <button className='header__button' onClick={handleMenu}>
+                                {displayMenu ? 'Close' : 'Menu'}
+                            </button>
+                        ) : (
                             <Link to='/signup'>
                                 <button className='header__button'>Sign Up</button>
                             </Link>
                         )
                     }
-                    <button className='header__button' onClick={handleMenu}>
-                        {displayMenu ? 'Close' : 'Menu'}
-                    </button>
                     {displayMenu && <Menu headerHeight={headerHeight} />}
                 </div>
             </div>

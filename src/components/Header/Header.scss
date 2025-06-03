@@ -61,15 +61,21 @@
 
     &__button {
         width: 100%;
-        @include button-1-style($black, $white, $white, $black, $black);
-        @include desktop-and-tablet {
-            width: fit-content;
-        }
         &:first-child {
             margin-left: 0;
         }
         &:last-child {
             margin-right: 0;
+        }
+        @include button-1-style($black, $white, $white, $black, $black);
+        @include desktop-and-tablet {
+            width: fit-content;
+            &:first-child {
+                margin-left: 0.5rem;
+            }
+            &:last-child {
+                margin-right: 0.5rem;
+            }
         }
     }
 
