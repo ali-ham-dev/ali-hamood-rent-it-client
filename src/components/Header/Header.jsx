@@ -26,7 +26,7 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
         return () => {
             window.removeEventListener('resize', updateHeaderHeight);
         };
-    }, []);
+    }, [headerHeight]);
 
     const handleLogout = () => {
         clearAllUserData && clearAllUserData();

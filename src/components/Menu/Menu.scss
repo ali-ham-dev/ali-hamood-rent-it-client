@@ -17,8 +17,16 @@ $menu-spacing: 0.25rem;
     @include corner-radius-1;
     @include border-1;
 
+    @include tablet {
+        right: 4rem;
+    }
+
+    @include desktop {
+        right: 10rem;
+
+    }
+
     @include desktop-and-tablet {
-        right: 0;
         left: auto;
         width: fit-content;
     }
