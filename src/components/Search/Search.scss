@@ -9,7 +9,8 @@
     margin-right: 0;
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
-    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
     @include corner-radius-1;
     @include border-1;
     @include flex-row-1;

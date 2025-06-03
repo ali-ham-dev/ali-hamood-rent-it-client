@@ -29,23 +29,26 @@
         }
     }
 
-    &__row-2 {
+    &__user-info-mobile {
+        display: block;
+        @include desktop-and-tablet {
+            display: none;
+        }
+    }
+
+    &__user-info-desktop-tablet {
         display: none;
         @include desktop-and-tablet {
             display: block;
         }
     }
 
-    &__link {
-        @include no-underline;
-    }
-
-    &__first-name {
-        @include button-label-all;
-    }
-
-    &__last-name {
-        @include button-label-all;
+    &__logo-and-user-info {
+        width: 100%;
+        @include flex-row-1;
+        @include desktop-and-tablet {
+            width: fit-content;
+        }
     }
 
     &__buttons {
@@ -62,5 +65,23 @@
         @include desktop-and-tablet {
             width: fit-content;
         }
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__link {
+        @include no-underline;
+    }
+
+    &__first-name {
+        @include heading-3-all;
+    }
+
+    &__last-name {
+        @include heading-3-all;
     }
 }

@@ -40,7 +40,15 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
     return (
         <header className='header' ref={headerRef}>
             <div className='header__row-1'>
-                <Logo />
+                <div className='header__logo-and-user-info'>
+                    <Logo />
+                    <div className='header__user-info-mobile'>
+                        <Link to='/' className='header__link'>
+                            <span className='header__first-name'>{userData?.firstName ? `${userData?.firstName} ` : ''}</span>
+                            <span className='header__last-name'>{userData?.lastName ? `${userData?.lastName} ` : ''}</span>
+                        </Link>
+                    </div>
+                </div>
                 <Search />
                 <div className='header__buttons'>
                     {
@@ -65,7 +73,7 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
                     {displayMenu && <Menu headerHeight={headerHeight} />}
                 </div>
             </div>
-            <div className='header__row-2'>
+            <div className='header__user-info-desktop-tablet'>
                 <Link to='/' className='header__link'>
                     <span className='header__first-name'>{userData?.firstName ? `${userData?.firstName} ` : ''}</span>
                     <span className='header__last-name'>{userData?.lastName ? `${userData?.lastName} ` : ''}</span>
