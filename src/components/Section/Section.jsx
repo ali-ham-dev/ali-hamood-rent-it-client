@@ -16,6 +16,9 @@ const Section = ({ title, headingLevel, content }) => {
         }
     }
 
+    // TODO: Make section collapsible.
+    // TODO: ....
+
     return (
         <section className='section'>
             {renderHeading(title, headingLevel)}

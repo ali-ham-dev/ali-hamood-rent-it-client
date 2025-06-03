@@ -1,10 +1,20 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as *;
 
-.make-ad {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+.prosemirror-editor {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    min-height: 300px;
+    margin: 20px 0;
+    background-color: #fff;
+
+    .ProseMirror {
+        min-height: 250px;
+        outline: none;
+    }
+
+    .ProseMirror-menubar {
+        margin-bottom: 10px;
+    }
 }
