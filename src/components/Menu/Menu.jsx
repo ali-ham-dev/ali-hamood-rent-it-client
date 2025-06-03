@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 // TODO: notifications should change appearance when unReadNotifications is true.
 const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
     const handleClick = (e) => {
-        console.log('handleClick');
         setDisplayMenu(false);
     }
 
