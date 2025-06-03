@@ -2,8 +2,12 @@
 @use '../../styles/mixins' as *;
 
 .logo {
-    @include no-underline;
-    
+    @include flex-column-2;
+
+    &__link {
+        @include no-underline;
+    }
+
     &__title {
         color: $black;
         white-space: nowrap;
