@@ -7,7 +7,6 @@
     padding-bottom: 0.5rem;
     height: 8rem;
     @include border-1;
-    @include flex-column-1;
     @include no-margin;
     @include left-right-page-padding;
 
@@ -23,15 +22,45 @@
         height: 100%;
     }
 
-    @include desktop-and-tablet {
-        @include flex-row-1;
+    &__row-1 {
+        @include flex-column-1;
+        @include desktop-and-tablet {
+            @include flex-row-1;
+        }
+    }
+
+    &__row-2 {
+        display: none;
+        @include desktop-and-tablet {
+            display: block;
+        }
+    }
+
+    &__link {
+        @include no-underline;
+    }
+
+    &__first-name {
+        @include button-label-all;
+    }
+
+    &__last-name {
+        @include button-label-all;
     }
 
     &__buttons {
+        width: 100%;
         @include flex-row-1;
+        @include desktop-and-tablet {
+            width: fit-content;
+        }
     }
 
     &__button {
+        width: 100%;
         @include button-1-style($black, $white, $white, $black, $black);
+        @include desktop-and-tablet {
+            width: fit-content;
+        }
     }
 }

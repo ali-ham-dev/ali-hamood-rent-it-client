@@ -32,35 +32,44 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
         clearAllUserData && clearAllUserData();
         navigate('/');
     }
+    
     const handleMenu = () => {
         setDisplayMenu(!displayMenu);
     }
 
     return (
         <header className='header' ref={headerRef}>
-            <Logo userName={userData?.firstName} />
-            <Search />
-            <div className='header__buttons'>
-                {
-                    isLoggedIn ? (
-                        <button className='header__button' onClick={handleLogout}>Logout</button>
-                    ) : (
-                        <Link to='/login'>
-                            <button className='header__button'>Login</button>
-                        </Link>
-                    )
-                }
-                {
-                    (!isLoggedIn) && (
-                        <Link to='/signup'>
-                            <button className='header__button'>Sign Up</button>
-                        </Link>
-                    )
-                }
-                <button className='header__button' onClick={handleMenu}>
-                    {displayMenu ? 'Close' : 'Menu'}
-                </button>
-                {displayMenu && <Menu headerHeight={headerHeight} />}
+            <div className='header__row-1'>
+                <Logo />
+                <Search />
+                <div className='header__buttons'>
+                    {
+                        isLoggedIn ? (
+                            <button className='header__button' onClick={handleLogout}>Logout</button>
+                        ) : (
+                            <Link to='/login'>
+                                <button className='header__button'>Login</button>
+                            </Link>
+                        )
+                    }
+                    {
+                        (!isLoggedIn) && (
+                            <Link to='/signup'>
+                                <button className='header__button'>Sign Up</button>
+                            </Link>
+                        )
+                    }
+                    <button className='header__button' onClick={handleMenu}>
+                        {displayMenu ? 'Close' : 'Menu'}
+                    </button>
+                    {displayMenu && <Menu headerHeight={headerHeight} />}
+                </div>
+            </div>
+            <div className='header__row-2'>
+                <Link to='/' className='header__link'>
+                    <span className='header__first-name'>{userData?.firstName ? `${userData?.firstName} ` : ''}</span>
+                    <span className='header__last-name'>{userData?.lastName ? `${userData?.lastName} ` : ''}</span>
+                </Link>
             </div>
         </header>         
     )
