@@ -2,7 +2,9 @@ import './Menu.scss';
 import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Menu = ({ headerHeight }) => {
+// TODO: add correct paths.
+// TODO: notifications should change appearance when unReadNotifications is true.
+const Menu = ({ headerHeight, unReadNotifications }) => {
     const menuRef = useRef(null);
     const menuItems = [
         {
