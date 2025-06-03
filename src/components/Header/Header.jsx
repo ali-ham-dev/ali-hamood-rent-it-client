@@ -2,19 +2,42 @@ import './Header.scss';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Search from '../Search/Search';
+import Menu from '../Menu/Menu';
 import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 
 const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
-
     const navigate = useNavigate();
+    const headerRef = useRef(null);
+    const [displayMenu, setDisplayMenu] = useState(false);
+    const [headerHeight, setHeaderHeight] = useState(84);
+
+    const updateHeaderHeight = () => {
+        if (headerRef.current) {
+            const headerHeight = headerRef.current.offsetHeight;
+            setHeaderHeight(headerHeight);
+        }
+    }
+
+    useEffect(() => {
+        updateHeaderHeight();
+        window.addEventListener('resize', updateHeaderHeight);
+
+        return () => {
+            window.removeEventListener('resize', updateHeaderHeight);
+        };
+    }, []);
 
     const handleLogout = () => {
         clearAllUserData && clearAllUserData();
         navigate('/');
     }
+    const handleMenu = () => {
+        setDisplayMenu(!displayMenu);
+    }
 
     return (
-        <header className='header'>
+        <header className='header' ref={headerRef}>
             <Logo userName={userData?.firstName} />
             <Search />
             <div className='header__buttons'>
@@ -30,7 +53,7 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
                 {
                     isLoggedIn ? (
                         <Link to='/'>
-                            <button className='header__button'>Notifications</button>
+                            <button className='header__button'>Inbox</button>
                         </Link>
                     ) : (
                         <Link to='/signup'>
@@ -38,7 +61,10 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
                         </Link>
                     )
                 }
-                <button className='header__button'>Menu</button>
+                <button className='header__button' onClick={handleMenu}>
+                    {displayMenu ? 'Close' : 'Menu'}
+                </button>
+                {displayMenu && <Menu headerHeight={headerHeight} />}
             </div>
         </header>         
     )
