@@ -71,7 +71,7 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
                             </Link>
                         )
                     }
-                    {displayMenu && <Menu headerHeight={headerHeight} />}
+                    {displayMenu && <Menu headerHeight={headerHeight} setDisplayMenu={setDisplayMenu} />}
                 </div>
             </div>
             <div className='header__user-info-desktop-tablet'>
