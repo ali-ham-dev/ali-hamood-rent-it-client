@@ -51,11 +51,7 @@ const Header = ({ isLoggedIn, userData, clearAllUserData}) => {
                     )
                 }
                 {
-                    isLoggedIn ? (
-                        <Link to='/'>
-                            <button className='header__button'>Inbox</button>
-                        </Link>
-                    ) : (
+                    (!isLoggedIn) && (
                         <Link to='/signup'>
                             <button className='header__button'>Sign Up</button>
                         </Link>
