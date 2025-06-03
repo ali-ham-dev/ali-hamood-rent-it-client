@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header/Header';
-import HomePublic from './pages/HomePublic/HomePublic';
+import AssetsPage from './pages/AssetsPage/AssetsPage';
 import AssetPage from './pages/AssetPage/AssetPage';
 import SignUp from './pages/SignUp/SignUp';
 import UserAuth from './pages/UserAuth/UserAuth';
@@ -108,7 +108,7 @@ function App() {
     <BrowserRouter>
       <Header isLoggedIn={isLoggedIn} userData={userData} clearAllUserData={clearAllUserData} /> 
       <Routes>
-        <Route path='/' element={<HomePublic />} />
+        <Route path='/' element={<AssetsPage />} />
         <Route path='/asset/:assetId' element={<AssetPage />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />

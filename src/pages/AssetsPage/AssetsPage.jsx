@@ -1,4 +1,4 @@
-import './HomePublic.scss';
+import './AssetsPage.scss';
 import AssetCardPublic from '../../components/AssetCardPublic/AssetCardPublic';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -14,7 +14,7 @@ const assetsEp = import.meta.env.VITE_ASSETS_EP;
 // - Add dynamic filters.
 // - AI and search. 
 
-const HomePublic = () => {
+const AssetsPage = () => {
 
     const [assetIds, setAssetIds] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -86,11 +86,11 @@ const HomePublic = () => {
 
     return (
         <main>
-            <div className='home-public'>
+            <div className='assets-page'>
                 {renderAssetCards()}
             </div>
         </main>
     )
 }
 
-export default HomePublic;
+export default AssetsPage;
