@@ -4,6 +4,7 @@ import Section from '../../components/Section/Section';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import InputBox from '../../components/InputBox/InputBox';
+import DropDown from '../../components/DropDown/DropDown';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
@@ -25,6 +26,24 @@ const MakeAd = ({ jwt }) => {
         isRequired: true,
         maxLength: 254
     });
+    const [price, setPrice] = useState({
+        htmlFor: 'ad',
+        labelText: '',
+        type: 'text',
+        name: 'price',
+        value: '',
+        placeholder: '$100',
+        error: false,
+        errorMessage: '',
+        isRequired: true,
+        maxLength: 1000
+    });
+    const [content, setContent] = useState([
+        'day',
+        'week',
+        'month',
+        'year'
+    ]);
 
     const fetchTinymceSessionJwt = async() => {
         try {
@@ -106,8 +125,20 @@ const MakeAd = ({ jwt }) => {
 
     return (
         <main className='make-ad'>
-            <Section title='Title:' headingLevel='h2' content={
+            <Section title='Title:' headingLevel='h2' isCollapsible={true} content={
                 <InputBox inputBoxData={title} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
+            } />
+            <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
+                <DropDown title='Category:' content={content} />
+            } />
+            <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
+                <div className='make-ad__price-container'>
+                    <InputBox inputBoxData={price} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
+                    <DropDown title='Period:' content={content} /> 
+                </div>
+            } />
+            <Section title='Location:' headingLevel='h2' isCollapsible={true} content={
+                <InputBox inputBoxData={location} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Description:' headingLevel='h2' isCollapsible={true} content={
                 isLoading ? (

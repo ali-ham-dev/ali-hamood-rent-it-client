@@ -1,0 +1,56 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.drop-down {
+
+    background-color: $white;
+    padding: 0.15rem;
+    transition: box-shadow 3s ease;
+    @include corner-radius-1;
+    @include shadow-2;
+
+
+    &__header-button {
+        width: 100%;
+        @include flex-row-1;
+        @include button-1-style;
+        @include no-margin;
+
+        & {
+            margin-bottom: 0.5rem;
+        }
+
+    }
+
+    &__title {
+        @include heading-4-all;
+        @include no-padding;
+        @include no-margin;
+    }
+
+    &__header-icon {
+        width: 24px;
+        height: 24px;
+        fill: inherit;
+        color: inherit;
+
+        @include no-margin;
+
+        &:hover {
+            fill: inherit;
+            color: inherit;
+        }
+
+    }
+
+    &__content {
+        width: 100%;
+        @include flex-row-1;
+        @include button-1-style;
+        @include no-margin;
+
+        &:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
