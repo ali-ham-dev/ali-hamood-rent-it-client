@@ -9,6 +9,7 @@ const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
 
 const MakeAd = ({ jwt }) => {
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
+    const [tinymceApiKey, setTinymceApiKey] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const handleEditorChange = (content, editor) => {
@@ -43,8 +44,39 @@ const MakeAd = ({ jwt }) => {
         }
     }
 
+    const fetchTinymceApiKey = async() => {
+        try {
+            if (!jwt) {
+                console.log('User is not logged in.');
+                setIsLoading(false);
+                return;
+            }
+
+            const headers = {
+                'Authorization': `Bearer ${jwt}`
+            }
+            const response = await axios.get(`${apiUrl}${tinymceEp}`, { headers });
+
+            if (response && 
+                response.data && 
+                response.status === 200 &&
+                response.data.apiKey) {
+                setTinymceApiKey(response.data.apiKey);
+            } else {
+                console.error('Error fetching TinyMCE api key:', response);
+            }
+        } catch (error) {
+            console.error('Error fetching TinyMCE api key:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     useEffect( () => {
-        fetchTinymceSessionJwt();
+        // TOKEN based auth is a paid tier.
+        // TODO: self host tinymce or switch to prosemirror. 
+        // For now, we're using the api key.
+        fetchTinymceApiKey();
     }, [jwt]);
 
     return (
@@ -52,9 +84,9 @@ const MakeAd = ({ jwt }) => {
             <Section title='Make Ad' headingLevel='h2' content={
                 isLoading ? (
                     <div className='make-ad__loading-editor'>Loading editor...</div>
-                ) : tinymceSessionJwt ? (
+                ) : tinymceApiKey ? (
                     <Editor
-                        apiKey={tinymceSessionJwt}
+                        apiKey={tinymceApiKey}
                         init={{
                             height: 500,
                             menubar: false,
@@ -72,7 +104,7 @@ const MakeAd = ({ jwt }) => {
                         onEditorChange={handleEditorChange}
                     />
                 ) : (
-                    <div>Please log in to use the editor.</div>
+                    <div className='make-ad__not-logged-in'>Please log in to use the editor.</div>
                 )
             } />
         </div>
