@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Section from '../../components/Section/Section';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
+import InputBox from '../../components/InputBox/InputBox';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
@@ -10,11 +11,20 @@ const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
 const MakeAd = ({ jwt }) => {
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
 
-    const handleEditorChange = (content, editor) => {
-        console.log('TinyMCE Content:', content);
-    };
+    const [isLoading, setIsLoading] = useState(true);
+    const [title, setTitle] = useState({
+        htmlFor: 'ad',
+        labelText: '',
+        type: 'text',
+        name: 'title',
+        value: '',
+        placeholder: 'Ad a title for your ad...',
+        error: false,
+        errorMessage: '',
+        isRequired: true,
+        maxLength: 254
+    });
 
     const fetchTinymceSessionJwt = async() => {
         try {
@@ -79,27 +89,45 @@ const MakeAd = ({ jwt }) => {
         fetchTinymceApiKey();
     }, [jwt]);
 
+    const handleEditorChange = (content, editor) => {
+        console.log('TinyMCE Content:', content);
+    };
+
+    const handleInputBoxChange = (e) => {
+        setTitle({
+            ...title,
+            value: e.target.value
+        });
+    };
+
+    const handleInputBoxBlur = (e) => {
+
+    };
+
     return (
-        <div className='make-ad'>
-            <Section title='Make Ad' headingLevel='h2' content={
+        <main className='make-ad'>
+            <Section title='Title:' headingLevel='h2' content={
+                <InputBox inputBoxData={title} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
+            } />
+            <Section title='Description:' headingLevel='h2' content={
                 isLoading ? (
                     <div className='make-ad__loading-editor'>Loading editor...</div>
                 ) : tinymceApiKey ? (
                     <Editor
                         apiKey={tinymceApiKey}
                         init={{
-                            height: 500,
+                            height: 400,
                             menubar: false,
                             plugins: [
                                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                                'anchor', 'searchreplace', 'visualblocks', 'code',
+                                'insertdatetime', 'media', 'table', 'wordcount'
                             ],
                             toolbar: 'undo redo | blocks | ' +
                                 'bold italic underline | alignleft aligncenter ' +
                                 'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat | help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                'removeformat',
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height: 0.25rem }'
                         }}
                         onEditorChange={handleEditorChange}
                     />
@@ -107,7 +135,7 @@ const MakeAd = ({ jwt }) => {
                     <div className='make-ad__not-logged-in'>Please log in to use the editor.</div>
                 )
             } />
-        </div>
+        </main>
     );
 };
 
