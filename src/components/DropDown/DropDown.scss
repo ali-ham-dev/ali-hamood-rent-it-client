@@ -2,13 +2,11 @@
 @use '../../styles/mixins' as *;
 
 .drop-down {
-
     background-color: $white;
     padding: 0.15rem;
     transition: box-shadow 3s ease;
     @include corner-radius-1;
     @include shadow-2;
-
 
     &__header-button {
         width: 100%;
@@ -20,10 +18,15 @@
             margin-bottom: 0.5rem;
         }
 
+        &--open {
+            background-color: $white;
+            color: $black;
+            border-color: $black;
+        }
     }
 
     &__title {
-        @include heading-4-all;
+        @include button-label-all;
         @include no-padding;
         @include no-margin;
     }
@@ -31,16 +34,14 @@
     &__header-icon {
         width: 24px;
         height: 24px;
-        fill: inherit;
-        color: inherit;
-
+        fill: $white;
+        color: $white;
         @include no-margin;
 
-        &:hover {
-            fill: inherit;
-            color: inherit;
+        &--open {
+            fill: $black;
+            color: $black;
         }
-
     }
 
     &__content {

@@ -38,6 +38,7 @@ const MakeAd = ({ jwt }) => {
         isRequired: true,
         maxLength: 1000
     });
+    const [period, setPeriod] = useState('');
     const [content, setContent] = useState([
         'day',
         'week',
@@ -133,8 +134,8 @@ const MakeAd = ({ jwt }) => {
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__price-container'>
-                    <InputBox inputBoxData={price} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
-                    <DropDown title='Period:' content={content} /> 
+                    <InputBox inputBoxData={price} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} value={price} />
+                    <DropDown content={content} setValue={setPeriod} value={period} /> 
                 </div>
             } />
             <Section title='Location:' headingLevel='h2' isCollapsible={true} content={
