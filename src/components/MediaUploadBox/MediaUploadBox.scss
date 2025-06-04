@@ -1,0 +1,10 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.media-upload-box {
+    &__dropzone-text {
+        box-sizing: border-box;
+        @include body-text-all;
+        @include no-margin;
+    }
+}

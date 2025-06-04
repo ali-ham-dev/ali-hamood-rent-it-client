@@ -5,9 +5,12 @@ import axios from 'axios';
 import InputBox from '../../components/InputBox/InputBox';
 import DropDown from '../../components/DropDown/DropDown';
 import TinyMceEditor from '../../components/TinyMceEditor/TinyMceEditor';
+import MediaUploadBox from '../../components/MediaUploadBox/MediaUploadBox';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
+const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
+const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 
 const MakeAd = ({ jwt }) => {
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
@@ -97,8 +100,6 @@ const MakeAd = ({ jwt }) => {
             }
         } catch (error) {
             console.error('Error fetching TinyMCE api key:', error);
-        } finally {
-            setIsLoading(false);
         }
     }
 
@@ -107,6 +108,7 @@ const MakeAd = ({ jwt }) => {
         // TODO: self host tinymce or switch to prosemirror. 
         // For now, we're using the api key.
         fetchTinymceApiKey();
+        setIsLoading(false);
     }, [jwt]);
 
     const handleEditorChange = (content, editor) => {
@@ -140,7 +142,7 @@ const MakeAd = ({ jwt }) => {
                 <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
-                <DropDown title='Category:' content={content} />
+                <MediaUploadBox />
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__price-container'>
