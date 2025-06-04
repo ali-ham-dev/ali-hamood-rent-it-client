@@ -3,6 +3,7 @@
 
 .media-upload-box {
     width: 100%;
+    height: fit-content;
     padding: 1rem;
     box-sizing: border-box;
     @include border-1;
@@ -32,15 +33,17 @@
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
     }
 
     &__preview-item {
         opacity: 0.5;
-        max-width: 10rem;
-        object-fit: cover;
+        max-width: 15rem;
         transition: opacity 0.5s ease;
-        @include corner-radius-1;
-        @include border-1;
+        border-radius: 1rem;
+        overflow: hidden;
 
         &:hover {
             opacity: 1;
