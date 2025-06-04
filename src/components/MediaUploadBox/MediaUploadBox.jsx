@@ -15,6 +15,8 @@ const MediaUploadBox = () => {
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
     const [files, setFiles] = useState([]);
+    const [error, setError] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('Error message');
 
     const fetchFileExtensions = async () => {
         try {
@@ -79,7 +81,11 @@ const MediaUploadBox = () => {
 
                 </div>
             )}
-            {/* TODO: error box */}
+            {error && (
+                <div className='media-upload-box__error'>
+                    <p className='media-upload-box__error-message'>{errorMessage}</p>
+                </div>
+            )}
             {files.length > 0 && (
                 <div className='media-upload-box__preview'>
                     {files.map((file, index) => (

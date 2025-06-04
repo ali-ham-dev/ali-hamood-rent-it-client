@@ -12,12 +12,15 @@
         padding: 2rem;
         border: 2px dashed $primary-dark;
         background-color: $primary-light;
+        color: $primary-dark;
         transition: background-color 0.3s ease;
         text-align: center;
         @include corner-radius-1;
 
         &:hover {
             background-color: $primary-dark;
+            color: $primary-light;
+            border-color: $secondary-dark;
         }
     }
 
@@ -25,7 +28,7 @@
         @include body-text-all;
         @include no-margin;
         & {
-            color: $primary-dark;
+            color: inherit;
         }
     }
 
@@ -72,35 +75,19 @@
             transform: scale(1.3);
         }
     }
+
+    &__error {
+        background-color: $white;
+        color: $error;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid $error;
+        @include corner-radius-1;
+    }
+
+    &__error-message {
+        color: inherit;
+        @include body-text-all;
+        @include no-margin;
+    }
 }
-
-
-// .media-upload-box {
-//     padding: 20px;
-//     border: 2px dashed #aaa;
-//     border-radius: 10px;
-//     background-color: #f9f9f9;
-//     transition: background-color 0.3s ease;
-  
-//     &__dropzone {
-//       padding: 40px;
-//       text-align: center;
-//       cursor: pointer;
-//       color: #333;
-//       font-size: 16px;
-  
-//       &:hover {
-//         background-color: #f0f0f0;
-//       }
-//     }
-  
-//     &__dropzone-text {
-//       margin: 0;
-//     }
-  
-//     &__dropzone-active {
-//       background-color: #e0f7fa;
-//       border-color: #00acc1;
-//     }
-//   }
-  
