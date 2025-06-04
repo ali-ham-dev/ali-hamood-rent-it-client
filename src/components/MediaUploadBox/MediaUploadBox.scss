@@ -2,9 +2,87 @@
 @use '../../styles/mixins' as *;
 
 .media-upload-box {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    @include border-1;
+
+    &__dropzone {
+        padding: 2rem;
+        border: 2px dashed $primary-dark;
+        background-color: $primary-light;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        @include corner-radius-1;
+
+        &:hover {
+            background-color: $primary-dark;
+        }
+    }
+
     &__dropzone-text {
-        box-sizing: border-box;
         @include body-text-all;
         @include no-margin;
+        & {
+            color: $primary-dark;
+        }
     }
+
+    &__preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    &__preview-item {
+        opacity: 0.5;
+        max-width: 10rem;
+        object-fit: cover;
+        transition: opacity 0.5s ease;
+        @include corner-radius-1;
+        @include border-1;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &__preview-image,
+    &__preview-video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    
 }
+
+
+// .media-upload-box {
+//     padding: 20px;
+//     border: 2px dashed #aaa;
+//     border-radius: 10px;
+//     background-color: #f9f9f9;
+//     transition: background-color 0.3s ease;
+  
+//     &__dropzone {
+//       padding: 40px;
+//       text-align: center;
+//       cursor: pointer;
+//       color: #333;
+//       font-size: 16px;
+  
+//       &:hover {
+//         background-color: #f0f0f0;
+//       }
+//     }
+  
+//     &__dropzone-text {
+//       margin: 0;
+//     }
+  
+//     &__dropzone-active {
+//       background-color: #e0f7fa;
+//       border-color: #00acc1;
+//     }
+//   }
+  
