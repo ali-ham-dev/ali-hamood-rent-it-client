@@ -114,7 +114,7 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/user-auth/:userId/:email/:expires' element={<UserAuth setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/asset/make-ad' element={<MakeAd />} />
+        <Route path='/asset/make-ad' element={<MakeAd jwt={jwt} />} />
       </Routes>
       <Footer />
     </BrowserRouter>
