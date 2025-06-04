@@ -39,6 +39,7 @@
     }
 
     &__preview-item {
+        position: relative;
         opacity: 0.5;
         max-width: 15rem;
         height: fit-content;
@@ -55,7 +56,22 @@
         width: 100%;
         height: auto;
     }
-    
+
+    &__preview-item-delete-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        padding: 0.25rem;
+
+        &:hover {
+            transform: scale(1.3);
+        }
+    }
 }
 
 

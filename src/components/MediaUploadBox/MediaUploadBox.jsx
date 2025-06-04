@@ -2,6 +2,7 @@ import './MediaUploadBox.scss';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import TrashCanIcon from '../TrashCanIcon/TrashCanIcon';
 
 const maxFileSize = import.meta.env.VITE_MAX_FILE_SIZE_MB;
 const maxTotalFileSize = import.meta.env.VITE_MAX_TOTAL_SIZE_MB;
@@ -72,10 +73,14 @@ const MediaUploadBox = () => {
 
                 </div>
             )}
+            {/* TODO: error box */}
             {files.length > 0 && (
                 <div className='media-upload-box__preview'>
                     {files.map((file, index) => (
                         <div key={index} className='media-upload-box__preview-item'>
+                            <button className='media-upload-box__preview-item-delete-button'>
+                                <TrashCanIcon />
+                            </button>
                             {file.type.startsWith('image/') ? (
                                 <img className='media-upload-box__preview-image' src={file.preview} alt={file.name} />
                             ) : (

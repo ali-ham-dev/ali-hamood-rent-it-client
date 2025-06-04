@@ -9,8 +9,6 @@ import MediaUploadBox from '../../components/MediaUploadBox/MediaUploadBox';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
-const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
-const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 
 const MakeAd = ({ jwt }) => {
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
