@@ -50,6 +50,12 @@ const MediaUploadBox = () => {
         setFiles(prevFiles => [...prevFiles, ...newFiles]);
     }, [files]);
 
+    const removeFile = (index) => {
+        const newFiles = files.filter((file, i) => i !== index);
+        URL.revokeObjectURL(files[index].preview);
+        setFiles(newFiles);
+    }
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop: onDrop,
         accept: {
@@ -78,7 +84,7 @@ const MediaUploadBox = () => {
                 <div className='media-upload-box__preview'>
                     {files.map((file, index) => (
                         <div key={index} className='media-upload-box__preview-item'>
-                            <button className='media-upload-box__preview-item-delete-button'>
+                            <button className='media-upload-box__preview-item-delete-button' onClick={() => removeFile(index)}>
                                 <TrashCanIcon />
                             </button>
                             {file.type.startsWith('image/') ? (
