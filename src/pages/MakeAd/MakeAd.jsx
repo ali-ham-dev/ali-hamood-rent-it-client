@@ -1,10 +1,10 @@
 import './MakeAd.scss';
 import { useState, useEffect } from 'react';
 import Section from '../../components/Section/Section';
-import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import InputBox from '../../components/InputBox/InputBox';
 import DropDown from '../../components/DropDown/DropDown';
+import TinyMceEditor from '../../components/TinyMceEditor/TinyMceEditor';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
@@ -14,7 +14,7 @@ const MakeAd = ({ jwt }) => {
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [title, setTitle] = useState({
+    const [titleInputBox, setTitleInputBox] = useState({
         htmlFor: 'ad',
         labelText: '',
         type: 'text',
@@ -26,7 +26,7 @@ const MakeAd = ({ jwt }) => {
         isRequired: true,
         maxLength: 254
     });
-    const [price, setPrice] = useState({
+    const [priceInputBox, setPriceInputBox] = useState({
         htmlFor: 'ad',
         labelText: '',
         type: 'text',
@@ -38,7 +38,7 @@ const MakeAd = ({ jwt }) => {
         isRequired: true,
         maxLength: 1000
     });
-    const [period, setPeriod] = useState('');
+    const [period, setPeriod] = useState('Select Charge Period');
     const [content, setContent] = useState([
         'day',
         'week',
@@ -114,10 +114,20 @@ const MakeAd = ({ jwt }) => {
     };
 
     const handleInputBoxChange = (e) => {
-        setTitle({
-            ...title,
-            value: e.target.value
-        });
+
+        if (e.target.name === 'title') {
+            setTitleInputBox({
+                ...titleInputBox,
+                value: e.target.value
+            });
+        }
+
+        if (e.target.name === 'price') {
+            setPriceInputBox({
+                ...priceInputBox,
+                value: e.target.value
+            });
+        }
     };
 
     const handleInputBoxBlur = (e) => {
@@ -127,14 +137,14 @@ const MakeAd = ({ jwt }) => {
     return (
         <main className='make-ad'>
             <Section title='Title:' headingLevel='h2' isCollapsible={true} content={
-                <InputBox inputBoxData={title} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
+                <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
                 <DropDown title='Category:' content={content} />
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__price-container'>
-                    <InputBox inputBoxData={price} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} value={price} />
+                    <InputBox inputBoxData={priceInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
                     <DropDown content={content} setValue={setPeriod} value={period} /> 
                 </div>
             } />
@@ -145,27 +155,13 @@ const MakeAd = ({ jwt }) => {
                 isLoading ? (
                     <div className='make-ad__loading-editor'>Loading editor...</div>
                 ) : tinymceApiKey ? (
-                    <Editor
-                        apiKey={tinymceApiKey}
-                        init={{
-                            height: 400,
-                            menubar: false,
-                            plugins: [
-                                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                'anchor', 'searchreplace', 'visualblocks', 'code',
-                                'insertdatetime', 'media', 'table', 'wordcount'
-                            ],
-                            toolbar: 'undo redo | blocks | ' +
-                                'bold italic underline | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height: 0.25rem }'
-                        }}
-                        onEditorChange={handleEditorChange}
-                    />
+                    <TinyMceEditor tinymceApiKey={tinymceApiKey} handleEditorChange={handleEditorChange} />
                 ) : (
                     <div className='make-ad__not-logged-in'>Please log in to use the editor.</div>
                 )
+            } />
+            <Section title='Specifications:' headingLevel='h2' isCollapsible={true} content={
+                'Need to make a spec table and an add section button.'
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__media-container'>
