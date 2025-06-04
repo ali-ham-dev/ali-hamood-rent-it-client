@@ -109,7 +109,7 @@ const MakeAd = ({ jwt }) => {
             <Section title='Title:' headingLevel='h2' content={
                 <InputBox inputBoxData={title} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
-            <Section title='Description:' headingLevel='h2' content={
+            <Section title='Description:' headingLevel='h2' isCollapsible={true} content={
                 isLoading ? (
                     <div className='make-ad__loading-editor'>Loading editor...</div>
                 ) : tinymceApiKey ? (
