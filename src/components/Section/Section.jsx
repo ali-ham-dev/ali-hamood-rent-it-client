@@ -1,8 +1,9 @@
 import './Section.scss';
+import { useState } from 'react';
 
-const Section = ({ title, headingLevel, content }) => {
+const Section = ({ title, headingLevel, content, isCollapsible = false }) => {
+    const [isCollapsed, setIsCollapsed] = useState(false);
 
-    
     const renderHeading = (_title, _headingLevel) => {
         _title = _title || 'Section Title';
         _headingLevel = _headingLevel || 'h2';
@@ -16,13 +17,37 @@ const Section = ({ title, headingLevel, content }) => {
         }
     }
 
-    // TODO: Make section collapsible.
-    // TODO: ....
+    const toggleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
+    };
+
+    const renderCollapseButton = () => {
+        if (!isCollapsible) return null;
+
+        return (
+            <button 
+                className='section__collapse-button'
+                onClick={toggleCollapse}>
+                {isCollapsed ? (
+                    <svg className='section__collapse-button-icon' xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 10L12 15L17 10H7Z"/>
+                    </svg>
+                ) : (
+                    <svg className='section__collapse-button-icon' xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 14L12 9L17 14H7Z"/>
+                    </svg>
+                )}
+            </button>
+        );
+    };
 
     return (
         <section className='section'>
-            {renderHeading(title, headingLevel)}
-            <div className='section__content'>
+            <div className='section__header'>
+                {renderHeading(title, headingLevel)}
+                {renderCollapseButton()}
+            </div>
+            <div className={`section__content ${isCollapsed ? 'section__content--collapsed' : ''}`}>
                 {content}
             </div>
         </section>

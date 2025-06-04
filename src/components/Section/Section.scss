@@ -9,10 +9,34 @@
     margin: 1rem 0;
     @include corner-radius-1;
 
-    &__title {
-        margin: 0;
+    &__header {
         margin-bottom: 1rem;
         @include border-bottom-1;
+        @include flex-row-1;
+    }
+
+    &__title {
+        margin: 0;
+    }
+
+    &__collapse-button{
+        @include flex-row-1;
+        @include button-1-style;
+        & { 
+            @include no-padding;
+            @include no-margin;
+        }
+    }
+
+    &__collapse-button-icon {
+        width: 24px;
+        height: 24px;
+        fill: $white;
+        color: $white;
+
+        &:hover {
+            fill: $black;
+        }
     }
 
     &__title-h2 {
@@ -25,5 +49,18 @@
 
     &__title-h4 {
         @include heading-4-all;
+    }
+
+    &__content {
+        overflow: hidden;
+        transition: all 2s ease;
+        max-height: 1000px;
+
+        &--collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+        }
     }
 }
