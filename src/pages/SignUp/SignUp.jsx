@@ -18,7 +18,7 @@ const SignUp = () => {
             labelText: 'First Name',
             type: 'text',
             name: 'firstName',
-            value: 'Ali',
+            value: '',
             error: false,
             errorMessage: 'First name is required',
             isRequired: true
@@ -28,7 +28,7 @@ const SignUp = () => {
             labelText: 'Last Name',
             type: 'text',
             name: 'lastName',
-            value: 'ali',
+            value: '',
             error: false,
             errorMessage: 'Last name is required',
             isRequired: true
@@ -38,7 +38,7 @@ const SignUp = () => {
             labelText: 'Email',
             type: 'email',
             name: 'email',
-            value: 'ali@gmail.com',
+            value: '',
             error: false,
             errorMessage: 'Email is required',
             isRequired: true
@@ -48,7 +48,7 @@ const SignUp = () => {
             labelText: 'Phone',
             type: 'tel',
             name: 'phone',
-            value: '1234567890',
+            value: '',
             error: false,
             errorMessage: 'Phone is required',
             isRequired: true
@@ -58,7 +58,7 @@ const SignUp = () => {
             labelText: 'Password',
             type: 'password',
             name: 'password',
-            value: 'Qq!12345',
+            value: '',
             error: false,
             errorMessage: 'Password is required',
             isRequired: true,
@@ -69,7 +69,7 @@ const SignUp = () => {
             labelText: 'Confirm Password',
             type: 'password',
             name: 'confirmPassword',
-            value: 'Qq!12345',
+            value: '',
             error: false,
             errorMessage: 'Confirm password is required',
             isRequired: true,
