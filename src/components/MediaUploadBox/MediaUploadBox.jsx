@@ -9,14 +9,17 @@ const maxFileCount = import.meta.env.VITE_MAX_FILE_COUNT;
 const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
+const uploadMediaEp = import.meta.env.VITE_MEDIA_UPLOAD_EP;
 
-const MediaUploadBox = ({ uploadMedia }) => {
+const MediaUploadBox = ({ uploadMedia, jwt }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
     const [files, setFiles] = useState([]);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const fetchFileExtensions = async () => {
         try {
@@ -44,9 +47,43 @@ const MediaUploadBox = ({ uploadMedia }) => {
     }, []);
 
     useEffect(() => {
+        const uploadFiles = async () => {
+            if (!uploadMedia || !jwt || files.length === 0 || isUploading) {
+                return;
+            }
 
-        console.log('Upload media');
-    }, [uploadMedia]);
+            setIsUploading(true);
+            setError(false);
+            setErrorMessage('');
+
+            const headers = {
+                'Authorization': `Bearer ${jwt}`
+            };
+
+            try {
+                for (const file of files) {
+                    if (uploadedFiles.includes(file.name)) {
+                        continue;
+                    }
+
+                    await axios.post(`${apiUrl}${uploadMediaEp}`, { media: file }, { headers });
+                    setUploadedFiles(prev => [...prev, file.name]);
+                }
+
+                files.forEach(file => URL.revokeObjectURL(file.preview));
+                setFiles([]);
+                setUploadedFiles([]);
+            } catch (error) {
+                console.error('Error uploading media:', error);
+                setError(true);
+                setErrorMessage('Error uploading media. Please try again.');
+            } finally {
+                setIsUploading(false);
+            }
+        };
+
+        uploadFiles();
+    }, [uploadMedia, jwt, files, isUploading]);
 
     const isFileUploadLimit = (droppedFiles) => {
         if (!droppedFiles || droppedFiles.length >= maxFileCount) {
@@ -70,9 +107,12 @@ const MediaUploadBox = ({ uploadMedia }) => {
                 return true;
             }
         });
-
         return false;
     }
+    
+    const getFileExtension = (mimeType) => {
+        return mimeType.split('/')[1];
+    };
 
     const isFileExtensionLimit = (droppedFiles) => {
         if (!droppedFiles || droppedFiles.length === 0) {
@@ -80,13 +120,6 @@ const MediaUploadBox = ({ uploadMedia }) => {
             setErrorMessage('File type error.');
             return true;
         }
-
-        const getFileExtension = (mimeType) => {
-            return mimeType.split('/')[1];
-        };
-
-        console.log(`File extension ---> ${getFileExtension(droppedFiles[0].type)}`);
-
         droppedFiles.forEach(file => {
             if (!imageExtensions.includes(getFileExtension(file.type)) || 
             !videoExtensions.includes(getFileExtension(file.type))) {
@@ -133,17 +166,19 @@ const MediaUploadBox = ({ uploadMedia }) => {
         maxSize: maxFileSize * 1024 * 1024
     });
 
-    // TODO: Upload buttn.
     // TODO: Progress bar.
+    // TODO: Validate input in input box .
 
     return (
         <div className='media-upload-box'>
-            { isLoading ? (
+            {isLoading ? (
                 <div className='media-upload-box__dropzone-text'>Loading...</div>
             ) : (                
                 <div className='media-upload-box__dropzone' {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p className='media-upload-box__dropzone-text'>Drag and drop your photos and videos here...</p>
+                    <p className='media-upload-box__dropzone-text'>
+                        {isUploading ? 'Uploading...' : 'Drag and drop your photos and videos here...'}
+                    </p>
                     <p className='media-upload-box__dropzone-text'>Maximum {maxFileCount} files, {maxFileSize}MB each</p>
                 </div>
             )}
@@ -156,7 +191,10 @@ const MediaUploadBox = ({ uploadMedia }) => {
                 <div className='media-upload-box__preview'>
                     {files.map((file, index) => (
                         <div key={index} className='media-upload-box__preview-item'>
-                            <button className='media-upload-box__preview-item-delete-button' onClick={() => removeFile(index)}>
+                            <button 
+                                className='media-upload-box__preview-item-delete-button' 
+                                onClick={() => removeFile(index)}
+                                disabled={isUploading}>
                                 <TrashCanIcon />
                             </button>
                             {file.type.startsWith('image/') ? (

@@ -1,5 +1,6 @@
 import './MakeAd.scss';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Section from '../../components/Section/Section';
 import axios from 'axios';
 import InputBox from '../../components/InputBox/InputBox';
@@ -11,6 +12,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
 
 const MakeAd = ({ jwt }) => {
+    const navigate = useNavigate();
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
 
@@ -111,6 +113,12 @@ const MakeAd = ({ jwt }) => {
         setIsLoading(false);
     }, [jwt]);
 
+    useEffect( () => {
+        if (!jwt) {
+            navigate('/login');
+        }
+    }, []);
+
     const handleEditorChange = (content, editor) => {
         console.log('TinyMCE Content:', content);
     };
@@ -146,7 +154,7 @@ const MakeAd = ({ jwt }) => {
                 <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
-                <MediaUploadBox uploadMedia={uploadMedia} />
+                <MediaUploadBox uploadMedia={uploadMedia} jwt={jwt} />
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__price-container'>
