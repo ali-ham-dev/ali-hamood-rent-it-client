@@ -19,5 +19,9 @@
     &__submit-button {
         width: 100%;
         @include button-1-style;
+        & {
+            box-sizing: border-box;
+            margin: 0;
+        }
     }
 }

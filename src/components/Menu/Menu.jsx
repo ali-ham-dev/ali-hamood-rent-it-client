@@ -13,6 +13,8 @@ const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
     // TODO: Add user profile.
     // TODO: Add settings.
     // TODO: Rental process.
+    // TODO: Add a way to manage assets user rented.
+    // TODO: Add a return rental process.
     const menuRef = useRef(null);
     const menuItems = [
         // {
@@ -36,15 +38,15 @@ const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
             onClick: handleClick,
         },
         {
-            label: 'Manage Rented Assets',
+            label: 'Manage Rentals',
             path: '/',
             onClick: handleClick,
         },
-        {
-            label: 'Manage Assets for Rent',
-            path: '/',
-            onClick: handleClick,
-        }
+        // {
+        //     label: 'Manage Assets for Rent',
+        //     path: '/',
+        //     onClick: handleClick,
+        // }
     ];
 
     const renderMenuItems = () => {
