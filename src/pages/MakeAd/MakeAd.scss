@@ -24,4 +24,18 @@
             margin: 0;
         }
     }
+
+    &__error {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: $white;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid $error;
+        @include corner-radius-1;
+        @include heading-4-all;
+        & {
+            color: $error;
+        }
+    }
 }
