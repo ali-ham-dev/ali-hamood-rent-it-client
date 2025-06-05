@@ -15,4 +15,9 @@
         align-items: center;
         @include heading-3-all;
     }
+
+    &__submit-button {
+        width: 100%;
+        @include button-1-style;
+    }
 }

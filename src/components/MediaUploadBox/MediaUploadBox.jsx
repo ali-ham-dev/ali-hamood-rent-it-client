@@ -10,7 +10,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 
-const MediaUploadBox = () => {
+const MediaUploadBox = ({ uploadMedia }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
@@ -42,6 +42,11 @@ const MediaUploadBox = () => {
         fetchFileExtensions();
         setIsLoading(false);
     }, []);
+
+    useEffect(() => {
+
+        console.log('Upload media');
+    }, [uploadMedia]);
 
     const isFileUploadLimit = (droppedFiles) => {
         if (!droppedFiles || droppedFiles.length >= maxFileCount) {

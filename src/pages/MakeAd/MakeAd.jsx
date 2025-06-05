@@ -15,6 +15,7 @@ const MakeAd = ({ jwt }) => {
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [titleInputBox, setTitleInputBox] = useState({
         htmlFor: 'ad',
         labelText: '',
@@ -46,6 +47,7 @@ const MakeAd = ({ jwt }) => {
         'month',
         'year'
     ]);
+    const [uploadMedia, setUploadMedia] = useState(false);
 
     const fetchTinymceSessionJwt = async() => {
         try {
@@ -134,13 +136,17 @@ const MakeAd = ({ jwt }) => {
 
     };
 
+    const handleSubmit = () => {
+        setUploadMedia(!uploadMedia);
+    }
+
     return (
         <main className='make-ad'>
             <Section title='Title:' headingLevel='h2' isCollapsible={true} content={
                 <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
-                <MediaUploadBox />
+                <MediaUploadBox uploadMedia={uploadMedia} />
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__price-container'>
@@ -170,6 +176,9 @@ const MakeAd = ({ jwt }) => {
                     </div>
                 </div>
             } />
+            <button className='make-ad__submit-button' onClick={handleSubmit}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+            </button>
         </main>
     );
 };
