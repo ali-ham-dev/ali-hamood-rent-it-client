@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import TrashCanIcon from '../TrashCanIcon/TrashCanIcon';
 
 const maxFileSize = import.meta.env.VITE_MAX_FILE_SIZE_MB;
-const maxTotalFileSize = import.meta.env.VITE_MAX_TOTAL_SIZE_MB;
+const maxFileCount = import.meta.env.VITE_MAX_FILE_COUNT;
 const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
@@ -15,8 +15,8 @@ const MediaUploadBox = () => {
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
     const [files, setFiles] = useState([]);
-    const [error, setError] = useState(true);
-    const [errorMessage, setErrorMessage] = useState('Error message');
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const fetchFileExtensions = async () => {
         try {
@@ -43,19 +43,78 @@ const MediaUploadBox = () => {
         setIsLoading(false);
     }, []);
 
-    const onDrop = useCallback((dripedFiles) => {
-        const newFiles = dripedFiles.map(file => {
+    const isFileUploadLimit = (droppedFiles) => {
+        if (!droppedFiles || droppedFiles.length >= maxFileCount) {
+            setError(true);
+            setErrorMessage(`You can only upload up to ${maxFileCount} files`);
+            return true;
+        }
+        return false;
+    }
+
+    const isFileSizeLimit = (droppedFiles) => {
+        if (!droppedFiles) {
+            setError(true);
+            setErrorMessage('File size limit error.');
+            return true;
+        }
+        droppedFiles.forEach(file => {
+            if (file.size > maxFileSize * 1024 * 1024) {
+                setError(true);
+                setErrorMessage(`Each file size must be less than ${maxFileSize}MB`);
+                return true;
+            }
+        });
+
+        return false;
+    }
+
+    const isFileExtensionLimit = (droppedFiles) => {
+        if (!droppedFiles || droppedFiles.length === 0) {
+            setError(true);
+            setErrorMessage('File type error.');
+            return true;
+        }
+
+        const getFileExtension = (mimeType) => {
+            return mimeType.split('/')[1];
+        };
+
+        console.log(`File extension ---> ${getFileExtension(droppedFiles[0].type)}`);
+
+        droppedFiles.forEach(file => {
+            if (!imageExtensions.includes(getFileExtension(file.type)) || 
+            !videoExtensions.includes(getFileExtension(file.type))) {
+                setError(true);
+                setErrorMessage('File type error.');
+                return true;
+            }
+        });
+
+        return false;
+    }
+
+    const onDrop = useCallback((droppedFiles) => {
+        if (isFileUploadLimit(droppedFiles)) return;
+        if (isFileSizeLimit(droppedFiles)) return;
+        if (isFileExtensionLimit(droppedFiles)) return;
+
+        const newFiles = droppedFiles.map(file => {
             file.preview = URL.createObjectURL(file)
             return file;
         });
 
         setFiles(prevFiles => [...prevFiles, ...newFiles]);
+        setError(false);
+        setErrorMessage('');
     }, [files]);
 
     const removeFile = (index) => {
         const newFiles = files.filter((file, i) => i !== index);
         URL.revokeObjectURL(files[index].preview);
         setFiles(newFiles);
+        setError(false);
+        setErrorMessage('');
     }
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -65,9 +124,12 @@ const MediaUploadBox = () => {
             'video/*': videoExtensions
         },
         multiple: true,
-        maxFiles: 10,
+        maxFiles: maxFileCount,
         maxSize: maxFileSize * 1024 * 1024
     });
+
+    // TODO: Upload buttn.
+    // TODO: Progress bar.
 
     return (
         <div className='media-upload-box'>
@@ -77,8 +139,7 @@ const MediaUploadBox = () => {
                 <div className='media-upload-box__dropzone' {...getRootProps()}>
                     <input {...getInputProps()} />
                     <p className='media-upload-box__dropzone-text'>Drag and drop your photos and videos here...</p>
-                    <p className='media-upload-box__dropzone-text'>Maximum 10 files, 100MB each</p>
-
+                    <p className='media-upload-box__dropzone-text'>Maximum {maxFileCount} files, {maxFileSize}MB each</p>
                 </div>
             )}
             {error && (
