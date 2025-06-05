@@ -9,25 +9,29 @@ const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
         setDisplayMenu(false);
     }
 
+    // TODO: Add messaging.
+    // TODO: Add user profile.
+    // TODO: Add settings.
+    // TODO: Rental process.
     const menuRef = useRef(null);
     const menuItems = [
+        // {
+        //     label: 'Settings',
+        //     path: '/',
+        //     onClick: handleClick,
+        // },
+        // {
+        //     label: 'User Profile',
+        //     path: '/',
+        //     onClick: handleClick,
+        // }, 
+        // {
+        //     label: 'Inbox',
+        //     path: '/',
+        //     onClick: handleClick,
+        // },
         {
-            label: 'Settings',
-            path: '/',
-            onClick: handleClick,
-        },
-        {
-            label: 'User Profile',
-            path: '/',
-            onClick: handleClick,
-        }, 
-        {
-            label: 'Inbox',
-            path: '/',
-            onClick: handleClick,
-        },
-        {
-            label: 'Post a Rental',
+            label: 'Make an Ad',
             path: '/asset/make-ad',
             onClick: handleClick,
         },
