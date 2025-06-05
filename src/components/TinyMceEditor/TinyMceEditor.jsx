@@ -17,7 +17,7 @@ const TinyMceEditor = ({ tinymceApiKey, handleEditorChange }) => {
                     'bold italic underline | alignleft aligncenter ' +
                     'alignright alignjustify | bullist numlist outdent indent | ' +
                     'removeformat',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height: 0.25rem }'
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; }'
             }}
             onEditorChange={handleEditorChange}
         />
