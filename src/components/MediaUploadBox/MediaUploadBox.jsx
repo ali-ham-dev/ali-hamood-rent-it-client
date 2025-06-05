@@ -60,13 +60,16 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
                 'Authorization': `Bearer ${jwt}`
             };
 
+            console.log('Sending files to server...');
+
             try {
                 for (const file of files) {
                     if (uploadedFiles.includes(file.name)) {
                         continue;
                     }
-
-                    await axios.post(`${apiUrl}${uploadMediaEp}`, { media: file }, { headers });
+                    const formData = new FormData();
+                    formData.append('media', file);
+                    await axios.post(`${apiUrl}${uploadMediaEp}`, formData, { headers });
                     setUploadedFiles(prev => [...prev, file.name]);
                 }
 
@@ -83,7 +86,7 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
         };
 
         uploadFiles();
-    }, [uploadMedia, jwt, files, isUploading]);
+    }, [uploadMedia]);
 
     const isFileUploadLimit = (droppedFiles) => {
         if (!droppedFiles || droppedFiles.length >= maxFileCount) {
