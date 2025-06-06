@@ -145,6 +145,14 @@ const AssetCard = ({ assetId, isEditable = false }) => {
         }
     }
 
+    const handleEditButtonClick = () => {
+        console.log('edit button clicked');
+    }
+
+    const handleDeleteButtonClick = () => {
+        console.log('delete button clicked');
+    }
+
     return (
         <div className={`asset-card ${isEditable ? '' : 'asset-card__floating'}`}>
             {isEditable && <div className='asset-card__edit-container'>
