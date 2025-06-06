@@ -1,5 +1,5 @@
 import './AssetsPage.scss';
-import AssetCardPublic from '../../components/AssetCardPublic/AssetCardPublic';
+import AssetCard from '../../components/AssetCard/AssetCard';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -53,7 +53,7 @@ const AssetsPage = () => {
         }
 
         return assetIds.map((assetId) => (
-            <AssetCardPublic key={uuidv4()} assetId={assetId} />
+            <AssetCard key={uuidv4()} assetId={assetId} />
         ));
     }
 
