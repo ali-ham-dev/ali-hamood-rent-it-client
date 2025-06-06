@@ -7,7 +7,7 @@
     box-sizing: border-box;
     @include left-right-page-padding;
 
-    &__message {
+    &__message-box {
         width: 100%;
         box-sizing: border-box;
         background-color: $white;
@@ -21,5 +21,14 @@
             color: $error;
             border-color: $error;
         }
+    }
+
+    &__message {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: $white;
+        padding: 1rem;
+        margin-top: 1rem;
+        @include heading-4-all;
     }
 }
