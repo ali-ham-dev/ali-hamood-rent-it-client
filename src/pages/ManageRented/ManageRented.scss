@@ -1,3 +1,25 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+.manage-rented {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    @include left-right-page-padding;
+
+    &__message {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: $white;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid $black;
+        @include corner-radius-1;
+        @include heading-4-all;
+
+        &--error {
+            color: $error;
+            border-color: $error;
+        }
+    }
+}

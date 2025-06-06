@@ -72,8 +72,6 @@ const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt }) => {
                 'Authorization': `Bearer ${jwt}`
             };
 
-            console.log('Sending files to server...');
-
             try {
                 for (const file of files) {
                     if (uploadedFiles.includes(file.name)) {
