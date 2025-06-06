@@ -22,9 +22,7 @@ const ManageAssets = ({ jwt }) => {
         }
 
         return assetsForRent.map(asset => (
-            <div key={asset.id} className='manage-assets__asset-card-container'>
-                <AssetCard assetId={asset.id} />
-            </div>
+            <AssetCard key={asset.id} assetId={asset.id} />
         ));
     }
 
@@ -34,9 +32,7 @@ const ManageAssets = ({ jwt }) => {
         }
 
         return rentedAssets.map(asset => (
-            <div key={asset.id} className='manage-assets__asset-card-container'>
-                <AssetCard assetId={asset.id} />
-            </div>
+            <AssetCard key={asset.id} assetId={asset.id} />
         ));
     }
 
@@ -68,20 +64,26 @@ const ManageAssets = ({ jwt }) => {
 
     useEffect( () => {
         if (!jwt) {
-            setIsLoading(false);
             setDisplayMessage(true);
             setUserMessage('You are not logged in.');
             setIsError(true);
+            return;
         }
+        setIsLoading(true);
+        setDisplayMessage(false);
+        setIsError(false);
+        setUserMessage('');
+        
         try {
             fetchAssetsForRent();
             fetchRentedAssets();
         } catch (error) {
             console.error('Error fetching rented assets:', error);
-            setIsLoading(false);
             setDisplayMessage(true);
             setUserMessage('Error fetching rented assets.');
             setIsError(true);
+        } finally {
+            setIsLoading(false);
         }
     }, [jwt]);
 
@@ -92,14 +94,22 @@ const ManageAssets = ({ jwt }) => {
                     {isLoading ? 'Loading...' : userMessage}
                 </div>}
             <Section title='Manage Assets for Rent:' headingLevel='h2' isCollapsible={true} content={
-                assetsForRent.length > 0 ? renderAssetsForRent() : (
+                assetsForRent.length > 0 ? (
+                    <div className='manage-assets__asset-card-container'>
+                        {renderAssetsForRent()}
+                    </div>
+            ) : (
                     <div className='manage-assets__message'>
                         <p>No assets for rent.</p>
                     </div>
                 )
             } />
             <Section title='Manage Rented Assets:' headingLevel='h2' isCollapsible={true} content={
-                rentedAssets.length > 0 ? renderRentedAssets() : (
+                rentedAssets.length > 0 ? (
+                    <div className='manage-assets__asset-card-container'>
+                        {renderRentedAssets()}
+                    </div>
+                ) : (
                     <div className='manage-assets__message'>
                         <p>No assets have been rented.</p>
                     </div>
