@@ -10,7 +10,7 @@ import MediaUploadBox from '../../components/MediaUploadBox/MediaUploadBox';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
-const uploadAssetEp = import.meta.env.VITE_ASSET_UPLOAD_EP;
+const assetUploadEd = import.meta.env.VITE_ASSET_UPLOAD_EP;
 
 const MakeAd = ({ jwt }) => {
     const navigate = useNavigate();
@@ -231,12 +231,15 @@ const MakeAd = ({ jwt }) => {
                 description: description
             }
 
-            await axios.post(`${apiUrl}${uploadAssetEp}`, payload, { headers });
-
+            const res = await axios.post(`${apiUrl}${assetUploadEd}`, payload, { headers });
+            console.log(res);
+            //navigate('/');
         } catch (error) {
             console.error('Error submitting ad:', error);
             setIsError(true);
             setErrorMessage('Error submitting ad. Please try again.');
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
