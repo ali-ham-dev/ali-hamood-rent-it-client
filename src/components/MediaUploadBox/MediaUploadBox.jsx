@@ -25,15 +25,29 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
         try {
             const imageResponse = await axios.get(`${apiUrl}${imageExtensionsEp}`);
             if (imageResponse.status === 200) {
-                const ext = imageResponse.data.map(item => item.extension);
-                const formattedExt = ext.map(item => item.startsWith('.') ? item : `.${item}`);
+                const formattedExt = [];
+                for (const ext of imageResponse.data) {
+                    if (ext[0] === '.') {
+                        formattedExt.push(ext);
+                    } else {
+                        formattedExt.push(`.${ext}`);
+                    }
+                }
                 setImageExtensions(formattedExt);
             }
     
             const videoResponse = await axios.get(`${apiUrl}${videoExtensionsEp}`);
             if (videoResponse.status === 200) {
-                const ext = videoResponse.data.map(item => item.extension);
-                const formattedExt = ext.map(item => item.startsWith('.') ? item : `.${item}`);
+                const formattedExt = [];
+                console.log(videoResponse.data);
+                for (const ext of videoResponse.data) {
+                    console.log(ext);
+                    if (ext[0] === '.') {
+                        formattedExt.push(ext);
+                    } else {
+                        formattedExt.push(`.${ext}`);
+                    }
+                }
                 setVideoExtensions(formattedExt);
             }
         } catch (error) {
