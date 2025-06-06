@@ -16,7 +16,10 @@ const AssetCard = ({ assetId }) => {
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
 
-    // Render functions
+    const stripHtmlTags = (html) => {
+        if (!html) return '';
+        return html.replace(/<[^>]*>/g, '');
+    };
 
     const getMediaType = (url) => {
         if (!url) 
@@ -69,8 +72,6 @@ const AssetCard = ({ assetId }) => {
         return noImageFound(className);
     }
 
-    // Loading data
-
     const fetchAssetDetails = async () => {
 
         if (!assetId) {
@@ -79,7 +80,9 @@ const AssetCard = ({ assetId }) => {
 
         const response = await axios.get(`${apiUrl}/assets/${assetId}`);
         if (response.status === 200) {
-            setAsset(response.data);
+            const assetData = response.data;
+            assetData.description = stripHtmlTags(assetData.description);
+            setAsset(assetData);
             setMedia([
                 ...(response.data.media || [])
             ]);
@@ -106,7 +109,7 @@ const AssetCard = ({ assetId }) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetchAsset = async () => {
             try {
                 await fetchAssetDetails();
@@ -119,8 +122,6 @@ const AssetCard = ({ assetId }) => {
         }
         fetchAsset();
     }, []);
-
-    // Event Handlers
 
     const handleLeftButtonClick = () => {
         const nextMediaIndex = mediaIndex - 1;
