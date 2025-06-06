@@ -94,17 +94,21 @@ const Gallery = ({ media }) => {
 
     const fetchFileExtensions = async () => {
         const imageResponse = await axios.get(`${apiUrl}${imgFileExtEp}`);
-
         if (imageResponse.status === 200) {
-            const ext = imageResponse.data.map(item => item.extension);
-            setImageExtensions(ext);
+            const extensions = [];
+            for (const ext of imageResponse.data) {
+                extensions.push(ext);
+            }
+            setImageExtensions(extensions);
         }
 
         const videoResponse = await axios.get(`${apiUrl}${videoFileExtEp}`);
-
         if (videoResponse.status === 200) {
-            const ext = videoResponse.data.map(item => item.extension);     
-            setVideoExtensions(ext);
+            const extensions = [];
+            for (const ext of videoResponse.data) {
+                extensions.push(ext);
+            }  
+            setVideoExtensions(extensions);
         }
     }
 

@@ -39,9 +39,7 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
             const videoResponse = await axios.get(`${apiUrl}${videoExtensionsEp}`);
             if (videoResponse.status === 200) {
                 const formattedExt = [];
-                console.log(videoResponse.data);
                 for (const ext of videoResponse.data) {
-                    console.log(ext);
                     if (ext[0] === '.') {
                         formattedExt.push(ext);
                     } else {

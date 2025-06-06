@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
+const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 
 const AssetCardPublic = ({ assetId }) => {
 
@@ -86,18 +88,22 @@ const AssetCardPublic = ({ assetId }) => {
     }
 
     const fetchFileExtensions = async () => {
-        const imageResponse = await axios.get(`${apiUrl}/file-extensions/image-file-extensions`);
-
+        const imageResponse = await axios.get(`${apiUrl}${imageExtensionsEp}`);
         if (imageResponse.status === 200) {
-            const ext = imageResponse.data.map(item => item.extension);
-            setImageExtensions(ext);
+            const extensions = [];
+            for (const ext of imageResponse.data) {
+                extensions.push(ext);
+            }
+            setImageExtensions(extensions);
         }
 
-        const videoResponse = await axios.get(`${apiUrl}/file-extensions/video-file-extensions`);
-
+        const videoResponse = await axios.get(`${apiUrl}${videoExtensionsEp}`);
         if (videoResponse.status === 200) {
-            const ext = videoResponse.data.map(item => item.extension);     
-            setVideoExtensions(ext);
+            const extensions = [];
+            for (const ext of videoResponse.data) {
+                extensions.push(ext);
+            }  
+            setVideoExtensions(extensions);
         }
     }
 
