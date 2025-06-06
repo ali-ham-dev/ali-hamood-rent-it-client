@@ -11,7 +11,7 @@ const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 const uploadMediaEp = import.meta.env.VITE_MEDIA_UPLOAD_EP;
 
-const MediaUploadBox = ({ uploadMedia, jwt }) => {
+const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
@@ -60,10 +60,10 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
 
     useEffect(() => {
         const uploadFiles = async () => {
-            if (!uploadMedia || !jwt || files.length === 0 || isUploading) {
+            if (!assetId || !jwt || files.length === 0 || isUploading) {
                 return;
             }
-
+            setDoneUploadingMedia(false);
             setIsUploading(true);
             setError(false);
             setErrorMessage('');
@@ -80,8 +80,8 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
                         continue;
                     }
                     const formData = new FormData();
-                    formData.append('media', file);
-                    await axios.post(`${apiUrl}${uploadMediaEp}`, formData, { headers });
+                    formData.append('file', file);
+                    await axios.post(`${apiUrl}${uploadMediaEp}/${assetId}`, formData, { headers });
                     setUploadedFiles(prev => [...prev, file.name]);
                 }
 
@@ -94,11 +94,12 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
                 setErrorMessage('Error uploading media. Please try again.');
             } finally {
                 setIsUploading(false);
+                setDoneUploadingMedia(true);
             }
         };
 
         uploadFiles();
-    }, [uploadMedia]);
+    }, [assetId]);
 
     const isFileUploadLimit = (droppedFiles) => {
         if (!droppedFiles || droppedFiles.length >= maxFileCount) {
@@ -182,7 +183,6 @@ const MediaUploadBox = ({ uploadMedia, jwt }) => {
     });
 
     // TODO: Progress bar.
-    // TODO: Validate input in input box .
 
     return (
         <div className='media-upload-box'>

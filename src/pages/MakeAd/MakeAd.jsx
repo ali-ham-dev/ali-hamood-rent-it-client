@@ -54,7 +54,8 @@ const MakeAd = ({ jwt }) => {
         'year'
     ]);
     const [description, setDescription] = useState('');
-    const [uploadMedia, setUploadMedia] = useState(false);
+    const [assetId, setAssetId] = useState(null);
+    const [doneUploadingMedia, setDoneUploadingMedia] = useState(false);
 
     const fetchTinymceSessionJwt = async() => {
         try {
@@ -213,8 +214,6 @@ const MakeAd = ({ jwt }) => {
             return;
         }
 
-        setUploadMedia(!uploadMedia);
-
         try {
             setIsError(false);
             setErrorMessage('');
@@ -232,8 +231,13 @@ const MakeAd = ({ jwt }) => {
             }
 
             const res = await axios.post(`${apiUrl}${assetUploadEd}`, payload, { headers });
-            console.log(res);
-            //navigate('/');
+
+            if (res.status === 200) {
+                setAssetId(res.data.assetId);
+            } else {
+                setIsError(true);
+                setErrorMessage('Error submitting ad. Please try again.');
+            }
         } catch (error) {
             console.error('Error submitting ad:', error);
             setIsError(true);
@@ -243,6 +247,12 @@ const MakeAd = ({ jwt }) => {
         }
     }
 
+    useEffect( () => {
+        if (doneUploadingMedia && assetId) {
+            navigate('/');
+        }
+    }, [doneUploadingMedia]);
+
     return (
         <main className='make-ad'>
             {isError && <div className='make-ad__error'>{errorMessage}</div>}
@@ -250,7 +260,7 @@ const MakeAd = ({ jwt }) => {
                 <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
-                <MediaUploadBox uploadMedia={uploadMedia} jwt={jwt} />
+                <MediaUploadBox setDoneUploadingMedia={setDoneUploadingMedia} assetId={assetId} jwt={jwt} />
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='make-ad__price-container'>
