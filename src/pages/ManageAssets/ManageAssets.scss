@@ -27,8 +27,12 @@
         width: 100%;
         box-sizing: border-box;
         background-color: $white;
-        padding: 1rem;
+        padding: 0 1rem 1rem 1rem;
         margin-top: 1rem;
         @include heading-4-all;
+
+        p {
+            margin: 0;
+        }
     }
 }

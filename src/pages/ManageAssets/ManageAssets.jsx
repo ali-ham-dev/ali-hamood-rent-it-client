@@ -14,6 +14,7 @@ const ManageAssets = ({ jwt }) => {
     const [displayMessage, setDisplayMessage] = useState(false);
     const [userMessage, setUserMessage] = useState('');
     const [assetsForRent, setAssetsForRent] = useState([]);
+    const [rentedAssets, setRentedAssets] = useState([]);
 
     const renderAssetsForRent = () => {
         if (!assetsForRent || assetsForRent.length === 0) {
@@ -21,6 +22,18 @@ const ManageAssets = ({ jwt }) => {
         }
 
         return assetsForRent.map(asset => (
+            <div key={asset.id} className='manage-assets__asset-card-container'>
+                <AssetCard assetId={asset.id} />
+            </div>
+        ));
+    }
+
+    const renderRentedAssets = () => {
+        if (!rentedAssets || rentedAssets.length === 0) {
+            return 
+        }
+
+        return rentedAssets.map(asset => (
             <div key={asset.id} className='manage-assets__asset-card-container'>
                 <AssetCard assetId={asset.id} />
             </div>
@@ -40,6 +53,19 @@ const ManageAssets = ({ jwt }) => {
         throw new Error('Error fetching rented assets.');
     }
 
+    const fetchRentedAssets = async () => {
+        const response = await axios.get(`${apiUrl}${getRentedAssetsEp}`, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+
+        if (response.status === 200 && response.data)
+            return setRentedAssets(response.data);
+
+        throw new Error('Error fetching rented assets.');
+    }
+
     useEffect( () => {
         if (!jwt) {
             setIsLoading(false);
@@ -49,6 +75,7 @@ const ManageAssets = ({ jwt }) => {
         }
         try {
             fetchAssetsForRent();
+            fetchRentedAssets();
         } catch (error) {
             console.error('Error fetching rented assets:', error);
             setIsLoading(false);
@@ -72,9 +99,11 @@ const ManageAssets = ({ jwt }) => {
                 )
             } />
             <Section title='Manage Rented Assets:' headingLevel='h2' isCollapsible={true} content={
-                <div className='manage-assets__content'>
-                    <h3>Manage Rented</h3>
-                </div>
+                rentedAssets.length > 0 ? renderRentedAssets() : (
+                    <div className='manage-assets__message'>
+                        <p>No assets have been rented.</p>
+                    </div>
+                )
             } />
         </main>
     );
