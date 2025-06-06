@@ -55,7 +55,7 @@ const MakeAd = ({ jwt }) => {
     ]);
     const [description, setDescription] = useState('');
     const [assetId, setAssetId] = useState(null);
-    const [doneUploadingMedia, setDoneUploadingMedia] = useState(false);
+    const [doneUploadingMedia, setDoneUploadingMedia] = useState(null);
 
     const fetchTinymceSessionJwt = async() => {
         try {
@@ -242,14 +242,25 @@ const MakeAd = ({ jwt }) => {
             console.error('Error submitting ad:', error);
             setIsError(true);
             setErrorMessage('Error submitting ad. Please try again.');
-        } finally {
-            setIsSubmitting(false);
         }
     }
 
     useEffect( () => {
         if (doneUploadingMedia && assetId) {
-            navigate('/');
+            if (typeof doneUploadingMedia === 'string') {
+                const lowerStr = doneUploadingMedia.toLowerCase();
+                if (lowerStr.includes('error')) {
+                    setIsError(true);
+                    setErrorMessage(doneUploadingMedia);
+                }
+            }
+
+            setIsSubmitting(false);
+            setAssetId(null);
+
+            if (!isError) {
+                navigate('/');
+            }
         }
     }, [doneUploadingMedia]);
 

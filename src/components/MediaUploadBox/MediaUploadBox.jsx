@@ -63,7 +63,7 @@ const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt }) => {
             if (!assetId || !jwt || files.length === 0 || isUploading) {
                 return;
             }
-            setDoneUploadingMedia(false);
+            setDoneUploadingMedia(null);
             setIsUploading(true);
             setError(false);
             setErrorMessage('');
@@ -92,6 +92,7 @@ const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt }) => {
                 console.error('Error uploading media:', error);
                 setError(true);
                 setErrorMessage('Error uploading media. Please try again.');
+                setDoneUploadingMedia('Error uploading media. Please try again.');
             } finally {
                 setIsUploading(false);
                 setDoneUploadingMedia(true);
