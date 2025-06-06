@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp/SignUp';
 import UserAuth from './pages/UserAuth/UserAuth';
 import Login from './pages/Login/Login';
 import MakeAd from './pages/MakeAd/MakeAd';
+import ManageRented from './pages/ManageRented/ManageRented';
 import Footer from './components/Footer/Footer';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -115,6 +116,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/user-auth/:userId/:email/:expires' element={<UserAuth setIsLoggedIn={setIsLoggedIn} />} />
         <Route path='/asset/make-ad' element={<MakeAd jwt={jwt} />} />
+        <Route path='/manage-rented' element={<ManageRented jwt={jwt} />} />
       </Routes>
       <Footer />
     </BrowserRouter>

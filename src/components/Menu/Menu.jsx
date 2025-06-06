@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // TODO: add correct paths.
 // TODO: notifications should change appearance when unReadNotifications is true.
-const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
+const Menu = ({ headerHeight, setDisplayMenu }) => {
     const handleClick = (e) => {
         setDisplayMenu(false);
     }
@@ -27,11 +27,11 @@ const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
         //     path: '/',
         //     onClick: handleClick,
         // }, 
-        // {
-        //     label: 'Inbox',
-        //     path: '/',
-        //     onClick: handleClick,
-        // },
+        {
+            label: 'Home',
+            path: '/',
+            onClick: handleClick,
+        },
         {
             label: 'Make an Ad',
             path: '/asset/make-ad',
@@ -39,7 +39,7 @@ const Menu = ({ headerHeight, setDisplayMenu, unReadNotifications }) => {
         },
         {
             label: 'Manage Rentals',
-            path: '/',
+            path: `/manage-rented`,
             onClick: handleClick,
         },
         // {
