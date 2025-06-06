@@ -38,8 +38,8 @@ const Menu = ({ headerHeight, setDisplayMenu }) => {
             onClick: handleClick,
         },
         {
-            label: 'Manage Rentals',
-            path: `/manage-rented`,
+            label: 'Manage Assets',
+            path: `/manage-assets`,
             onClick: handleClick,
         },
         // {
