@@ -2,12 +2,14 @@ import './AssetCard.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import EditIcon from '../EditIcon/EditIcon';
+import DeleteIcon from '../TrashCanIcon/TrashCanIcon';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 
-const AssetCard = ({ assetId }) => {
+const AssetCard = ({ assetId, isEditable = false }) => {
 
     const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
@@ -144,7 +146,15 @@ const AssetCard = ({ assetId }) => {
     }
 
     return (
-        <div className='asset-card'>
+        <div className={`asset-card ${isEditable ? '' : 'asset-card__floating'}`}>
+            {isEditable && <div className='asset-card__edit-container'>
+                <button className='asset-card__edit-button'>
+                    <EditIcon />
+                </button>
+                <button className='asset-card__delete-button'>
+                    <DeleteIcon />
+                </button>
+            </div>}
             <section className="asset-card__gallery">
                 <button 
                     className="asset-card__button asset-card__button-left" 

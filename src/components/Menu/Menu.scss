@@ -9,7 +9,7 @@ $menu-spacing: 0.25rem;
     left: 0;
     height: fit-content;
     background-color: $white;
-    z-index: 10;
+    z-index: 100;
     padding: $menu-spacing;
     padding-bottom: 0;
     @include flex-column-2;

@@ -22,7 +22,7 @@ const ManageAssets = ({ jwt }) => {
         }
 
         return assetsForRent.map(asset => (
-            <AssetCard key={asset.id} assetId={asset.id} />
+            <AssetCard key={asset.id} assetId={asset.id} isEditable={true} />
         ));
     }
 
