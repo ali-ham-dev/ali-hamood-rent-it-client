@@ -25,7 +25,7 @@ const AssetCard = ({ assetId, isEditable = false }) => {
         isError: true,
         onFirstButton: () => { setDisplayMessageBox(false); },
         onFirstButtonText: 'Cancel',
-        onSecondButton: () => { console.log('delete button clicked'); },
+        onSecondButton: () => { handleDeleteConfirmation(); },
         onSecondButtonText: 'Delete'
     });
 
@@ -160,9 +160,11 @@ const AssetCard = ({ assetId, isEditable = false }) => {
         console.log('edit button clicked');
     }
 
-    const handleDeleteButtonClick = () => {
-        console.log('delete button clicked');
+    const handleDeleteButtonClick = (e) => {
         setDisplayMessageBox(true);
+    }
+    const handleDeleteConfirmation = () => {
+        console.log('delete confirmation');
     }
 
     return (

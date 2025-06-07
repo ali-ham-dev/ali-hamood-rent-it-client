@@ -17,12 +17,12 @@ const MessageBox = ({messageBox}) => {
         messageBox.onFirstButtonText = 'Close';
     }
 
-    const handleFirstButtonClick = () => {
-        messageBox.onFirstButton();
+    const handleFirstButtonClick = (e) => {
+        messageBox.onFirstButton(e);
     }
 
-    const handleSecondButtonClick = () => {
-        messageBox.onSecondButton && messageBox.onSecondButton();
+    const handleSecondButtonClick = (e) => {
+        messageBox.onSecondButton && messageBox.onSecondButton(e);
     }
 
     return (
