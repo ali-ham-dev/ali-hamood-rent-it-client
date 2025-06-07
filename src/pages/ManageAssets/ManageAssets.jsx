@@ -15,6 +15,10 @@ const ManageAssets = ({ jwt }) => {
     const [userMessage, setUserMessage] = useState('');
     const [assetsForRent, setAssetsForRent] = useState([]);
     const [rentedAssets, setRentedAssets] = useState([]);
+    
+    const removeAssetAssetForRent = (assetId) => {
+        setAssetsForRent(assetsForRent.filter(asset => asset.id !== assetId));
+    }
 
     const renderAssetsForRent = () => {
         if (!assetsForRent || assetsForRent.length === 0 || !jwt) {
@@ -22,7 +26,7 @@ const ManageAssets = ({ jwt }) => {
         }
 
         return assetsForRent.map(asset => (
-            <AssetCard key={asset.id} assetId={asset.id} isEditable={true} jwt={jwt} />
+            <AssetCard key={asset.id} assetId={asset.id} isEditable={true} jwt={jwt} onDelete={removeAssetAssetForRent} />
         ));
     }
 

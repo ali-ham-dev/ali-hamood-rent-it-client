@@ -11,7 +11,7 @@ const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 const deleteAssetEp = import.meta.env.VITE_DELETE_ASSET_EP;
 
-const AssetCard = ({ assetId, isEditable = false, jwt}) => {
+const AssetCard = ({ assetId, isEditable = false, jwt, onDelete}) => {
 
     const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
@@ -176,6 +176,7 @@ const AssetCard = ({ assetId, isEditable = false, jwt}) => {
             const res = await axios.delete(`${apiUrl}${deleteAssetEp}/${assetId}`, { headers });
             if (res.status === 200) {
                 setDisplayMessageBox(false);
+                onDelete(assetId);
                 return;
             }
             throw new Error('Failed to delete asset');
