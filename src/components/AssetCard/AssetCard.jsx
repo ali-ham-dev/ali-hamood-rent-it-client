@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import EditIcon from '../EditIcon/EditIcon';
 import DeleteIcon from '../TrashCanIcon/TrashCanIcon';
+import MessageBox from '../MessageBox/MessageBox';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
@@ -17,6 +18,16 @@ const AssetCard = ({ assetId, isEditable = false }) => {
     const [mediaIndex, setMediaIndex] = useState(0);
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
+    const [displayMessageBox, setDisplayMessageBox] = useState(false);
+
+    const [confirmDelete, setConfirmDelete] = useState({
+        message: 'Are you sure you want to delete this asset?',
+        isError: true,
+        onFirstButton: () => { setDisplayMessageBox(false); },
+        onFirstButtonText: 'Cancel',
+        onSecondButton: () => { console.log('delete button clicked'); },
+        onSecondButtonText: 'Delete'
+    });
 
     const stripHtmlTags = (html) => {
         if (!html) return '';
@@ -151,15 +162,17 @@ const AssetCard = ({ assetId, isEditable = false }) => {
 
     const handleDeleteButtonClick = () => {
         console.log('delete button clicked');
+        setDisplayMessageBox(true);
     }
 
     return (
         <div className={`asset-card ${isEditable ? '' : 'asset-card__floating'}`}>
+            {displayMessageBox && <MessageBox messageBox={confirmDelete} />}
             {isEditable && <div className='asset-card__edit-container'>
-                <button className='asset-card__edit-button'>
+                <button className='asset-card__edit-button' onClick={handleEditButtonClick}>
                     <EditIcon />
                 </button>
-                <button className='asset-card__delete-button'>
+                <button className='asset-card__delete-button' onClick={handleDeleteButtonClick}>
                     <DeleteIcon />
                 </button>
             </div>}
