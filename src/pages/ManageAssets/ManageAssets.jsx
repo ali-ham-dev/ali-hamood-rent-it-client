@@ -17,12 +17,12 @@ const ManageAssets = ({ jwt }) => {
     const [rentedAssets, setRentedAssets] = useState([]);
 
     const renderAssetsForRent = () => {
-        if (!assetsForRent || assetsForRent.length === 0) {
+        if (!assetsForRent || assetsForRent.length === 0 || !jwt) {
             return 
         }
 
         return assetsForRent.map(asset => (
-            <AssetCard key={asset.id} assetId={asset.id} isEditable={true} />
+            <AssetCard key={asset.id} assetId={asset.id} isEditable={true} jwt={jwt} />
         ));
     }
 

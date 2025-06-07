@@ -9,8 +9,9 @@ import MessageBox from '../MessageBox/MessageBox';
 const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
+const deleteAssetEp = import.meta.env.VITE_DELETE_ASSET_EP;
 
-const AssetCard = ({ assetId, isEditable = false }) => {
+const AssetCard = ({ assetId, isEditable = false, jwt}) => {
 
     const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ const AssetCard = ({ assetId, isEditable = false }) => {
 
     const [confirmDelete, setConfirmDelete] = useState({
         message: 'Are you sure you want to delete this asset?',
-        isError: true,
+        isError: false,
         onFirstButton: () => { setDisplayMessageBox(false); },
         onFirstButtonText: 'Cancel',
         onSecondButton: () => { handleDeleteConfirmation(); },
@@ -163,8 +164,33 @@ const AssetCard = ({ assetId, isEditable = false }) => {
     const handleDeleteButtonClick = (e) => {
         setDisplayMessageBox(true);
     }
-    const handleDeleteConfirmation = () => {
-        console.log('delete confirmation');
+
+    const handleDeleteConfirmation = async () => {
+        try {
+            if (!jwt) {
+                throw new Error('No JWT provided');
+            }
+            const headers = {
+                'Authorization': `Bearer ${jwt}`
+            };
+            const res = await axios.delete(`${apiUrl}${deleteAssetEp}/${assetId}`, { headers });
+            if (res.status === 200) {
+                setDisplayMessageBox(false);
+                return;
+            }
+            throw new Error('Failed to delete asset');
+        } catch (error) {
+            console.error('Error deleting asset:', error);
+            setConfirmDelete({
+                message: 'Failed to delete asset',
+                isError: true,
+                onFirstButton: () => { setDisplayMessageBox(false); },
+                onFirstButtonText: '',
+                onSecondButton: () => { },
+            });
+        } finally {
+            setDisplayMessageBox(false);
+        }
     }
 
     return (
