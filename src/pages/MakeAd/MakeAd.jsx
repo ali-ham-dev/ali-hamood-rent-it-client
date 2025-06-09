@@ -7,6 +7,7 @@ import InputBox from '../../components/InputBox/InputBox';
 import DropDown from '../../components/DropDown/DropDown';
 import TinyMceEditor from '../../components/TinyMceEditor/TinyMceEditor';
 import MediaUploadBox from '../../components/MediaUploadBox/MediaUploadBox';
+import DOMPurify from 'dompurify';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
@@ -120,7 +121,8 @@ const MakeAd = ({ jwt }) => {
 
     const handleEditorChange = (content, editor) => {
         console.log('TinyMCE Content:', content);
-        setDescription(content);
+        const sanitizedContent = DOMPurify.sanitize(content);
+        setDescription(sanitizedContent);
     };
 
     const validateTitleChange = (input) => {

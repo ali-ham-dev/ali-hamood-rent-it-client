@@ -7,6 +7,7 @@ import Gallery from '../../components/Gallery/Gallery';
 import Section from '../../components/Section/Section';
 import InputBox from '../../components/InputBox/InputBox';
 import DropDown from '../../components/DropDown/DropDown';
+import DOMPurify from 'dompurify';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const assetsEp = import.meta.env.VITE_ASSETS_EP;
@@ -79,7 +80,8 @@ const AssetPage = () => {
                 value: asset.price
             });
 
-            setDescription(asset.description);
+            const sanitizedDescription = DOMPurify.sanitize(asset.description);
+            setDescription(sanitizedDescription);
         }
 
         if (media) {
@@ -112,7 +114,7 @@ const AssetPage = () => {
             <Section title='Description' headingLevel='h2' isCollapsible={true} content={
                 <div 
                     className='content-area asset-page__description' 
-                    dangerouslySetInnerHTML={{ __html: asset ? asset.description : '' }} />
+                    dangerouslySetInnerHTML={{ __html: description }} />
             } />
             <button className='asset-page__edit-button' onClick={handleEditButtonClick}>Edit</button>
         </main>
