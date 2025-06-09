@@ -1,6 +1,6 @@
 import './Ad.scss';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Section from '../../components/Section/Section';
 import axios from 'axios';
 import InputBox from '../../components/InputBox/InputBox';
@@ -12,9 +12,13 @@ import DOMPurify from 'dompurify';
 const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
 const assetUploadEd = import.meta.env.VITE_ASSET_UPLOAD_EP;
+const assetsEp = import.meta.env.VITE_ASSETS_EP;
 
-const Ad = ({ jwt }) => {
+const Ad = ({ jwt, isEdit = false}) => {
     const navigate = useNavigate();
+    const headers = {
+        'Authorization': `Bearer ${jwt}`
+    }
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
 
@@ -55,7 +59,7 @@ const Ad = ({ jwt }) => {
         'year'
     ]);
     const [description, setDescription] = useState('');
-    const [assetId, setAssetId] = useState(null);
+    const [assetId, setAssetId] = useState(useParams().assetId);
     const [doneUploadingMedia, setDoneUploadingMedia] = useState(null);
 
     const fetchTinymceSessionJwt = async() => {
@@ -66,9 +70,6 @@ const Ad = ({ jwt }) => {
                 return;
             }
 
-            const headers = {
-                'Authorization': `Bearer ${jwt}`
-            }
             const response = await axios.get(`${apiUrl}${tinymceEp}`, { headers });
 
             if (response && 
@@ -94,9 +95,6 @@ const Ad = ({ jwt }) => {
                 return;
             }
 
-            const headers = {
-                'Authorization': `Bearer ${jwt}`
-            }
             const response = await axios.get(`${apiUrl}${tinymceEp}`, { headers });
 
             if (response && 
@@ -111,6 +109,33 @@ const Ad = ({ jwt }) => {
             console.error('Error fetching TinyMCE api key:', error);
         }
     }
+
+    const fetchAd = async() => {
+        try {
+            const response = await axios.get(`${apiUrl}${assetsEp}/${assetId}`, { headers });
+            if (response.status === 200 && response.data) {
+                setTitleInputBox({
+                    ...titleInputBox,
+                    value: response.data.title
+                });
+                setPriceInputBox({
+                    ...priceInputBox,
+                    value: response.data.price
+                });
+                setPeriod(response.data.period);
+                setDescription(response.data.description);
+            }
+        } catch (error) {
+            console.error('Error fetching ad:', error);
+        }
+    }
+
+    useEffect( () => {
+        console.log('isEdit', isEdit);
+        if (isEdit) {
+            fetchAd();
+        }
+    }, [isEdit]);
 
     useEffect( () => {
         // TOKEN based auth is a paid tier.
@@ -221,10 +246,6 @@ const Ad = ({ jwt }) => {
             setErrorMessage('');
             setIsSubmitting(true);
 
-            const headers = {
-                'Authorization': `Bearer ${jwt}`
-            }
-
             const payload = {
                 title: titleInputBox.value,
                 price: priceInputBox.value,
@@ -285,7 +306,7 @@ const Ad = ({ jwt }) => {
                 isLoading ? (
                     <div className='ad__loading-editor'>Loading editor...</div>
                 ) : tinymceApiKey ? (
-                    <TinyMceEditor tinymceApiKey={tinymceApiKey} handleEditorChange={handleEditorChange} />
+                    <TinyMceEditor tinymceApiKey={tinymceApiKey} handleEditorChange={handleEditorChange} initialValue={description} />
                 ) : (
                     <div className='ad__not-logged-in'>Please log in to use the editor.</div>
                 )

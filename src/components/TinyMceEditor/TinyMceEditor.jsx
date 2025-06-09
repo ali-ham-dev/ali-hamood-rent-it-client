@@ -1,10 +1,11 @@
 import './TinyMceEditor.scss';
 import { Editor } from '@tinymce/tinymce-react';
 
-const TinyMceEditor = ({ tinymceApiKey, handleEditorChange }) => {
+const TinyMceEditor = ({ tinymceApiKey, handleEditorChange, initialValue = ''}) => {
     return (
         <Editor
             apiKey={tinymceApiKey}
+            initialValue={initialValue}
             init={{
                 height: 400,
                 menubar: false,
