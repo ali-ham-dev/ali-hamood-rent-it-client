@@ -158,7 +158,7 @@ const AssetCard = ({ assetId, isEditable = false, jwt, onDelete}) => {
     }
 
     const handleEditButtonClick = () => {
-        console.log('edit button clicked');
+        navigate(`/asset/edit/${assetId}`);
     }
 
     const handleDeleteButtonClick = (e) => {
