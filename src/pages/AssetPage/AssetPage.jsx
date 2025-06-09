@@ -1,10 +1,12 @@
 import './AssetPage.scss';
+import 'tinymce/skins/content/default/content.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Gallery from '../../components/Gallery/Gallery';
 import Section from '../../components/Section/Section';
 import InputBox from '../../components/InputBox/InputBox';
+import DropDown from '../../components/DropDown/DropDown';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const assetsEp = import.meta.env.VITE_ASSETS_EP;
@@ -28,6 +30,21 @@ const AssetPage = () => {
         maxLength: 254,
         readOnly: true
     });
+    const [priceInputBox, setPriceInputBox] = useState({
+        htmlFor: 'ad',
+        labelText: '',
+        type: 'text',
+        name: 'price',
+        value: '',
+        placeholder: '$100',
+        error: false,
+        errorMessage: '',
+        isRequired: true,
+        maxLength: 1000,
+        readOnly: true
+    });
+    const [period, setPeriod] = useState('month');
+    const [description, setDescription] = useState('');
     
     useEffect( () => {
         const fetchAsset = async () => {
@@ -56,6 +73,13 @@ const AssetPage = () => {
                 ...titleInputBox,
                 value: asset.title
             });
+
+            setPriceInputBox({
+                ...priceInputBox,
+                value: asset.price
+            });
+
+            setDescription(asset.description);
         }
 
         if (media) {
@@ -67,6 +91,7 @@ const AssetPage = () => {
 
     const handleEditButtonClick = () => {
         console.log(asset);
+        console.log(asset.description);
     }
 
     return (
@@ -77,6 +102,17 @@ const AssetPage = () => {
             } />
             <Section title='Gallery' headingLevel='h2' isCollapsible={true} content={
                 <Gallery media={media} />
+            } />
+            <Section title='Description' headingLevel='h2' isCollapsible={true} content={
+                <div className='asset-page__price-container'>
+                    <InputBox inputBoxData={priceInputBox} />
+                    <DropDown value={period} /> 
+                </div>
+            } />
+            <Section title='Description' headingLevel='h2' isCollapsible={true} content={
+                <div 
+                    className='content-area asset-page__description' 
+                    dangerouslySetInnerHTML={{ __html: asset ? asset.description : '' }} />
             } />
             <button className='asset-page__edit-button' onClick={handleEditButtonClick}>Edit</button>
         </main>

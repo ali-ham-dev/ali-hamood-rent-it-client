@@ -26,6 +26,7 @@
     "react-dropzone": "^14.3.8",
     "react-router-dom": "^7.5.3",
     "sass": "^1.87.0",
+    "tinymce": "^7.9.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

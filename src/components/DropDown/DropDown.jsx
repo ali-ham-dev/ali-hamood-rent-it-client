@@ -5,7 +5,7 @@ const DropDown = ({ title, content, setValue, value }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropDown = (e) => {
-        e.preventDefault();
+        if (!setValue) return;
         if (isOpen) {
             setValue(e.target.textContent);
         }
