@@ -34,7 +34,7 @@ const Menu = ({ headerHeight, setDisplayMenu }) => {
         },
         {
             label: 'Make an Ad',
-            path: '/asset/make-ad',
+            path: '/asset/ad/make',
             onClick: handleClick,
         },
         {

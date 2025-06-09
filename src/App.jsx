@@ -8,7 +8,7 @@ import AssetPage from './pages/AssetPage/AssetPage';
 import SignUp from './pages/SignUp/SignUp';
 import UserAuth from './pages/UserAuth/UserAuth';
 import Login from './pages/Login/Login';
-import MakeAd from './pages/MakeAd/MakeAd';
+import Ad from './pages/Ad/Ad';
 import ManageAssets from './pages/ManageAssets/ManageAssets';
 import Footer from './components/Footer/Footer';
 
@@ -115,7 +115,8 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/user-auth/:userId/:email/:expires' element={<UserAuth setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/asset/make-ad' element={<MakeAd jwt={jwt} />} />
+        <Route path='/asset/ad/make' element={<Ad jwt={jwt} />} />
+        <Route path='/asset/ad/edit/:assetId' element={<Ad jwt={jwt} isEdit={true}/>} />
         <Route path='/manage-assets' element={<ManageAssets jwt={jwt} />} />
       </Routes>
       <Footer />

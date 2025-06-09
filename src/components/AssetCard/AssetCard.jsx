@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import EditIcon from '../EditIcon/EditIcon';
 import DeleteIcon from '../TrashCanIcon/TrashCanIcon';
 import MessageBox from '../MessageBox/MessageBox';
+import { useNavigate } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
@@ -12,7 +13,7 @@ const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 const deleteAssetEp = import.meta.env.VITE_DELETE_ASSET_EP;
 
 const AssetCard = ({ assetId, isEditable = false, jwt, onDelete}) => {
-
+    const navigate = useNavigate();
     const [asset, setAsset] = useState({});
     const [loading, setLoading] = useState(true);
     const [media, setMedia] = useState({});
@@ -158,7 +159,7 @@ const AssetCard = ({ assetId, isEditable = false, jwt, onDelete}) => {
     }
 
     const handleEditButtonClick = () => {
-        navigate(`/asset/edit/${assetId}`);
+        navigate(`/asset/ad/edit/${assetId}`);
     }
 
     const handleDeleteButtonClick = (e) => {

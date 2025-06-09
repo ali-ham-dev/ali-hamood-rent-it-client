@@ -1,4 +1,4 @@
-import './MakeAd.scss';
+import './Ad.scss';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Section from '../../components/Section/Section';
@@ -13,7 +13,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
 const assetUploadEd = import.meta.env.VITE_ASSET_UPLOAD_EP;
 
-const MakeAd = ({ jwt }) => {
+const Ad = ({ jwt }) => {
     const navigate = useNavigate();
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
@@ -267,8 +267,8 @@ const MakeAd = ({ jwt }) => {
     }, [doneUploadingMedia]);
 
     return (
-        <main className='make-ad'>
-            {isError && <div className='make-ad__error'>{errorMessage}</div>}
+        <main className='ad'>
+            {isError && <div className='ad__error'>{errorMessage}</div>}
             <Section title='Title:' headingLevel='h2' isCollapsible={true} content={
                 <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
@@ -276,25 +276,25 @@ const MakeAd = ({ jwt }) => {
                 <MediaUploadBox setDoneUploadingMedia={setDoneUploadingMedia} assetId={assetId} jwt={jwt} />
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
-                <div className='make-ad__price-container'>
+                <div className='ad__price-container'>
                     <InputBox inputBoxData={priceInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
                     <DropDown content={content} setValue={setPeriod} value={period} /> 
                 </div>
             } />
             <Section title='Description:' headingLevel='h2' isCollapsible={true} content={
                 isLoading ? (
-                    <div className='make-ad__loading-editor'>Loading editor...</div>
+                    <div className='ad__loading-editor'>Loading editor...</div>
                 ) : tinymceApiKey ? (
                     <TinyMceEditor tinymceApiKey={tinymceApiKey} handleEditorChange={handleEditorChange} />
                 ) : (
-                    <div className='make-ad__not-logged-in'>Please log in to use the editor.</div>
+                    <div className='ad__not-logged-in'>Please log in to use the editor.</div>
                 )
             } />
-            <button className='make-ad__submit-button' onClick={handleSubmit}>
+            <button className='ad__submit-button' onClick={handleSubmit}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}
             </button>
         </main>
     );
 };
 
-export default MakeAd;
+export default Ad;
