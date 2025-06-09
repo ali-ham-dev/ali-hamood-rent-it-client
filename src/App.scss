@@ -3,6 +3,6 @@
 
 body {
     background-color: $primary-light;
-    @include no-margin;
+    margin: 0 !important;
     @include no-padding;
 }
