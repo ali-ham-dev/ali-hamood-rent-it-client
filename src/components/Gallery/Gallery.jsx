@@ -156,7 +156,7 @@ const Gallery = ({ media }) => {
             </button>
             <div className='gallery__container'>
                 <div className='gallery__image-container'> 
-                    {renderMedia(media[mediaIndex], 'gallery__image')}
+                    {renderMedia(media ? media[mediaIndex] : '', 'gallery__image')}
                 </div>
                 <div className='gallery__carousel'>
                     {renderCircles()}

@@ -35,6 +35,7 @@ const InputBox = ({
                 onBlur={onBlur}   
                 autoComplete={inputBoxData.autoComplete ? inputBoxData.autoComplete : 'off'}
                 maxLength={inputBoxData.maxLength}
+                readOnly={inputBoxData.readOnly}
             />
             {renderError()}
         </div>
