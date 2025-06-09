@@ -111,7 +111,7 @@ function App() {
       <Header isLoggedIn={isLoggedIn} userData={userData} clearAllUserData={clearAllUserData} /> 
       <Routes>
         <Route path='/' element={<AssetsPage />} />
-        <Route path='/asset/:assetId' element={<AssetPage />} />
+        <Route path='/asset/:assetId' element={<AssetPage jwt={jwt} />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/user-auth/:userId/:email/:expires' element={<UserAuth setIsLoggedIn={setIsLoggedIn} />} />

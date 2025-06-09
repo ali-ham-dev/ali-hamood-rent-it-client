@@ -11,8 +11,10 @@ import DOMPurify from 'dompurify';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const assetsEp = import.meta.env.VITE_ASSETS_EP;
+const startRentEp = import.meta.env.VITE_START_RENT_EP;
+const endRentEp = import.meta.env.VITE_END_RENT_EP;
 
-const AssetPage = () => {
+const AssetPage = ({ jwt }) => {
     const { assetId } = useParams();
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -46,6 +48,7 @@ const AssetPage = () => {
     });
     const [period, setPeriod] = useState('month');
     const [description, setDescription] = useState('');
+    const [isRenting, setIsRenting] = useState(false);
     
     useEffect( () => {
         const fetchAsset = async () => {
@@ -82,6 +85,8 @@ const AssetPage = () => {
 
             const sanitizedDescription = DOMPurify.sanitize(asset.description);
             setDescription(sanitizedDescription);
+
+            setIsRenting(asset.is_rented);
         }
 
         if (media) {
@@ -91,11 +96,29 @@ const AssetPage = () => {
         }
     }, [asset]);
 
-    const handleEditButtonClick = () => {
-        console.log(asset);
-        console.log(asset.description);
-    }
+    const handleRentItButtonClick = async (e) => {
+        if (!jwt) {
+            navigate('/login');
+            return;
+        }
 
+        const headers = {
+            'Authorization': `Bearer ${jwt}`
+        }
+
+        try {
+            const response = isRenting ? 
+                await axios.post(`${apiUrl}${endRentEp}/${assetId}`, {}, {headers}) :
+                await axios.post(`${apiUrl}${startRentEp}/${assetId}`, {}, {headers});
+            if (response.status === 200 && response.data) {
+                setIsRenting(!isRenting);
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.error(`Error renting asset with id: ${assetId}`, error);
+        }
+    }
+    
     return (
         <main className='asset-page'>
             {isError && <div className='asset-page__error'>{errorMessage}</div>}
@@ -116,7 +139,9 @@ const AssetPage = () => {
                     className='content-area asset-page__description' 
                     dangerouslySetInnerHTML={{ __html: description }} />
             } />
-            <button className='asset-page__edit-button' onClick={handleEditButtonClick}>Edit</button>
+            <button className='asset-page__rent-it' onClick={handleRentItButtonClick}>
+                {isRenting ? 'End Rent' : 'Rent it'}
+            </button>
         </main>
     )
 }
