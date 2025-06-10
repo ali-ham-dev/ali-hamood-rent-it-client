@@ -10,6 +10,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 const uploadMediaEp = import.meta.env.VITE_MEDIA_UPLOAD_EP;
+const mediaEditEp = import.meta.env.VITE_MEDIA_EDIT_EP;
 
 const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt, isEdit = false, existingMedia = [] }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -54,20 +55,37 @@ const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt, isEdit = false, e
     }
 
     useEffect(() => {
+        if (isEdit && existingMedia && existingMedia.length > 0) {
+            const newFiles = existingMedia.map(url => {
+                const fileExtension = url.split('.').pop().toLowerCase();
+                const isImage = imageExtensions.includes(`.${fileExtension}`);
+                const isVideo = videoExtensions.includes(`.${fileExtension}`);
+                
+                return {
+                    name: url.split('/').pop(),
+                    preview: url,
+                    type: isImage ? `image/${fileExtension}` : isVideo ? `video/${fileExtension}` : 'application/octet-stream'
+                };
+            });
+            setFiles([...newFiles]);
+        }
+    }, [existingMedia]);
+
+    useEffect(() => {
         fetchFileExtensions();
         setIsLoading(false);
     }, []);
 
     useEffect(() => {
         const uploadFiles = async () => {
-            if (!assetId || !jwt || files.length === 0 || isUploading || isEdit) {
+            if (!assetId || !jwt || files.length === 0 || isUploading) {
                 return;
             }
             setDoneUploadingMedia(null);
             setIsUploading(true);
             setError(false);
             setErrorMessage('');
-
+            
             const headers = {
                 'Authorization': `Bearer ${jwt}`
             };
@@ -79,7 +97,10 @@ const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt, isEdit = false, e
                     }
                     const formData = new FormData();
                     formData.append('file', file);
-                    await axios.post(`${apiUrl}${uploadMediaEp}/${assetId}`, formData, { headers });
+
+                    isEdit ? 
+                        await axios.put(`${apiUrl}${mediaEditEp}/${assetId}`, formData, { headers }) : 
+                        await axios.post(`${apiUrl}${uploadMediaEp}/${assetId}`, formData, { headers });
                     setUploadedFiles(prev => [...prev, file.name]);
                 }
 
