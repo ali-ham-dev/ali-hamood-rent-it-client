@@ -11,7 +11,7 @@ const imageExtensionsEp = import.meta.env.VITE_IMG_FILE_EX_EP;
 const videoExtensionsEp = import.meta.env.VITE_VID_FILE_EX_EP;
 const uploadMediaEp = import.meta.env.VITE_MEDIA_UPLOAD_EP;
 
-const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt }) => {
+const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt, isEdit = false, existingMedia = [] }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [imageExtensions, setImageExtensions] = useState([]);
     const [videoExtensions, setVideoExtensions] = useState([]);
@@ -60,7 +60,7 @@ const MediaUploadBox = ({ setDoneUploadingMedia, assetId, jwt }) => {
 
     useEffect(() => {
         const uploadFiles = async () => {
-            if (!assetId || !jwt || files.length === 0 || isUploading) {
+            if (!assetId || !jwt || files.length === 0 || isUploading || isEdit) {
                 return;
             }
             setDoneUploadingMedia(null);

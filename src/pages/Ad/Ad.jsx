@@ -13,6 +13,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
 const assetUploadEd = import.meta.env.VITE_ASSET_UPLOAD_EP;
 const assetsEp = import.meta.env.VITE_ASSETS_EP;
+const assetEditEp = import.meta.env.VITE_ASSET_EDIT_EP;
+const mediaEditEp = import.meta.env.VITE_MEDIA_EDIT_EP;
 
 const Ad = ({ jwt, isEdit = false}) => {
     const navigate = useNavigate();
@@ -21,12 +23,10 @@ const Ad = ({ jwt, isEdit = false}) => {
     }
     const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
     const [tinymceApiKey, setTinymceApiKey] = useState(null);
-
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-
     const [titleInputBox, setTitleInputBox] = useState({
         htmlFor: 'ad',
         labelText: '',
@@ -61,6 +61,7 @@ const Ad = ({ jwt, isEdit = false}) => {
     const [description, setDescription] = useState('');
     const [assetId, setAssetId] = useState(useParams().assetId);
     const [doneUploadingMedia, setDoneUploadingMedia] = useState(null);
+    const [existingMedia, setExistingMedia] = useState([]);
 
     const fetchTinymceSessionJwt = async() => {
         try {
@@ -124,14 +125,17 @@ const Ad = ({ jwt, isEdit = false}) => {
                 });
                 setPeriod(response.data.period);
                 setDescription(response.data.description);
+                if (response.data.media && response.data.media.length > 0) {
+                    setExistingMedia(response.data.media);
+                }
             }
         } catch (error) {
             console.error('Error fetching ad:', error);
         }
     }
 
+    // TODO: Page is not re-rendering when user goes from edit to make ad. 
     useEffect( () => {
-        console.log('isEdit', isEdit);
         if (isEdit) {
             fetchAd();
         }
@@ -253,7 +257,9 @@ const Ad = ({ jwt, isEdit = false}) => {
                 description: description
             }
 
-            const res = await axios.post(`${apiUrl}${assetUploadEd}`, payload, { headers });
+            const res = isEdit ? 
+                await axios.put(`${apiUrl}${assetEditEp}/${assetId}`, payload, { headers }) :
+                await axios.post(`${apiUrl}${assetUploadEd}`, payload, { headers });
 
             if (res.status === 200) {
                 setAssetId(res.data.assetId);
@@ -294,7 +300,7 @@ const Ad = ({ jwt, isEdit = false}) => {
                 <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
             } />
             <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
-                <MediaUploadBox setDoneUploadingMedia={setDoneUploadingMedia} assetId={assetId} jwt={jwt} />
+                <MediaUploadBox setDoneUploadingMedia={setDoneUploadingMedia} assetId={assetId} jwt={jwt} isEdit={isEdit} existingMedia={existingMedia}/>
             } />
             <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
                 <div className='ad__price-container'>
@@ -306,7 +312,10 @@ const Ad = ({ jwt, isEdit = false}) => {
                 isLoading ? (
                     <div className='ad__loading-editor'>Loading editor...</div>
                 ) : tinymceApiKey ? (
-                    <TinyMceEditor tinymceApiKey={tinymceApiKey} handleEditorChange={handleEditorChange} initialValue={description} />
+                    <TinyMceEditor 
+                        tinymceApiKey={tinymceApiKey} 
+                        handleEditorChange={handleEditorChange} 
+                        initialValue={description} />
                 ) : (
                     <div className='ad__not-logged-in'>Please log in to use the editor.</div>
                 )
