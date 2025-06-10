@@ -5,7 +5,7 @@ const TinyMceEditor = ({ tinymceApiKey, handleEditorChange, initialValue = ''}) 
     return (
         <Editor
             apiKey={tinymceApiKey}
-            initialValue={initialValue}
+            value={initialValue}
             init={{
                 height: 400,
                 menubar: false,
