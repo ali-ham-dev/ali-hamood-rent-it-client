@@ -1,0 +1,42 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+$menu-spacing: 0.25rem;
+
+.menu {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: fit-content;
+    background-color: $white;
+    z-index: 100;
+    padding: $menu-spacing;
+    padding-bottom: 0;
+    @include flex-column-2;
+    @include shadow-3;
+    @include corner-radius-1;
+    @include border-1;
+
+    @include tablet {
+        right: 4rem;
+    }
+
+    @include desktop {
+        right: 10rem;
+
+    }
+
+    @include desktop-and-tablet {
+        left: auto;
+        width: fit-content;
+    }
+
+    &__button {
+        @include button-1-style($black, $white, $white, $black, $black);
+        & {
+            width: 100%;
+            margin: 0;
+            margin-bottom: $menu-spacing;
+        }
+    }
+}

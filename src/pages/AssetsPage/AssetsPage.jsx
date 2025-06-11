@@ -1,11 +1,12 @@
-import './HomePublic.scss';
-import AssetCardPublic from '../../components/AssetCardPublic/AssetCardPublic';
+import './AssetsPage.scss';
+import AssetCard from '../../components/AssetCard/AssetCard';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const assetsEp = import.meta.env.VITE_ASSETS_EP;
 
 // Future features:
 // - Add categories to the home page.
@@ -13,7 +14,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 // - Add dynamic filters.
 // - AI and search. 
 
-const HomePublic = () => {
+const AssetsPage = () => {
 
     const [assetIds, setAssetIds] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -52,7 +53,7 @@ const HomePublic = () => {
         }
 
         return assetIds.map((assetId) => (
-            <AssetCardPublic key={uuidv4()} assetId={assetId} />
+            <AssetCard key={uuidv4()} assetId={assetId} />
         ));
     }
 
@@ -65,7 +66,7 @@ const HomePublic = () => {
             setAssetIds(response.data.map(asset => asset.id));
         }
 
-        setAssetIds(['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']);
+        setAssetIds(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
     }
 
     // loading, or error? 
@@ -85,11 +86,11 @@ const HomePublic = () => {
 
     return (
         <main>
-            <div className='home-public'>
+            <div className='assets-page'>
                 {renderAssetCards()}
             </div>
         </main>
     )
 }
 
-export default HomePublic;
+export default AssetsPage;

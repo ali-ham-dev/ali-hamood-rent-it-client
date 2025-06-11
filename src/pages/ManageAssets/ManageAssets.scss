@@ -1,0 +1,49 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.manage-assets {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    @include left-right-page-padding;
+
+    &__message-box {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: $white;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid $black;
+        @include corner-radius-1;
+        @include heading-4-all;
+
+        &--error {
+            color: $error;
+            border-color: $error;
+        }
+    }
+
+    &__message {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: $white;
+        padding: 0 1rem 1rem 1rem;
+        margin-top: 1rem;
+        @include heading-4-all;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &__asset-card-container {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}

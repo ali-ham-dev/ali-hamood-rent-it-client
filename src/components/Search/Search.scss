@@ -5,14 +5,25 @@
     background-color: $white;
     padding-left: 1rem;
     padding-right: 1rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-left: 0;
+    margin-right: 0;
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
     width: 100%;
+    box-sizing: border-box;
     @include corner-radius-1;
     @include border-1;
-    @include flex-row;
+    @include flex-row-1;
+
+    @include tablet {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    @include desktop {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
 
     &__input {
         width: 100%;

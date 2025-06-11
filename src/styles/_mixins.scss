@@ -251,7 +251,7 @@
 @mixin button-1-style(
     $backgroudColor: $black, 
     $textColor: $white,
-    $hoverBackgroundColor: $forest-green,
+    $hoverBackgroundColor: $white,
     $hoverTextColor: $black,
     $hoverBorderColor: $black) {
 
@@ -307,6 +307,10 @@
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0,0,0,0.12);
 }
 
+@mixin shadow-3 {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25), 0 8px 16px rgba(0,0,0,0.15);
+}
+
 @mixin no-text-overflow {
   white-space: nowrap; 
   overflow: hidden;
@@ -342,18 +346,28 @@
 
 // Flexbox Mixins
 
-@mixin flex-row {
+@mixin flex-row-1 {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-@mixin flex-column {
+@mixin flex-row-2 {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-column-1 {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin flex-column-2 {
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin flex-row-center {

@@ -1,0 +1,64 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.message-box {
+    &__underlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $black;
+        opacity: 0.5;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        padding: 1rem;
+        border: 1px solid $black;
+        background-color: $white;
+        width: fit-content;
+        height: fit-content;
+        @include shadow-1;
+        @include corner-radius-1;
+
+        &--error {
+            border: 1px solid $error;
+            color: $error;
+        }
+    }
+
+    &__message {
+        margin: 0;
+        padding: 0;
+        @include heading-4-all;
+
+        &--error {
+            color: $error;
+        }
+    }
+
+    &__button-container {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__close-button, &__confirm-button {
+        @include button-1-style;
+
+        &--error {
+            background-color: $error;
+            color: $white;
+        }
+    }
+}

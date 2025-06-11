@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 
 const Logo = () => {
     return (
-        <Link to='/' className='logo'>
-            <h1 className='logo__title'>Rent it</h1>
-        </Link>
+        <div className='logo'>  
+            <Link to='/' className='logo__link'>
+                <h1 className='logo__title'>Rent it</h1>
+            </Link>
+        </div>
     )
 }
 

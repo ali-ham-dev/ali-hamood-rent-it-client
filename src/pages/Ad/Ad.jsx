@@ -1,0 +1,330 @@
+import './Ad.scss';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Section from '../../components/Section/Section';
+import axios from 'axios';
+import InputBox from '../../components/InputBox/InputBox';
+import DropDown from '../../components/DropDown/DropDown';
+import TinyMceEditor from '../../components/TinyMceEditor/TinyMceEditor';
+import MediaUploadBox from '../../components/MediaUploadBox/MediaUploadBox';
+import DOMPurify from 'dompurify';
+
+const apiUrl = import.meta.env.VITE_API_URL;
+const tinymceEp = import.meta.env.VITE_TINYMCE_EP;
+const assetUploadEd = import.meta.env.VITE_ASSET_UPLOAD_EP;
+const assetsEp = import.meta.env.VITE_ASSETS_EP;
+const assetEditEp = import.meta.env.VITE_ASSET_EDIT_EP;
+const mediaEditEp = import.meta.env.VITE_MEDIA_EDIT_EP;
+
+const Ad = ({ jwt, isEdit = false}) => {
+    const navigate = useNavigate();
+    const headers = {
+        'Authorization': `Bearer ${jwt}`
+    }
+    const [tinymceSessionJwt, setTinymceSessionJwt] = useState(null);
+    const [tinymceApiKey, setTinymceApiKey] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [titleInputBox, setTitleInputBox] = useState({
+        htmlFor: 'ad',
+        labelText: '',
+        type: 'text',
+        name: 'title',
+        value: '',
+        placeholder: 'Ad a title for your ad...',
+        error: false,
+        errorMessage: '',
+        isRequired: true,
+        maxLength: 254
+    });
+    const [priceInputBox, setPriceInputBox] = useState({
+        htmlFor: 'ad',
+        labelText: '',
+        type: 'text',
+        name: 'price',
+        value: '',
+        placeholder: '$100',
+        error: false,
+        errorMessage: '',
+        isRequired: true,
+        maxLength: 1000
+    });
+    const [period, setPeriod] = useState('month');
+    const [content, setContent] = useState([
+        'day',
+        'week',
+        'month',
+        'year'
+    ]);
+    const [description, setDescription] = useState('');
+    const [assetId, setAssetId] = useState(useParams().assetId);
+    const [doneUploadingMedia, setDoneUploadingMedia] = useState(null);
+    const [existingMedia, setExistingMedia] = useState([]);
+
+    const fetchTinymceSessionJwt = async() => {
+        try {
+            if (!jwt) {
+                console.log('User is not logged in.');
+                setIsLoading(false);
+                return;
+            }
+
+            const response = await axios.get(`${apiUrl}${tinymceEp}`, { headers });
+
+            if (response && 
+                response.data && 
+                response.status === 200 &&
+                response.data.authToken) {
+                setTinymceSessionJwt(response.data.authToken);
+            } else {
+                console.error('Error fetching TinyMCE plugin:', response);
+            }
+        } catch (error) {
+            console.error('Error fetching TinyMCE plugin:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchTinymceApiKey = async() => {
+        try {
+            if (!jwt) {
+                console.log('User is not logged in.');
+                setIsLoading(false);
+                return;
+            }
+
+            const response = await axios.get(`${apiUrl}${tinymceEp}`, { headers });
+
+            if (response && 
+                response.data && 
+                response.status === 200 &&
+                response.data.apiKey) {
+                setTinymceApiKey(response.data.apiKey);
+            } else {
+                console.error('Error fetching TinyMCE api key:', response);
+            }
+        } catch (error) {
+            console.error('Error fetching TinyMCE api key:', error);
+        }
+    }
+
+    const fetchAd = async() => {
+        try {
+            const response = await axios.get(`${apiUrl}${assetsEp}/${assetId}`, { headers });
+            if (response.status === 200 && response.data) {
+                setTitleInputBox({
+                    ...titleInputBox,
+                    value: response.data.title
+                });
+                setPriceInputBox({
+                    ...priceInputBox,
+                    value: response.data.price
+                });
+                setPeriod(response.data.period);
+                setDescription(response.data.description);
+                if (response.data.media && response.data.media.length > 0) {
+                    setExistingMedia(response.data.media);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching ad:', error);
+        }
+    }
+
+    // TODO: Page is not re-rendering when user goes from edit to make ad. 
+    useEffect( () => {
+        if (isEdit) {
+            fetchAd();
+        }
+    }, [isEdit]);
+
+    useEffect( () => {
+        // TOKEN based auth is a paid tier.
+        // TODO: self host tinymce or switch to prosemirror. For now, we're using the api key.
+        fetchTinymceApiKey();
+        setIsLoading(false);
+    }, [jwt]);
+
+    const handleEditorChange = (content, editor) => {
+        console.log('TinyMCE Content:', content);
+        const sanitizedContent = DOMPurify.sanitize(content);
+        setDescription(sanitizedContent);
+    };
+
+    const validateTitleChange = (input) => {
+        if (input.length > 254) {
+            titleInputBox.error = true;
+            titleInputBox.errorMessage = 'Title must be less than 254 characters.';
+        }
+    }
+
+    const validateTitleBlur = (input) => {
+        if (input.length < 1) {
+            titleInputBox.error = true;
+            titleInputBox.errorMessage = 'Title is required.';
+        }
+    }
+
+    const validatePriceChange = (input) => {
+        if (input.length > 10000) {
+            priceInputBox.error = true;
+            priceInputBox.errorMessage = 'Price must be less than 1000 characters.';
+            return false;
+        }
+
+        return true
+    }
+
+    const validatePriceBlur = (input) => {
+        if (!input || input.length < 1) {
+            priceInputBox.error = true;
+            priceInputBox.errorMessage = 'Price is required.';
+        }
+    }
+
+    const handleInputBoxChange = (e) => {
+        if (e.target.name === 'title') {
+            titleInputBox.error = false;
+            titleInputBox.errorMessage = '';
+            validateTitleChange(e.target.value);
+            setTitleInputBox({
+                ...titleInputBox,
+                value: e.target.value
+            });
+        }
+        if (e.target.name === 'price') {
+            priceInputBox.error = false;
+            priceInputBox.errorMessage = '';
+            const value = e.target.value.replace(/[^0-9]/g, '');
+            validatePriceChange(value);
+            setPriceInputBox({
+                ...priceInputBox,
+                value: value
+            });
+        }
+    };
+
+    const handleInputBoxBlur = (e) => {
+        if (e.target.name === 'title') {
+            validateTitleBlur(e.target.value);
+            setTitleInputBox({
+                ...titleInputBox,
+            });
+        }
+
+        if (e.target.name === 'price') {
+            validatePriceBlur(e.target.value);
+            setPriceInputBox({
+                ...priceInputBox,
+            });
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (!jwt) {
+            navigate('/login');
+            setIsError(true);
+            setErrorMessage('Please log in to submit an ad.');
+            return;
+        }
+
+        validateTitleChange(titleInputBox.value);
+        validateTitleBlur(titleInputBox.value);
+        if (titleInputBox.error) {
+            console.log('Title error');
+            return;
+        }
+
+        validatePriceChange(priceInputBox.value);
+        validatePriceBlur(priceInputBox.value);
+        if (priceInputBox.error) {
+            console.log('Price error');
+            return;
+        }
+
+        try {
+            setIsError(false);
+            setErrorMessage('');
+            setIsSubmitting(true);
+
+            const payload = {
+                title: titleInputBox.value,
+                price: priceInputBox.value,
+                period: period,
+                description: description
+            }
+
+            const res = isEdit ? 
+                await axios.put(`${apiUrl}${assetEditEp}/${assetId}`, payload, { headers }) :
+                await axios.post(`${apiUrl}${assetUploadEd}`, payload, { headers });
+
+            if (res.status === 200) {
+                setAssetId(res.data.assetId);
+            } else {
+                setIsError(true);
+                setErrorMessage('Error submitting ad. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting ad:', error);
+            setIsError(true);
+            setErrorMessage('Error submitting ad. Please try again.');
+        }
+    }
+
+    useEffect( () => {
+        if (doneUploadingMedia && assetId) {
+            if (typeof doneUploadingMedia === 'string') {
+                const lowerStr = doneUploadingMedia.toLowerCase();
+                if (lowerStr.includes('error')) {
+                    setIsError(true);
+                    setErrorMessage(doneUploadingMedia);
+                }
+            }
+
+            setIsSubmitting(false);
+            setAssetId(null);
+
+            if (!isError) {
+                navigate('/');
+            }
+        }
+    }, [doneUploadingMedia]);
+
+    return (
+        <main className='ad'>
+            {isError && <div className='ad__error'>{errorMessage}</div>}
+            <Section title='Title:' headingLevel='h2' isCollapsible={true} content={
+                <InputBox inputBoxData={titleInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
+            } />
+            <Section title='Media:' headingLevel='h2' isCollapsible={true} content={
+                <MediaUploadBox setDoneUploadingMedia={setDoneUploadingMedia} assetId={assetId} jwt={jwt} isEdit={isEdit} existingMedia={existingMedia}/>
+            } />
+            <Section title='Price:' headingLevel='h2' isCollapsible={true} content={
+                <div className='ad__price-container'>
+                    <InputBox inputBoxData={priceInputBox} onChange={handleInputBoxChange} onBlur={handleInputBoxBlur} />
+                    <DropDown content={content} setValue={setPeriod} value={period} /> 
+                </div>
+            } />
+            <Section title='Description:' headingLevel='h2' isCollapsible={true} content={
+                isLoading ? (
+                    <div className='ad__loading-editor'>Loading editor...</div>
+                ) : tinymceApiKey ? (
+                    <TinyMceEditor 
+                        tinymceApiKey={tinymceApiKey} 
+                        handleEditorChange={handleEditorChange} 
+                        initialValue={description} />
+                ) : (
+                    <div className='ad__not-logged-in'>Please log in to use the editor.</div>
+                )
+            } />
+            <button className='ad__submit-button' onClick={handleSubmit}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+            </button>
+        </main>
+    );
+};
+
+export default Ad;

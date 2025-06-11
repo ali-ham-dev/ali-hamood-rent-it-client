@@ -14,7 +14,6 @@ $desktop-min-width: 1280px;
 // $pistachio: #EFFAF7;
 // $sea-green: #B7CEC9;
 // $sage: #E4EFEC;
-// $error: #B10606;
 // $primary-indigo: #2E66E5;
 // $secondary-slate: #5C667E;
 // $secondary-cloud: #BDC5D5;
@@ -24,12 +23,13 @@ $primary-dark: #DEDEDE;
 $secondary-dark: #D4DCE3;
 $white: #FFFFFF;
 $black: #000000;
+$error: #B10606;
 
 // Padding
 
 $left-right-padding-header: 10rem;
-$left-right-padding-header-mobile: 2rem;
 $left-right-padding-header-tablet: 4rem;
+$left-right-padding-header-mobile: 1rem;
 
 // Miscellaneous
 
